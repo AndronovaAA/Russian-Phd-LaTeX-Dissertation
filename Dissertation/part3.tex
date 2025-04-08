@@ -49,7 +49,6 @@
 \end{lemma}
 
 \section{Предлагаемый метод}\label{sec:ch3/sect2}
-\section{Предлагаемый метод}\label{sec:ch3/sect2}
 \subsection{Аддитивная и мультипликативная неопределённость}\label{sec:ch3/sect2/sub1}
 Рассмотрим следующую динамическую систему:
 %
@@ -99,10 +98,10 @@ ${N_1} \in \mathbb{R}^{d \times n_z}$ известные матрицы, ${F}_1$
 ${S} = \begin{bmatrix}
 	{I} \\ 0
 \end{bmatrix}$, 
-$\bo{E}=[ \bo{N} \ \ \bo{R}]$, и 
+${E}=[ {N} \ \ {R}]$, и 
 $
-\bo{A}_c=    \begin{bmatrix}
-	\bo{A}_r  & \bo{A}_{\rho} \\
+{A}_c=    \begin{bmatrix}
+	{A}_r  & {A}_{\rho} \\
 	0  & 0
 \end{bmatrix}
 $
@@ -110,45 +109,43 @@ $
 %
 \begin{equation}
 	\label{eq:part1_error_dynamics}
-	\dot e= (\bo{A}_e-\bo{L}\bo{C}\bo{E})e +\bo{S}\Delta \bo{A}_n z.
+	\dot e= ({A}_e-{L}{C}{E})e +{S}\Delta {A}_n z.
 \end{equation}
 %
 Вводим закон управления:
 %
 \begin{equation}
-	u=\bo{K}_z \hat{z}+\bo{K}_{\zeta} \hat{\zeta},
+	u={K}_z \hat{z}+{K}_{\zeta} \hat{\zeta},
 \end{equation}
 %
-и определяем $\bo{K}=\begin{bmatrix}
-	\bo{K}_z & \bo{K}_{\zeta}
+и определяем ${K}=\begin{bmatrix}
+	{K}_z & {K}_{\zeta}
 \end{bmatrix}$ записываем динамическую систему с обратной связью:
 %
 \begin{equation}
 	\label{eq:part1_active_dynamics}
-	\dot{z}=(\bo{A}_n+\Delta \bo{A}_n +\bo{B}\bo{K}_z)z-\bo{B}\bo{K}e+(\bo{A}_r+\bo{B}\bo{K}_{\zeta})\zeta.
+	\dot{z}=({A}_n+\Delta {A}_n +{B}{K}_z)z-{B}{K}e+({A}_r+{B}{K}_{\zeta})\zeta.
 \end{equation}
 %
-Коэффициент регулятора $\bo{K}_{\zeta}$ может быть выбран как:
+Коэффициент регулятора ${K}_{\zeta}$ может быть выбран как:
 %
 \begin{equation}
 	\label{eq:part1_static_control}
-	\bo{K}_{\zeta}=-\bo{B}^{\dagger}\bo{A}_r.
+	{K}_{\zeta}=-{B}^{\dagger}{A}_r.
 \end{equation}
 %
-Пока столбцы$\bo{A}_r$ лежат в подпространстве столбцов $\bo{B}$ и существует точная оценка состояния, данный закон управления сводит на нет эффект $\zeta$ на динамику. В данном случае,отмечая что $\bo{K}_z=\bo{K}\bo{S}$,  мы можем представить ошибку наблюдателя и динамику робота как систему уравнений:
+Пока столбцы${A}_r$ лежат в подпространстве столбцов ${B}$ и существует точная оценка состояния, данный закон управления сводит на нет эффект $\zeta$ на динамику. В данном случае,отмечая что ${K}_z={K}{S}$,  мы можем представить ошибку наблюдателя и динамику робота как систему уравнений:
 %
 \begin{equation}
 	\label{eq:part1_system}
 	\begin{bmatrix}
 		\dot{z} \\ \dot{e}
 	\end{bmatrix}=\begin{bmatrix}
-		(\bo{A}_n+\Delta \bo{A}_n +\bo{B}\bo{K}\bo{S}) & -\bo{B}\bo{K} \\
-		\bo{S} \Delta \bo{A}_n & (\bo{A}_e-\bo{L}\bo{C}\bo{E})        \end{bmatrix}\begin{bmatrix}
+		({A}_n+\Delta {A}_n +{B}{K}{S}) & {B}{K} \\
+		{S} \Delta {A}_n & ({A}_e-{L}{C}{E})        \end{bmatrix}\begin{bmatrix}
 		z \\ e
 	\end{bmatrix}.
 \end{equation}
 %
-Рассмотрим проблему нахождения таких коэффициентов регулятора и наблюдателя, которые будут давать устойчивую систему для всех допустимых значений $\Delta \bo{A}_n$.
-\clearpage
-
+Рассмотрим проблему нахождения таких коэффициентов регулятора и наблюдателя, которые будут давать устойчивую систему для всех допустимых значений $\Delta {A}_n$.
 \clearpage
