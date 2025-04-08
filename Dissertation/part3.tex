@@ -1,5 +1,3 @@
-\chapter{Предлагаемый метод}\label{ch:ch3}
-
 \section{Математические инструменты}\label{sec:ch3/sect1}
 В данном разделе мы обобщим несколько результатов, которые будут использованы в последующих разделах работы.
 \begin{lemma}\label{lemma:Young}
@@ -51,4 +49,106 @@
 \end{lemma}
 
 \section{Предлагаемый метод}\label{sec:ch3/sect2}
+\section{Предлагаемый метод}\label{sec:ch3/sect2}
+\subsection{Аддитивная и мультипликативная неопределённость}\label{sec:ch3/sect2/sub1}
+Рассмотрим следующую динамическую систему:
+%
+\begin{equation}
+	\label{eq:part1_linear_dynamics}
+	\begin{cases}
+		\dot z=({A}_n+\Delta {A}_n)z + {A}_r\zeta + {B}u,\\
+		y={C}{N}z+{C}{R}\zeta,
+	\end{cases}
+\end{equation}
+%
+где $z$ это динамические состояния, $\zeta = \text{const}$ - статические состояния и $\Delta {A}_n$ представляет мультипликативную модель неопределенностей и имеет следующую структуру:
+%
+\begin{equation}
+	\label{eq:part1_uncertainty}
+	\Delta {A}_n={M}_1{F}_1{N}_1 \quad \text{и} \quad {F}_1\T{F}_1\leq \nu {I},
+\end{equation}
+%
+где ${M_1} \in \mathbb{R}^{n_z \times d}$ и 
+${N_1} \in \mathbb{R}^{d \times n_z}$ известные матрицы, ${F}_1$ - неизвестная матрица ограниченная по норме и $\nu$ - неизвестный радиус - скаляр, определяющий лимит наложенный на норму ${F}_1$.
+
+Следуя \cite{SAVIN2021} мы можем ввести наблюдатель Люнберга:
+%
+\begin{equation}
+	\begin{bmatrix}
+		\dot{\hat{z}} \\
+		\dot{\hat{\zeta}}
+	\end{bmatrix}=\begin{bmatrix}
+		{A}_n & {A}_r \\
+		0 & 0
+	\end{bmatrix}
+	\begin{bmatrix}
+		\hat{z}\\ \hat{\zeta}
+	\end{bmatrix}
+	+  \begin{bmatrix}
+		{B}\\0
+	\end{bmatrix}u + {L} \left( y-\begin{bmatrix}
+		{C}{N} & {C}{R}
+	\end{bmatrix} \begin{bmatrix}
+		\hat{z}\\ \hat{\zeta}
+	\end{bmatrix} \right),
+\end{equation}
+%
+где ${L}$ коэффициент наблюдателя.
+
+Определим ошибку оценки состояния как $e = [ (z-\hat{z})\T \ \ (\zeta-\hat{\zeta})\T ]\T$ и введем блочную матрицу:
+${S} = \begin{bmatrix}
+	{I} \\ 0
+\end{bmatrix}$, 
+$\bo{E}=[ \bo{N} \ \ \bo{R}]$, и 
+$
+\bo{A}_c=    \begin{bmatrix}
+	\bo{A}_r  & \bo{A}_{\rho} \\
+	0  & 0
+\end{bmatrix}
+$
+записываем ошибку наблюдателя динамики:
+%
+\begin{equation}
+	\label{eq:part1_error_dynamics}
+	\dot e= (\bo{A}_e-\bo{L}\bo{C}\bo{E})e +\bo{S}\Delta \bo{A}_n z.
+\end{equation}
+%
+Вводим закон управления:
+%
+\begin{equation}
+	u=\bo{K}_z \hat{z}+\bo{K}_{\zeta} \hat{\zeta},
+\end{equation}
+%
+и определяем $\bo{K}=\begin{bmatrix}
+	\bo{K}_z & \bo{K}_{\zeta}
+\end{bmatrix}$ записываем динамическую систему с обратной связью:
+%
+\begin{equation}
+	\label{eq:part1_active_dynamics}
+	\dot{z}=(\bo{A}_n+\Delta \bo{A}_n +\bo{B}\bo{K}_z)z-\bo{B}\bo{K}e+(\bo{A}_r+\bo{B}\bo{K}_{\zeta})\zeta.
+\end{equation}
+%
+Коэффициент регулятора $\bo{K}_{\zeta}$ может быть выбран как:
+%
+\begin{equation}
+	\label{eq:part1_static_control}
+	\bo{K}_{\zeta}=-\bo{B}^{\dagger}\bo{A}_r.
+\end{equation}
+%
+Пока столбцы$\bo{A}_r$ лежат в подпространстве столбцов $\bo{B}$ и существует точная оценка состояния, данный закон управления сводит на нет эффект $\zeta$ на динамику. В данном случае,отмечая что $\bo{K}_z=\bo{K}\bo{S}$,  мы можем представить ошибку наблюдателя и динамику робота как систему уравнений:
+%
+\begin{equation}
+	\label{eq:part1_system}
+	\begin{bmatrix}
+		\dot{z} \\ \dot{e}
+	\end{bmatrix}=\begin{bmatrix}
+		(\bo{A}_n+\Delta \bo{A}_n +\bo{B}\bo{K}\bo{S}) & -\bo{B}\bo{K} \\
+		\bo{S} \Delta \bo{A}_n & (\bo{A}_e-\bo{L}\bo{C}\bo{E})        \end{bmatrix}\begin{bmatrix}
+		z \\ e
+	\end{bmatrix}.
+\end{equation}
+%
+Рассмотрим проблему нахождения таких коэффициентов регулятора и наблюдателя, которые будут давать устойчивую систему для всех допустимых значений $\Delta \bo{A}_n$.
+\clearpage
+
 \clearpage
