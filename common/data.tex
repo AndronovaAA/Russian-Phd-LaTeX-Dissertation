@@ -1,70 +1,49 @@
-%%% Основные сведения %%%
-\newcommand{\thesisAuthorLastName}{\fixme{Фамилия}}
-\newcommand{\thesisAuthorOtherNames}{\fixme{Имя Отчество}}
-\newcommand{\thesisAuthorInitials}{\fixme{И.\,О.}}
+\newcommand{\thesisAuthorLastName}{\fixme{Андронова}}
+\newcommand{\thesisAuthorOtherNames}{\fixme{Анастасия Алексеевна}}
+\newcommand{\thesisAuthorInitials}{\fixme{А.\,А.}}
 \newcommand{\thesisAuthor}             % Диссертация, ФИО автора
 {%
-    \texorpdfstring{% \texorpdfstring takes two arguments and uses the first for (La)TeX and the second for pdf
-        \thesisAuthorLastName~\thesisAuthorOtherNames% так будет отображаться на титульном листе или в тексте, где будет использоваться переменная
-    }{%
-        \thesisAuthorLastName, \thesisAuthorOtherNames% эта запись для свойств pdf-файла. В таком виде, если pdf будет обработан программами для сбора библиографических сведений, будет правильно представлена фамилия.
-    }
+	\texorpdfstring{% \texorpdfstring takes two arguments and uses the first for (La)TeX and the second for pdf
+		\thesisAuthorLastName~\thesisAuthorOtherNames% так будет отображаться на титульном листе или в тексте, где будет использоваться переменная
+	}{%
+		\thesisAuthorLastName, \thesisAuthorOtherNames% эта запись для свойств pdf-файла. В таком виде, если pdf будет обработан программами для сбора библиографических сведений, будет правильно представлена фамилия.
+	}
 }
 \newcommand{\thesisAuthorShort}        % Диссертация, ФИО автора инициалами
 {\thesisAuthorInitials~\thesisAuthorLastName}
 %\newcommand{\thesisUdk}                % Диссертация, УДК
 %{\fixme{xxx.xxx}}
 \newcommand{\thesisTitle}              % Диссертация, название
-{\fixme{Длинное название диссертационной работы, состоящее из~достаточно большого
-количества слов, совсем длинное длинное длинное длинное название, из~которого
-простому обывателю знакомы, в~лучшем случае, лишь отдельные слова}}
+{\fixme{Ортогональные методы оптимального робастного управления шагающими роботами с использованием матричных неравенств}}
 \newcommand{\thesisSpecialtyNumber}    % Диссертация, специальность, номер
-{\fixme{XX.XX.XX}}
+{\fixme{1.2.2}}
 \newcommand{\thesisSpecialtyTitle}     % Диссертация, специальность, название (название взято с сайта ВАК для примера)
-{\fixme{Технология обработки, хранения и~переработки злаковых, бобовых культур,
-крупяных продуктов, плодоовощной продукции и~виноградарства}}
-%% \newcommand{\thesisSpecialtyTwoNumber} % Диссертация, вторая специальность, номер
-%% {\fixme{XX.XX.XX}}
-%% \newcommand{\thesisSpecialtyTwoTitle}  % Диссертация, вторая специальность, название
-%% {\fixme{Теория и~методика физического воспитания, спортивной тренировки,
-%% оздоровительной и~адаптивной физической культуры}}
+{\fixme{Математическое моделирование, численные методы и комплексы программ}}
 \newcommand{\thesisDegree}             % Диссертация, ученая степень
 {\fixme{кандидата физико-математических наук}}
 \newcommand{\thesisDegreeShort}        % Диссертация, ученая степень, краткая запись
 {\fixme{канд. физ.-мат. наук}}
 \newcommand{\thesisCity}               % Диссертация, город написания диссертации
-{\fixme{Город}}
+{\fixme{Иннополис}}
 \newcommand{\thesisYear}               % Диссертация, год написания диссертации
 {\the\year}
 \newcommand{\thesisOrganization}       % Диссертация, организация
-{\fixme{Федеральное государственное автономное образовательное учреждение высшего
-образования <<Длинное название образовательного учреждения <<АББРЕВИАТУРА>>}}
+{\fixme{Автономная некоммерческая организация высшего образования <<Университет Иннополис>>}}
 \newcommand{\thesisOrganizationShort}  % Диссертация, краткое название организации для доклада
 {\fixme{НазУчДисРаб}}
 
 \newcommand{\thesisInOrganization}     % Диссертация, организация в предложном падеже: Работа выполнена в ...
-{\fixme{учреждении с~длинным длинным длинным длинным названием, в~котором
-выполнялась данная диссертационная работа}}
+{\fixme{Автономной некоммерческой организации высшего образования <<Университет Иннополис>>}}
 
 %% \newcommand{\supervisorDead}{}           % Рисовать рамку вокруг фамилии
 \newcommand{\supervisorFio}              % Научный руководитель, ФИО
-{\fixme{Фамилия Имя Отчество}}
+{\fixme{Савин Сергей Игоревич}}
 \newcommand{\supervisorRegalia}          % Научный руководитель, регалии
-{\fixme{уч. степень, уч. звание}}
+{\fixme{Кандидат технических наук, доцент}}
 \newcommand{\supervisorFioShort}         % Научный руководитель, ФИО
-{\fixme{И.\,О.~Фамилия}}
+{\fixme{С.\,И.~Савин}}
 \newcommand{\supervisorRegaliaShort}     % Научный руководитель, регалии
-{\fixme{уч.~ст.,~уч.~зв.}}
-
-%% \newcommand{\supervisorTwoDead}{}        % Рисовать рамку вокруг фамилии
-%% \newcommand{\supervisorTwoFio}           % Второй научный руководитель, ФИО
-%% {\fixme{Фамилия Имя Отчество}}
-%% \newcommand{\supervisorTwoRegalia}       % Второй научный руководитель, регалии
-%% {\fixme{уч. степень, уч. звание}}
-%% \newcommand{\supervisorTwoFioShort}      % Второй научный руководитель, ФИО
-%% {\fixme{И.\,О.~Фамилия}}
-%% \newcommand{\supervisorTwoRegaliaShort}  % Второй научный руководитель, регалии
-%% {\fixme{уч.~ст.,~уч.~зв.}}
+{\fixme{к.~т.~н., доцент}}
 
 \newcommand{\opponentOneFio}           % Оппонент 1, ФИО
 {\fixme{Фамилия Имя Отчество}}
@@ -94,11 +73,10 @@
 %% {\fixme{старший научный сотрудник}}
 
 \newcommand{\leadingOrganizationTitle} % Ведущая организация, дополнительные строки. Удалить, чтобы не отображать в автореферате
-{\fixme{Федеральное государственное бюджетное образовательное учреждение высшего
-профессионального образования с~длинным длинным длинным длинным названием}}
+{\fixme{Автономная некоммерческая организация высшего образования <<Университет Иннополис>>}}
 
 \newcommand{\defenseDate}              % Защита, дата
-{\fixme{DD mmmmmmmm YYYY~г.~в~XX часов}}
+{\fixme{DD mmmmmmmm 2025~г.~в~XX часов}}
 \newcommand{\defenseCouncilNumber}     % Защита, номер диссертационного совета
 {\fixme{Д\,123.456.78}}
 \newcommand{\defenseCouncilTitle}      % Защита, учреждение диссертационного совета
