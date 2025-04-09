@@ -631,4 +631,87 @@ $
 	и коэффициенты регулятора и наблюдателя находятся как ${L}={P}^{-1}_2\hat{{L}}$
 	и ${KS}=\hat{{K}}{Q}^{-1}_1$.  
 \end{theorem}
+\begin{proof}
+	Введём переменную ${\vartheta}=[
+	z\T \ e\T ]\T$ и напишем кандидата в функцию Ляпунова: 
+	%
+	\begin{equation}
+		V
+		=
+		\begin{bmatrix}
+			z \\ e
+		\end{bmatrix}\T
+		\begin{bmatrix}
+			{P}_1 & 0 \\
+			0 & {P}_2
+		\end{bmatrix}
+		\begin{bmatrix}
+			z  \\ e
+		\end{bmatrix}
+		=
+		\vartheta\T{P}\vartheta
+		>0.
+	\end{equation}
+	%
+	Производная по времени от функции-кандидата Ляпунова представляет собой квадратичную форму, которая должна быть отрицательно-определённой. Это можно записать в виде следующего матричного неравенства:
+	\begin{equation}
+		\label{eq:matrix_Young}
+		\begin{bmatrix}
+			{\Sigma}_1+{P}_1\Delta {A}_n+ (\Delta {A}_n)\T {P}_1 & ({S} \Delta {A}_n)\T{P}_2 -{P}_1{BK} \\
+			{P}_2{S}\Delta {A}_n - ({BK})\T{P}_1 & {\Sigma}_2
+		\end{bmatrix}<0,
+	\end{equation}
+	%
+	где
+	%
+	\begin{align}
+		{\Sigma}_1&= {P}_1({A}_n+{BKS})+({A}_n+{BKS}){P}_1\T, \\  
+		{\Sigma}_2&={P}_2({A}_e-{LCE})+({A}_e-{LCE})\T{P}_2.
+	\end{align}
+	%
+	Теперь, подставив \eqref{eq:part1_uncertainty} в \eqref{eq:matrix_Young} и сопрягая по $diag({Q}_1, {I})$, получим:
+	\begin{equation}
+		\label{eq:Young_conjugated}
+		\begin{bmatrix}
+			{\Pi}_1+{M}_1{F}_1{N}_1{Q}_1 + {Q}_1({M}_1{F}_1{N}_1)\T   & {Q}_1({S} {M}_1{F}_1{N}_1)\T{P}_2 -{BK} \\
+			{P}_2{M}_1{F}_1{N}_1{Q}_1 - ({BK})\T & {\Sigma}_2
+		\end{bmatrix} <0,
+	\end{equation}
+	%
+	где $ {\Pi}_1=({A}_n+{BKS}){Q}_1+{Q}_1({A}_n+{BKS})\T$ и ${Q}_1 ={P}_1^{-1}$.
+	Используя лемму \ref{lemma:Young} уравнения \eqref{eq:Young_relation_BMI} и \eqref{eq:Young_robust_2} с $\nu=1$ мы расширяем последнее выражение следующим образом (см. приложение \ref{apx:A}):
+	\begin{equation}
+		\label{eq:thm1_LMI_after_Young}
+		\begin{bmatrix}
+			{\Gamma}_1  & 0  \\
+			0 & {\Sigma}_2 +\frac{1}{\epsilon_1}{H}^{-1} +\epsilon_3 {P}_2{S}{M}_1({P}_2{S}{M}_1)\T
+		\end{bmatrix}<0,
+	\end{equation}
+	%
+	где
+	%
+	\begin{equation}
+		\label{eq:thm1_pre_final_LMI_Gamma}
+		{\Gamma}_1={\Pi}_1 +\epsilon_1{BKH}{K}\T{B}\T+ \left(\frac{1}{\epsilon_2}+\frac{1}{\epsilon_3} \right){Q}_1{N}_1\T{N}_1{Q}_1 + \epsilon_2 {M}_1{M}_1\T.
+	\end{equation}
+	%
+	Применяя дополнение Шура \ref{lemma:Schur}:
+	%
+	\begin{equation}
+		\label{eq:thm1_pre_final_LMI}
+		\begin{bmatrix}
+			{\Pi}_1 +\epsilon_2{M}_1{M}_1\T & 0 & {BKH} & 0 &  {Q}_1{N}_1\T & {Q}_1{N}_1\T & 0\\
+			* & {\Sigma}_2 & 0 & {I} & 0 & 0 & {P}_2{S}{M}_1\\
+			* & * &  -\frac{1}{\epsilon_1}{H} & 0 & 0 &0 & 0\\
+			* & * & * & -\epsilon_1{H} & 0 & 0 & 0 \\
+			* & * & * & * & -\epsilon_2 {I} & 0 & 0 \\       * & * & * & * & *& -\epsilon_3 {I} & 0 \\
+			* & * & * & * & *& * & -\frac{1}{\epsilon_3} {I}\\
+		\end{bmatrix} <0.
+	\end{equation}
+	%
+	Замена переменных $\hat{{L}}={P}_2{L}$ и $\hat{{K}}={KS}{Q}_1$
+	показывает нам эквивалентности ${\Psi}_1={\Pi}_1+\epsilon_2{M}_1{M}_1\T$ , ${\Psi}_2={\Sigma}_2$ и ${BKH}={\Xi}$; и подставляет их в \eqref{eq:thm1_pre_final_LMI}, находим окончательное линейное матричное неравенство \eqref{eq:thm1_main_LMI}, 
+	где ${\Psi}_1$ и ${\Psi}_2$ определяются как выражения \eqref{eq:Psi_1} и \eqref{eq:Psi_2}.
+	Это линейное матричное неравенство с переменными ${Q}_1,{P}_2, \hat{{K}},\hat{{L}}$ и $\epsilon_2$. Скаляры $\epsilon_1$ и $\epsilon_3$ постоянные параметры, которые должны быть выбраны перед решением проблемы.
+\end{proof}
 \clearpage
