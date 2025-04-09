@@ -1,3 +1,4 @@
+\chapter{Предлагаемый метод}\label{ch:ch3}
 \section{Математические инструменты}\label{sec:ch3/sect1}
 В данном разделе мы обобщим несколько результатов, которые будут использованы в последующих разделах работы.
 \begin{lemma}\label{lemma:Young}
@@ -48,9 +49,305 @@
 	\end{enumerate}
 \end{lemma}
 
-\section{Предлагаемый метод}\label{sec:ch3/sect2}
-\subsection{Аддитивная и мультипликативная неопределённость}\label{sec:ch3/sect2/sub1}
-Рассмотрим следующую динамическую систему:
+\section{Мультипликативная неопределённость}\label{sec:ch3/sect2}
+В этом разделе мы рассматриваем формулировку, в которой мультипликативные неопределённости накладываются на каждую из матриц модели. Мы показываем, что эта задача может быть решена как в случае строго ограниченной неопределённости, так и в случае мягко ограниченной неопределённости. Наша цель - предоставить новые методы для проектирования робастного управления, а также показать дополнительную устойчивость к неопределённости, которая может быть достигнута при отмене статического влияния состояния.
+
+Рассмотрим следующую систему: 
+%
+\begin{equation}
+	\label{eq:part2_linear_dynamics}
+	\begin{cases}
+		\dot z=({A}_n+\Delta {A}_n)z + ({B}+\Delta {B})u,\\
+		y = ({C}+ \Delta {C}){N}  z,
+	\end{cases}
+\end{equation}
+%
+где неопределённые матрицы состояния, управления и наблюдения определяются как:
+%
+\begin{equation}
+	\label{eq:part2_uncertainty}
+	\Delta {A}_n={M}_1{F}_1{N}_1, \ \ \Delta {B}= {M}_2{F}_2{N}_2, \ \
+	\Delta {C} = {M}_3{F}_3{N}_3; 
+\end{equation}
+%
+где ${M}_1 \in \mathbb{R}^{n_z \times d}$, 
+${N}_1 \in \mathbb{R}^{d \times n_z}$ , ${M}_2 \in \mathbb{R}^{n_z \times p}$,
+${N}_2 \in \mathbb{R}^{p \times m}$, ${M}_3 \in \mathbb{R}^{l \times q}$,
+${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы, а ${F}_i$ - неизвестные матрицы ограниченные по норме ${F}_i\T{F}_i\leq \nu_i {I}$, где $\nu_i$ - радиусы неопределённости - скаляры, определяющие ограничения, накладываемые на нормы ${F}_i$. Мы вводим наблюдателя Люенбергера с состоянием $\hat{z}$:
+%
+\begin{equation}
+	\hat{z}={A}_n\hat{z}+{B}u+{L}_z(y- {C} {N}\hat{z}).
+\end{equation}
+%
+Учитывая ошибку оценки $e_z=z-\hat{z}$, мы можем записать динамику ошибки наблюдателя:
+%
+\begin{equation}
+	\label{eq:part2_error_dynamics}
+	\dot{e}_z=({A}_n-{L}_z{C}{N}) e_z +(\Delta {A}_n -{L}_z\Delta {C}{N}) z +\Delta {B} u.
+\end{equation}
+%
+Рассмотрим следующий закон управления с линейной обратной связью:
+%
+\begin{equation}
+	u={K}_z\hat{z}.
+\end{equation}
+%
+При этом динамика замкнутого цикла принимает вид:
+%
+\begin{equation}
+	\label{eq:part2_system}
+	\begin{bmatrix}
+		\dot{z} \\ \dot{e}_z
+	\end{bmatrix}=\begin{bmatrix}
+		({A}_n+\Delta {A}_n +{B}{K}_z+\Delta {B}{K}_z) & -({B}{K}_z+\Delta {B}{K}_z) \\
+		(\Delta {A}_n +\Delta {B}{K}_z-{L}_z\Delta {C}{N}) & ({A}_n-{L}_z{C}{N}-\Delta {B}{K}_z)        \end{bmatrix}\begin{bmatrix}
+		z \\ e_z
+	\end{bmatrix}.
+\end{equation}
+%
+\subsection{Единичная неопределённость}\label{sec:ch3/sect2/sub1}
+В этом подразделе мы рассмотрим случай, когда радиус неопределённости равен $\nu_i = 1$, поэтому границы неопределённости определяются как:
+%
+\begin{equation}
+	\label{eq:part2_one_uncertainty}
+	{F}_i\T{F}_i\leq {I}, \ \ i=1,2,3;
+\end{equation}
+%
+\begin{theorem}\label{thm:part2_LMI_1}
+	Система \eqref{eq:part2_system} асимптотически устойчива при любом выборе $\Delta {A}_n$, $\Delta {B}$, $\Delta {C}$, удовлетворяющих условиям \eqref{eq:part2_uncertainty} и \eqref{eq:part2_one_uncertainty}, если существуют положительно-определённые матрицы ${Q}_1>0$, ${P}_2>0$, матрицы $\hat{{K}}$, $\hat{{L}}$,
+	и положительные скаляры $\alpha_1>0,\beta_1>0,\alpha_2>0,\beta_2>0,\alpha_3>0,\beta_3>0$ и $\epsilon_1 > 0$ такие, что выполняется следующее линейно-матричное неравенство:
+	%
+	\begin{equation}
+		\label{eq:thm3_final_LMI}
+		\begin{bmatrix}
+			\mathcal{T}_{11} & \mathcal{T}_{12} \\
+			* & \mathcal{T}_{22}
+		\end{bmatrix}<0,
+	\end{equation}
+	%
+	где
+	%
+	\begin{equation}
+		\mathcal{T}_{11}= \begin{bmatrix}
+			{\Lambda}_1 & 0 & {M}_1 & {M}_2&0 & {Q}_1{N}_1\T & \hat{{K}}_z\T{N}_2\T & {Q}_1 {N}\T{N}_3\T \\
+			* & {\Lambda}_2 & {P}_2{M}_1 & {P}_2{M}_2 & \hat{{L}}_z{M}_3& 0& 0&0\\
+			* & * & -2\alpha_1{I} & 0&0&0&0&0\\
+			* & * &*  & -2\alpha_2{I}&0&0&0&0\\
+			*& * & * &*  &-2\alpha_3{I}&0&0&0\\
+			* &* & * & * & *&-2\beta_1{I}&0&0\\
+			* & * & * &*& *&*&-2\beta_2{I}& 0\\
+			*&*&* &* & * & * & *&-2\beta_3{I}\\
+		\end{bmatrix},
+	\end{equation}
+	%
+	\begin{equation}
+		\mathcal{T}_{12}= \begin{bmatrix}
+			{B}\hat{{K}}_z & 0&0&0&0&0&0&0\\
+			0&{I}&0&0&0&0&0&0\\
+			0&0& \beta_1{I}&0&0&0&0&0\\
+			0&0&0& \beta_2{I}&0&0&0&0\\
+			0&0&0&0&\beta_3{I}&0&0&0\\
+			0&0&0&0&0& \alpha_1{I}&0&0\\
+			{N}_2\hat{{K}}_z&0&0&0&0&0& \alpha_2{I}&0\\
+			0&0&0&0&0&0&0&\alpha_3{I}\\
+		\end{bmatrix},
+	\end{equation}
+	%
+	\begin{equation}
+		\mathcal{T}_{22}=\textnormal{diag}\left(-\frac{1}{\epsilon_1}{Q}_1,-\epsilon_1{Q}_1,{I}\right),
+	\end{equation}%
+	%
+	\begin{align}
+		\label{eq:Lambda_1}
+		{\Lambda}_1&={Q}_1{A}_n\T+{A}_n{Q}_1+{B}\hat{{K}}_z+\hat{{K}}_z\T{B}\T, \\
+		\label{eq:Lambda_2}
+		{\Lambda}_2&={A}_n\T{P}_2+{P}_2{A}_n-\hat{{L}}_z{C}{N}-{N}\T{C}\T\hat{{L}}_z\T,
+	\end{align}
+	%
+	и коэффициенты регулятора и наблюдателя находятся следующим образом ${K}_z\ = \hat{{K}}_z{Q}_1^{-1}$ и ${L}_z = {P}_2^{-1} \hat{{L}}_z$.
+\end{theorem}
+\begin{proof}
+	Мы вводим новую переменную $\chi = [z\T \ e_z\T ]\T$ и напишем кандидата в функцию Ляпунова:
+	%
+	\begin{equation}
+		\label{eq:thm3_Lyapunov_candidat}
+		V = \begin{bmatrix}
+			z  \\ e_z
+		\end{bmatrix}\T
+		\begin{bmatrix}
+			{P}_1 & 0 \\
+			0 & {P}_2
+		\end{bmatrix}
+		\begin{bmatrix}
+			z \\
+			e_z
+		\end{bmatrix}
+		=
+		\chi\T {P} \chi >0.
+	\end{equation}
+	%
+	Производная от кандидата в функции Ляпунова может быть записана:
+	%
+	\begin{equation}
+		\label{eq:thm3_after_Lyapunov}
+		\begin{bmatrix}
+			z \\ e_z \\ \eta_1 \\ \eta_2 \\ \eta_3
+		\end{bmatrix}\T
+		\begin{bmatrix}
+			{\Theta}_1 & -{P}_1{B}{K}_z & {P}_1{M}_1 & {P}_1{M}_2 &0 \\
+			* &    {\Theta}_2 & {P}_2{M}_1 & {P}_2{M}_2 & {P}_2{L}_z{M}_3\\
+			* & * & 0 & 0&0\\
+			* & * & * & 0&0 \\
+			* & * & * & *&0
+		\end{bmatrix}
+		\begin{bmatrix}
+			z \\ e_z \\ \eta_1 \\ \eta_2 \\ \eta_3
+		\end{bmatrix}<0,
+	\end{equation}
+	%
+	где
+	%
+	\begin{align}
+		{\Theta}_1&={P}_1({A}_n+{B}{K}_z)+({A}_n+{B}{K}_z)\T{P}_1 ,\\
+		{\Theta}_2&={P}_2({A}_n-{L}_z{CN})+({A}_n-{L}_z{CN})\T{P}_2,
+	\end{align}
+	%
+	и
+	%
+	\begin{align}
+		\eta_1&={F}_1\begin{bmatrix}
+			{N}_1 &0
+		\end{bmatrix}\chi ,\\
+		\eta_2&={F}_2\begin{bmatrix}
+			{N}_2{K}_z & -{N}_2{K}_z
+		\end{bmatrix}\chi, \\
+		\label{eq:eta_3_thm3}
+		\eta_3&={F}_3\begin{bmatrix}
+			-{N}_3{N} & 0
+		\end{bmatrix}\chi.
+	\end{align}
+	%
+	Из ${F}_i\T{F}_i\leq {I}$ следует, что:
+	%
+	\begin{align}    
+		\eta_1\T\eta_1 &\leq \chi\T \begin{bmatrix}
+			{N}_1\T \\ 0  
+		\end{bmatrix}\begin{bmatrix}
+			{N}_1 \ \ 0  
+		\end{bmatrix} \chi,
+		\\
+		\eta_2\T\eta_2 &\leq \chi\T \begin{bmatrix}
+			{K}_z\T{N}_2 \\ -{K}_z\T{N}_2\T  
+		\end{bmatrix}\begin{bmatrix}
+			{N}_2{K}_z & -{N}_2{K}_z
+		\end{bmatrix} \chi,
+		\\
+		\eta_3\T\eta_3 &\leq \chi\T \begin{bmatrix}
+			-{N}\T{N}_3\T \\ 0  
+		\end{bmatrix}\begin{bmatrix}
+			-{N}{N}_3 \ \ 0  
+		\end{bmatrix} \chi.
+	\end{align}
+	
+	Используя S-процедуру {\ref{lemma:S_procedure}}, мы получаем условие на положительность кандидата Ляпунова:
+	%
+	\begin{multline}
+		\begin{bmatrix}
+			{\Theta}_1 & -{P}_1{B}{K}_z & {P}_1{M}_1 & {P}_1{M}_2 &0 \\
+			* &    {\Theta}_2 & {P}_2{M}_1 & {P}_2{M}_2 & {P}_2{L}_z{M}_3\\
+			* & * & 0 & 0&0\\
+			* & * & * & 0&0 \\
+			* & * & * & *&0
+		\end{bmatrix} + \\
+		\begin{bmatrix}
+			\mathcal{X}_{\gamma}& -\gamma_2{K}_z\T{N}_2\T{N}_2{K}_z &0 &0 & 0\\
+			*&\gamma_2{K}_z\T{N}_2\T{N}_2{K}_z&0&0&0\\
+			*&*&-\gamma_1{I}&0&0\\
+			*&*&*&-\gamma_2{I}&0\\
+			*&*&*&*&-\gamma_3{I}\\
+		\end{bmatrix} 
+		<0,
+	\end{multline}
+	где $\gamma_1 > 0,\gamma_2 > 0$ и $\gamma_3 > 0$, также
+	%
+	\begin{equation}
+		\mathcal{X}_{\gamma}=    \gamma_1{N}_1\T{N}_1 +\gamma_2{K}_z\T{N}_2\T{N}_2{K}_z+\gamma_3{N}\T{N}_3\T{N}_3{N},
+	\end{equation}
+	Используя дополнение Шура {\ref{lemma:Schur}} и сопрягая блочно-диагональную матрицу $\textbf{diag}({Q}_1, {I})$, где ${Q}_1 = {P}_1^{-1}$, находим:
+	%
+	\begin{equation}
+		\label{eq:thm3_before_Young}
+		\begin{bmatrix}
+			{\Omega}_1 & -{B}{K}_z & {M}_1 & {M}_2 & 0& {Q}_1{N}_1\T & {Q}_1{K}_z\T{N}_2\T & {Q}_1 {N}\T{N}_3\T 
+			\\
+			* & {\Theta}_2 & {P}_2{M}_1 & {P}_2{M}_2 & {P}_2{L}_z{M}_3 & 0 & -{K}_z\T{N}_2\T & 0\\
+			* & * & -\gamma_1{I} & 0&0&0&0&0\\
+			* & * & * & -\gamma_2{I}&0&0&0&0\\
+			* & * & * & *&-\gamma_3{I}&0&0&0\\
+			* & * & * & *&*&-\frac{1}{\gamma_1}{I}&0&0\\
+			* & * & * & *&*&*&-\frac{1}{\gamma_2}{I}&0\\
+			*&* & * & * & *&*&*&-\frac{1}{\gamma_3}{I}
+		\end{bmatrix}<0,
+	\end{equation}
+	%
+	где
+	%
+	\begin{equation}
+		{\Omega}_1={A}_n{Q}_1+{B}{K}_z{Q}_1+{Q}_1{A}_n\T+{Q}_1{K}_z\T{B}\T.
+	\end{equation}
+	%
+	Используя неравенство Юнга \ref{lemma:Young}, применяя дополнение Шура {\ref{lemma:Schur}} и вводя замену переменных $\hat{{K}}_z={K}_z{Q}_1$, $\hat{{L}}_z={P}_2{L}_z$, получаем:
+	%
+	\begin{equation}
+		\label{eq:thm3_LMI_before_alpha_beta}
+		\begin{bmatrix}
+			{\Lambda}_1 & 0 & {M}_1 & {M}_2&0 & {Q}_1{N}_1\T & {\Lambda}_3& {\Lambda}_4 & {B}\hat{{K}}_z & 0\\
+			* & {\Lambda}_2 & {P}_2{M}_1 & {P}_2{M}_2 & \hat{{L}}_z{M}_3& 0& 0&0&0&{I} \\
+			* & * & -\gamma_1{I} & 0&0&0&0&0&0&0\\
+			* & * &*  & -\gamma_2{I}&0&0&0&0&0&0\\
+			*& * & * &*  & -\gamma_3{I}&0&0&0&0&0\\
+			* &* & * & * & *&-\frac{1}{\gamma_1}{I}&0&0&0&0\\
+			* & * & * &*& *&*&-\frac{1}{\gamma_2}{I}& 0&{N}_2\hat{{K}}_z&0\\
+			*&*&* &* & * & * & *&-\frac{1}{\gamma_3}{I}&0&0\\
+			* & * & *&*&* & *&*&*&-\frac{1}{\epsilon_1}{Q}_1&0\\
+			* & * & * & *&*&*&*&*&*&-\epsilon_1{Q}_1\\
+		\end{bmatrix}<0.
+	\end{equation}
+	%
+	Последний шаг заключается в замене скаляров $\gamma_i$ на пары переменных $\alpha_i$, $\beta_i$, как указано в замечании \ref{rmk:alpha_beta}. После этого условие устойчивости приобретает вид, определённый в теореме \ref{thm:part2_LMI_1}.
+\end{proof}
+Это линейное матричное неравенство с переменными ${Q}_1,{P}_2,\hat{{K}}_z$ $\hat{{L}}_z$ , $\alpha_i$, $\beta_i$. Определяя целевую функцию как сумму следов переменных, мы формулируем полуопределённую программу с параметром $\epsilon_1$:
+%
+\begin{equation}
+	\label{eq:thm3_OCP}
+	\begin{aligned}
+		& \underset{\alpha_i, \beta_i, {Q}_1, {P}_2, \hat{{K}}_z, \hat{{L}}_z}{\text{minimize}}
+		& & \operatorname{tr}({Q}_1\T{W}_z{Q}_1)+ \operatorname{tr}({P}_2\T{W}_e{P}_2)+ \operatorname{tr}(\hat{{K}}\T{W}_k\hat{{K}})+\operatorname{tr}(\hat{{L}}\T{W}_l\hat{{L}}), \\
+		& \text{subject to}
+		& & \begin{cases}
+			{Q}_1 > 0, \ \
+			{P}_2 > 0, \ \
+			\alpha_i >0, \ \
+			\beta_i>0 \ \
+			\text{for} \ \ i=1,2,3;\\
+			\text{condition \eqref{eq:thm3_final_LMI}}.
+		\end{cases}
+	\end{aligned}
+\end{equation}
+%
+Фиксируя значение параметра, мы находим оптимальный регулятор и наблюдаем усиление, гарантирующее устойчивость системы. Эта оптимизационная задача может быть эффективно решена с помощью решателя полуопределённых программ. Мы можем выполнить сеточный поиск для $\epsilon_1$.
+
+\subsection{Мягкая неопределённость}\label{sec:ch3/sect2/sub2}
+ В этом подразделе мы рассмотрим случай, когда неопределённости ограничены следующим образом:
+ %
+ \begin{equation}
+ 	\label{eq:part2_nu_uncertainty}
+ 	{F}_i\T{F}_i\leq \nu_i {I}, \ \ i=1,2,3;
+ \end{equation}
+ %
+ 
+\section{Аддитивная неопределённость}\label{sec:ch3/sect3}
+Рассмотрим следующую систему:
 %
 \begin{equation}
 	\label{eq:part1_linear_dynamics}
@@ -60,7 +357,7 @@
 	\end{cases}
 \end{equation}
 %
-где $z$ это динамические состояния, $\zeta = \text{const}$ - статические состояния и $\Delta {A}_n$ представляет мультипликативную модель неопределенностей и имеет следующую структуру:
+где $z$ это динамические состояния, $\zeta = \text{const}$ - статические состояния и $\Delta {A}_n$ представляет мультипликативную модель неопределённостей и имеет следующую структуру:
 %
 \begin{equation}
 	\label{eq:part1_uncertainty}
@@ -148,4 +445,8 @@ $
 \end{equation}
 %
 Рассмотрим проблему нахождения таких коэффициентов регулятора и наблюдателя, которые будут давать устойчивую систему для всех допустимых значений $\Delta {A}_n$.
+
+\subsection{Единичная неопределённость}\label{sec:ch3/sect3/sub1}
+
+
 \clearpage
