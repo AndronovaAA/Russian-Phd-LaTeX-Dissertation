@@ -316,6 +316,22 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы, а ${F}
 	%
 	Последний шаг заключается в замене скаляров $\gamma_i$ на пары переменных $\alpha_i$, $\beta_i$, как указано в замечании \ref{rmk:alpha_beta}. После этого условие устойчивости приобретает вид, определённый в теореме \ref{thm:part2_LMI_1}.
 \end{proof}
+\begin{remark}
+	\label{rmk:alpha_beta}
+	Можно заменить параметр $\epsilon_3$ новыми переменными $\alpha$ и $\beta$, которые сохраняют линейность ограничения линейного матричного неравенства. Для этого мы предлагаем соотношение $\epsilon_3=\frac{\alpha^2}{\beta^2}$ и требуем положительности новых переменных $\alpha>0$, $\beta>0$. Это приводит к следующим тождествам \cite{KHELOUFI2016}:
+	%
+	\begin{equation}
+		\label{eq:apha_beta_rm_eq1}
+		\left(\beta-\frac{\alpha}{\beta}\right)^2 {I} \geq 0 \ \ , \ \  \left(\alpha-\frac{\beta}{\alpha}\right)^2 {I} \geq 0,
+	\end{equation}
+	%
+	\begin{equation}
+		\label{eq:apha_beta_rm_eq2}
+		-\epsilon_3 {I} = -\frac{\alpha^2}{\beta^2}{I} \leq \beta^2{I}-2\alpha {I} \ \ , \ \  -\frac{1}{\epsilon_3} {I} = -\frac{\beta^2}{\alpha^2}{I} \leq \alpha^2{I}-2\beta {I} .
+	\end{equation}
+	%
+\end{remark}
+	%
 Это линейное матричное неравенство с переменными ${Q}_1,{P}_2,\hat{{K}}_z$ $\hat{{L}}_z$ , $\alpha_i$, $\beta_i$. Определяя целевую функцию как сумму следов переменных, мы формулируем полуопределённую программу с параметром $\epsilon_1$:
 %
 \begin{equation}
@@ -490,7 +506,10 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы, а ${F}
  \end{equation}
  %
  Данная задача оптимизации имеет параметр $\epsilon_1$ который мы можем найти решетчатым поиском как в \ref{rm:griding_search}.
-
+\begin{remark}
+	Эту задачу можно рассматривать как обобщение и ослабление исходной задачи, рассмотренной в предыдущем подразделе. Вместо того чтобы искать управление, устойчивое к заданной неопределённости, мы пытаемся найти управление, устойчивое к наибольшей возможной неопределённости.
+\end{remark}
+%
 \section{Аддитивная неопределённость}\label{sec:ch3/sect3}
 Рассмотрим следующую систему:
 %
@@ -713,5 +732,136 @@ $
 	показывает нам эквивалентности ${\Psi}_1={\Pi}_1+\epsilon_2{M}_1{M}_1\T$ , ${\Psi}_2={\Sigma}_2$ и ${BKH}={\Xi}$; и подставляет их в \eqref{eq:thm1_pre_final_LMI}, находим окончательное линейное матричное неравенство \eqref{eq:thm1_main_LMI}, 
 	где ${\Psi}_1$ и ${\Psi}_2$ определяются как выражения \eqref{eq:Psi_1} и \eqref{eq:Psi_2}.
 	Это линейное матричное неравенство с переменными ${Q}_1,{P}_2, \hat{{K}},\hat{{L}}$ и $\epsilon_2$. Скаляры $\epsilon_1$ и $\epsilon_3$ постоянные параметры, которые должны быть выбраны перед решением проблемы.
+Подставляя \ref{rmk:alpha_beta} в \eqref{eq:thm1_main_LMI} и применяя дополнение Шура, мы получаем линейно матричное неравенство в переменных 
+${Q}_1$, ${P}_2$, $\hat{{K}}$, $\hat{{L}}$, $\epsilon_2$, $\alpha$, и $\beta$.
+%
+\begin{equation}
+	\label{eq:thm1_final_LMI_ab}
+	\begin{bmatrix}    
+		{\Psi}_1  & 0 & {\Xi} & 0 &  {P}_1{N}_1\T & {Q}_1{N}_1\T & 0 & 0 & 0\\
+		* & {\Psi}_2 & 0 & {I} & 0 & 0 & {P}_2{S}{M}_1 & 0 & 0\\
+		* & * &  -\frac{1}{\epsilon_1}{H} & 0 & 0 &0 & 0& 0 & 0\\
+		* & * & * & -\epsilon_1{H} & 0 & 0 & 0 & 0 & 0 \\
+		* & * & * & * & -\epsilon_2 {I} & 0 & 0 & 0 & 0 \\       * & * & * & * & *&  -2\alpha {I} & 0 & \beta {I} &0 \\
+		* & * & * & * & *& * & -2\beta {I} & 0 & \alpha {I} \\
+		* & * & * & * & *&*&* &-{I}&0\\
+		* & * & * & * & *&*&*&* &-{I}
+	\end{bmatrix} <0.
+\end{equation}
 \end{proof}
+
+Используя теорему \ref{thm:part1_LMI_1} и добавляя выпуклую целевую функцию, мы формулируем робастную конструкцию управления в виде полуопределённой программы:
+%
+\begin{equation}
+	\label{eq:thm1_OCP}
+	\begin{aligned}
+		& \underset{\epsilon_2,\alpha,\beta, {Q}_1, {P}_2,\hat{{K}} , \hat{{L}} }{\text{minimize}}
+		& & \operatorname{tr}({Q}_1\T{W}_z{Q}_1)+ \operatorname{tr}({P}_2\T{W}_e{P}_2)+ \operatorname{tr}(\hat{{K}}\T{W}_k\hat{{K}})+\operatorname{tr}(\hat{{L}}\T{W}_l\hat{{L}}), \\
+		& \text{subject to}
+		& & \begin{cases}
+			{Q}_1>0, \ \
+			{P}_2>0, \ \
+			\epsilon_2>0, \ \
+			\alpha>0, \ \
+			\beta>0, \\
+			\text{условие \eqref{eq:thm1_final_LMI_ab} },
+		\end{cases}
+	\end{aligned}
+\end{equation}
+где ${W}_z,{W}_e,{W}_k$ и ${W}_l$ - весовые матрицы. 
+\subsection{Мягкая неопределённость}\label{sec:ch3/sect3/sub2}
+Пусть матрица неопределённости $\Delta {A}_n$ определяется как:
+%
+\begin{equation}
+	\label{eq:nu_uncertainty}
+	\Delta {A}_n={M}_1{F}_1{N}_1 \quad \text{и} \quad {F}_1\T{F}_1\leq \nu {I}.
+\end{equation}
+%
+Мы можем предложить условия на усиление регулятора и наблюдателя, которые гарантируют устойчивость при любом допустимом значении ${F}_1$ для заданного радиуса неопределённости $\nu$:
+%
+\begin{theorem}\label{thm:part1_LMI_2}
+	Система \eqref{eq:part1_system}
+	асимптотически устойчива для любой $\Delta {A}_n =$${M}_1{F}_1{N}_1$ с ${F}_1\T{F}_1\leq \nu {I}$, если существуют положительно-определённые матрицы ${Q}_1>0$, ${P}_2>0$, матрицы $\hat{{K}}, \hat{{L}}$ и скаляр $\bar{\epsilon}>0$ такие, что следующее линейное матричное неравенство выполнимо: 
+	%
+	\begin{equation}
+		\label{eq:thm2_final_LMI}
+		\begin{bmatrix}    
+			{\Upsilon}_1  & 0 & {\Xi} & 0 &  {Q}_1{N}_1\T & {M}_1 & 0\\
+			* & {\Psi}_2 & 0 & {I} & 0 & 0 & {P}_2{S}{M}_1\\
+			* & * &  -\frac{1}{\epsilon_1}{H} & 0 & 0 &0 & 0\\
+			* & * & * & -\epsilon_1{H} & 0 & 0 & 0 \\
+			* & * & * & * & -\frac{\bar{\epsilon}}{2}{I} & 0 & 0 \\       * & * & * & * & *&  -\bar{\epsilon}{I} & 0 \\
+			* & * & * & * & *& * &  -\bar{\epsilon}{I}
+		\end{bmatrix} <0,
+	\end{equation}
+	%
+	где
+	%
+	\begin{equation}
+		\label{eq:Upsilon_1}
+		{\Upsilon}_1={Q}_1{A}_n\T+{A}_n{Q}_1+{B}\hat{{K}}+\hat{{K}}\T{B}\T, 
+	\end{equation}
+	Матрицы ${\Psi}_2$, ${\Xi}$ те же, что и в уравнениях \eqref{eq:Psi_2},\eqref{eq:H_Xi_variables},
+	а коэффициенты регулятора и наблюдателя задаются ${L}={P}^{-1}_2\hat{{L}}$.
+	и ${KS}=\hat{{K}}{Q}^{-1}_1$.
+\end{theorem}
+\begin{proof}
+	Первая часть доказательства совпадает с доказательством теоремы \ref{thm:part1_LMI_1} (до уравнения \eqref{eq:Young_conjugated}). Используя уравнения \eqref{eq:Young_relation_BMI} и \eqref{eq:updated_Young_robust_2} из леммы \ref{lemma:Young}, получаем
+	%
+	\begin{equation}
+		\label{eq:thm2_LMI_after_Young}
+		\begin{bmatrix}
+			{\Phi}  & 0  \\
+			0 & {\Sigma}_2 +\frac{1}{\epsilon_1}{H}^{-1} +\epsilon {P}_2{S}{M}_1({P}_2{S}{M}_1)\T
+		\end{bmatrix}<0,
+	\end{equation}
+	%
+	где $\epsilon=\sqrt{\nu}>0$ и
+	%
+	\begin{equation}
+		{\Phi}={\Sigma}_1 
+		+\epsilon_1{BKH}{K}\T{B}\T+ 2\epsilon {Q}_1{N}_1\T{N}_1{Q}_1 + \epsilon {M}_1{M}_1\T.
+	\end{equation}
+	%
+	Используя дополнение Шура, преобразуем это условие в: 
+	%
+	\begin{equation}
+		\label{eq:thm2_pre_final_LMI}
+		\begin{bmatrix}
+			{\Sigma}_1  & 0 & {BKH} & 0 &  {Q}_1{N}_1\T & {M}_1 & 0\\
+			* & {\Sigma}_2 & 0 & {I} & 0 & 0 & {P}_2{S}{M}_1\\
+			* & * &  -\frac{1}{\epsilon_1}{H} & 0 & 0 &0 & 0\\
+			* & * & * & -\epsilon_1{H} & 0 & 0 & 0 \\
+			* & * & * & * & -\frac{\bar{\epsilon}}{2}{I} & 0 & 0 \\       * & * & * & * & *& -\bar{\epsilon} {I} & 0 \\
+			* & * & * & * & *& * & -\bar{\epsilon} {I}\\
+		\end{bmatrix} <0,
+	\end{equation}
+	%
+	где $\bar{\epsilon}=\frac{1}{\epsilon}$, и, наконец, используя замену переменных 
+	$\hat{{L}}={P}_2{L}$ и $\hat{{K}}={KS}{Q}_1$
+	находим, что ${\Upsilon}_1={\Sigma}_1$, ${\Psi}_2={\Sigma}_2$ и ${BKH}={\Xi}$ и, подставляя в \eqref{eq:thm2_pre_final_LMI}, находим окончательное линейное матричное неравенство \eqref{eq:thm2_final_LMI}. 
+\end{proof}
+Это неравенство в переменных ${Q}_1,{P}_2,\hat{{K}} , \hat{{L}},\bar{\epsilon}$.
+Мы можем выполнить поиск $\epsilon_1$, как описано в примечании \ref{rm:griding_search}. 
+
+В качестве функции стоимости мы можем использовать минимизацию $\bar{\epsilon}$, что эквивалентно максимизации $\nu$, так как $\nu=\frac{1}{\bar{\epsilon}^2}$. Тогда задача оптимизации приобретает вид:
+%
+\begin{equation}
+	\label{eq:thm2_OCP}
+	\begin{aligned}
+		& \underset{\bar{\epsilon},{Q}_1, {P}_2,\hat{{K}} , \hat{{L}} }{\text{minimize}}
+		& &  \bar{\epsilon}, \\
+		& \text{subject to}
+		& & \begin{cases}
+			{Q}_1>0, \ \
+			{P}_2>0, \ \
+			\bar{\epsilon}>0, \\
+			\text{condition \eqref{eq:thm2_final_LMI} }.
+		\end{cases}
+	\end{aligned}
+\end{equation}
+\begin{remark}
+	\label{rm:nu_trick}
+	Добавление условия $\bar{\epsilon}\geq 1$ к \eqref{eq:thm2_OCP} эквивалентно ограничению $\nu \leq 1$. Это полезно, если мы заинтересованы в решении задачи ${F}_1\T{F}_1 \leq {I}$, но эта задача невыполнима, и мы хотели бы знать наибольший радиус $\nu$, для которого задача может быть решена. Таким образом, двоичный вопрос «да или нет» о выполнимости исходной задачи сводится к непрерывному вопросу «насколько велика неопределённость, которую мы можем допустить».
+\end{remark}
 \clearpage
