@@ -864,4 +864,174 @@ ${Q}_1$, ${P}_2$, $\hat{{K}}$, $\hat{{L}}$, $\epsilon_2$, $\alpha$, и $\beta$.
 	\label{rm:nu_trick}
 	Добавление условия $\bar{\epsilon}\geq 1$ к \eqref{eq:thm2_OCP} эквивалентно ограничению $\nu \leq 1$. Это полезно, если мы заинтересованы в решении задачи ${F}_1\T{F}_1 \leq {I}$, но эта задача невыполнима, и мы хотели бы знать наибольший радиус $\nu$, для которого задача может быть решена. Таким образом, двоичный вопрос «да или нет» о выполнимости исходной задачи сводится к непрерывному вопросу «насколько велика неопределённость, которую мы можем допустить».
 \end{remark}
+\section{Мультипликативная неопределённость и регулятор с выходом}\label{sec:ch3/sect4}
+Рассмотрим следующую систему:
+\begin{align}
+	\dot{{z}} = {A}_N {z} + {A}_R {\zeta} + {B} {u}\\
+	{y} = {C} {N} {z} + {C} {R} {\zeta}
+\end{align}
+
+Введем регулятор по обратной связи
+\begin{align}
+	\dot{{z}}_K = {A}_K {z}_K + {B}_K {y}\\
+	{u} = {C}_K {z}_K + {D}_K {y}
+\end{align}
+Мы можем переписать предыдущую систему уравнений как:
+\begin{align}
+	&\begin{bmatrix}
+		{\dot{z}} \\ {\dot{z}}_K
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+	{A}_N & 0 \\
+		0 & {A}_K
+	\end{bmatrix}
+	\begin{bmatrix}
+		{z} \\ {z}_K 
+	\end{bmatrix}
+	+
+	\begin{bmatrix}
+		{B} & 0 \\
+		0 & {B}_K 
+	\end{bmatrix}
+	\begin{bmatrix}
+		{u} \\ {y}
+	\end{bmatrix}
+	+
+	\begin{bmatrix}
+		{A}_R \\ 0 
+	\end{bmatrix}
+	\zeta
+	\\
+	& \begin{bmatrix}
+		{I} & -{D}_K \\
+		0 & {I}
+	\end{bmatrix}
+	\begin{bmatrix}
+		{u} \\ {y}
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 & {C}_K \\
+		{C} {N} & 0
+	\end{bmatrix}
+	\begin{bmatrix}
+		{z} \\ {z}_K
+	\end{bmatrix}
+	+
+	\begin{bmatrix}
+		0 \\ {C} {R}
+	\end{bmatrix}{\zeta}
+\end{align}
+
+где матрица $\bigl[ \begin{smallmatrix}  {I} & -{D}_K \\ 0 & {I} \end{smallmatrix} \bigr]$ должна быть невырожденной, какой она и является (добавить почему).
+\begin{equation}
+	\begin{bmatrix}
+		{I} & -{D}_K \\ 0 & {I}
+	\end{bmatrix}^{-1} = 
+	\begin{bmatrix}
+		{I} + {I}(-{D}_K)({I}-0*{I}(-{D}_K))*0*{I} & -{I}(-{D}_K)({I}-0*{I}(-{D}_K))^{-1}\\
+		-({I} - 0*{I}({D}_K))^{-1}*0*{I} &
+		{I}-(0*{I}(-{D}_K))^{-1}
+	\end{bmatrix}= 
+	\begin{bmatrix}
+		{I} & {D}_K \\ 0 & {I}
+	\end{bmatrix}
+\end{equation}
+Подставим (6) в (5):
+\begin{align}
+	&\begin{bmatrix}
+		{\dot{z}} \\ {\dot{z}}_K 
+	\end{bmatrix}
+	=\left(
+	\begin{bmatrix}
+		{A}_N & 0 \\
+		0 & {A}_K
+	\end{bmatrix}
+	+
+	\begin{bmatrix}
+		{B} & 0 \\
+		0 & {B}_K
+	\end{bmatrix}
+	\begin{bmatrix}
+		{I} & {D}_K \\
+		0 & {I}
+	\end{bmatrix}
+	\begin{bmatrix}
+		0 & {C}_K \\
+		{C}{N} & 0
+	\end{bmatrix}
+	\right)
+	\begin{bmatrix}
+		{z} \\ {z}_K
+	\end{bmatrix}
+	+ \left(
+	\begin{bmatrix}
+		{B} & 0 \\
+		0 & {B}_K
+	\end{bmatrix}
+	\begin{bmatrix}
+		{I} & {D}_K \\
+		0 & {I}
+	\end{bmatrix}
+	\begin{bmatrix}
+		0 \\ {C}{R}
+	\end{bmatrix}
+	+
+	\begin{bmatrix}
+		{A}_R \\ 0 
+	\end{bmatrix}\right)
+	{\zeta}
+\end{align}
+\begin{align}
+	&\begin{bmatrix}
+		{\dot{z}} \\ {\dot{z}}_K 
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		{A}_N + {B}{D}_K{C}{N} & {B}{C}_K \\
+		{B}_K{C}{N} &{A}_K
+	\end{bmatrix}
+	\begin{bmatrix}
+		{z} \\ {z}_K 
+	\end{bmatrix}
+	+
+	\begin{bmatrix}
+		{A}_R + {B}{D}_K{C}{R}\\ {B}_K{C}_R
+	\end{bmatrix}
+	{\zeta}
+\end{align}
+Обозначим:
+\begin{align}
+	{A}_{cl} = \begin{bmatrix}
+		{A}_N + {B}{D}_K{C}{N} & {B}{C}_K \\
+		{B}_K{C}{N} & {A}_K
+	\end{bmatrix}
+	\\
+	{z}_{cl} = \begin{bmatrix}
+		{\dot{z}} \\ {\dot{z}}_K 
+	\end{bmatrix}
+	\\
+	{F}_{cl} = \begin{bmatrix}
+		{A}_R + {B}{D}_K{C}{R}\\ {B}_K{C}_R
+	\end{bmatrix}
+\end{align}
+Мы можем переписать (8), как:
+\begin{align}
+	&{\dot{z}}_{cl} = {A}_{cl} {z}_{cl}+ {F}_{cl}\zeta
+\end{align}
+\begin{theorem}
+	Система стабильна
+\end{theorem}
+\begin{proof}
+Введем кандидата в функцию Ляпунова ${V} = {z}_{cl}\T {P}{z}_{cl} \geq 0$ и её производную от времени:
+\begin{align}
+	{\dot{V}} = {z}_{cl}\T {P} {A}_{cl} {z}_{cl} +
+	{z}_{cl}\T {A}_{cl}\T {z}_{cl} 
+	+
+	{z}_{cl}\T {P} {F}_{cl} {\zeta} +
+	{\zeta}\T {F}_{cl}\T {z}_{cl}
+	\leq 0
+\end{align}
+\end{proof}
 \clearpage
