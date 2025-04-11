@@ -1024,7 +1024,7 @@ ${Q}_1$, ${P}_2$, $\hat{{K}}$, $\hat{{L}}$, $\epsilon_2$, $\alpha$, и $\beta$.
 	Система стабильна
 \end{theorem}
 \begin{proof}
-Введем кандидата в функцию Ляпунова ${V} = {z}_{cl}\T {P}{z}_{cl} \geq 0$ и её производную от времени:
+Введём кандидата в функцию Ляпунова ${V} = {z}_{cl}\T {P}{z}_{cl} \geq 0$ и её производную от времени:
 \begin{align}
 	{\dot{V}} = {z}_{cl}\T {P} {A}_{cl} {z}_{cl} +
 	{z}_{cl}\T {A}_{cl}\T {z}_{cl} 
@@ -1033,5 +1033,220 @@ ${Q}_1$, ${P}_2$, $\hat{{K}}$, $\hat{{L}}$, $\epsilon_2$, $\alpha$, и $\beta$.
 	{\zeta}\T {F}_{cl}\T {z}_{cl}
 	\leq 0
 \end{align}
+где система считается квадратичной устойчивой в конечное время тогда и только тогда, когда существует положительно-определённая матрица ${P} = \bigl[ \begin{smallmatrix}  {P}_1 & {P}_2 \\ {P}_2\T & {P}_3 \end{smallmatrix} \bigr]$ которые удовлетворяют следующим линейному матричному неравенству
+\begin{align}
+	{z}_{cl}\T {P} {A}_{cl} {z}_{cl} +
+	{z}_{cl}\T {A}_{cl}\T {z}_{cl} 
+	+
+	{z}_{cl}\T {P} {F}_{cl} {\zeta} +
+	{\zeta}\T {F}_{cl}\T {z}_{cl}
+	\leq 0
+\end{align}
+Перепишем как
+\begin{align}
+	\begin{bmatrix}
+		{P} {A}_{cl} + {A}_{cl}\T {P} & {P} {F}_{cl} \\
+		{F}_{cl} \T {P} & 0
+	\end{bmatrix} \leq 0.
+\end{align}
+Введём релаксацию, добавляя параметр $\alpha$, который и будет условием релаксации:
+\begin{align}\label{eq: S procedure}
+	\begin{bmatrix}
+		{P} {A}_{cl} + {A}_{cl}\T {P} & {P} {F}_{cl} \\
+		{F}_{cl} \T {P} & 0
+	\end{bmatrix} < 
+	\begin{bmatrix}
+		0 & 0\\
+		0 & \alpha {I}
+	\end{bmatrix}.
+\end{align}
+Далее нам необходимо избавиться от нелинейности в переменных и для этого вводим следующую лемму:
+\begin{lemma}
+	Даны симметричные и невырожденные матрицы ${Q}_{1} \in \mathbb{R}^{n\times n}$ и ${P}_{1} \in \mathbb{R}^{n\times n}$. Следующие утверждения эквивалентны.\\
+	
+	i). Существуют симметричные и невырожденные матрицы  ${P}_{3}$ и ${Q}_{3} \in \mathbb{R}^{m\times m}$ и матрицы с полным рангом ${P}_{2}$ и ${Q}_{2} \in \mathbb{R}^{n\times m}$ такие, что
+	
+	\begin{align*}
+		{P}=
+		\begin{bmatrix} 
+			{P}_{1} & {P}_{2}\\ 
+			{P}_{2}\T & {P}_{3} 
+		\end{bmatrix} =
+		\begin{bmatrix} 
+			{Q}_{1} & {Q}_{2} \\ 
+			{Q}_{2}\T & {Q}_{3}
+		\end{bmatrix}^{-1}={Q}^{-1}>0,
+	\end{align*} 
+	где ${Q}_{CL}=
+	\begin{bmatrix} 
+		{Q}_{1} & {I} \\ {Q}_{2}\T & 0
+	\end{bmatrix}$ является матрицей полного ранга.\\
+	
+	ii). \begin{align*}
+		\begin{bmatrix} 
+			{Q}_{1} & I \\ 
+			I & {P}_{1}
+		\end{bmatrix} > 0.
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Из i)., берём 
+	\begin{align}
+		&{P} = {Q}^{-1}\\
+		&{P}{Q}={I}\\
+		&\begin{bmatrix} 
+			{P}_{1} & {P}_{2}\\ 
+			{P}_{2}\T & {P}_{3} 
+		\end{bmatrix}
+		\begin{bmatrix} 
+			{Q}_{1} & {Q}_{2} \\ 
+			{Q}_{2}\T & {Q}_{3}
+		\end{bmatrix} = 
+		\begin{bmatrix}
+			{I} & 0 \\
+			0 & {I}
+		\end{bmatrix}
+	\end{align}
+	После последнего перемножения, мы получаем:
+	\begin{align}
+		&{P}_{1}{Q}_{1}+{P}_{2}{Q}_{2}\T ={I}\\
+		&{P}_{1}\T{Q}_{2}+{P}_{2}{Q}_{3} =0\label{eq: lemma mult1}\\
+		&{P}_{2}\T{Q}_{1}+{P}_{3}{Q}_{2}\T=0\\
+		&{P}_{2}\T{Q}_{2}+{P}_{3}{Q}_{3}= {I} \label{eq: lemma mult2}
+	\end{align}
+	Из данных уравнений мы получаем:
+	\begin{align}
+		{P}{Q}_{CL}={P}_{CL},
+	\end{align}
+	где
+	\begin{align}
+		{Q}_{CL}=
+		\begin{bmatrix}
+			{Q}_{1} & {I}\\
+			{Q}_{2}\T & 0
+		\end{bmatrix}\\
+		{P}_{CL}=
+		\begin{bmatrix}
+			{I} & {P}_{1} \\
+			0 & {P}_{2}\T
+		\end{bmatrix}
+	\end{align}
+	Матрица ${Q}_{2}$ имеет полный ранг и матрица ${Q}_{CL}$ тоже имеет полный ранг, тогда
+	\begin{align}
+		0<{Q}_{CL}\T {P} {Q}_{CL} = {Q}_{CL}\T {P}_{CL} = 
+		\begin{bmatrix} 
+			{Q}_{1} & I \\ 
+			I & {P}_{1}
+		\end{bmatrix}
+	\end{align}
+	И наоборот, предположим ii). верно. Мы можем умножить на $-1$ и применить дополнение Шура к неравенству 
+	$\bigl( \begin{smallmatrix} 
+		{Q}_{1} & I \\ 
+		I & {P}_{1}\end{smallmatrix} \bigr) <0$. 
+	И тогда, согласно дополнению Шура, получаем $-{P}_{1}<0$ и $-{Q}_{1}-(-{I})(-{P}_{1})^{-1}(-{I})\T<0$. Упрощая, избавляясь от матриц тождества, мы получаем ${P}_{1}^{-1}-{Q}_{1}<0$, и она имеет полный ранг, то есть можно найти обратную матрицу. Что также означает, что ${I}-{P}_{1}{Q}_{1}$ имеет обратную матрицу.\\\
+	
+	Выбираем любые две матрицы полного ранга ${P}_{2}$ и ${Q}_{2}$, такие что ${P}_{2}{Q}_{2}\T={I}-{P}_{1}{Q}_{1}$. И поскольку ${P}_2$ и ${Q}_2$ имеют полный ранг, ${Q}_{CL}=\bigl[\begin{smallmatrix}  
+		{Q}_{1} & {I}\\
+		{Q}_{2}\T & 0
+	\end{smallmatrix} \bigr]$ и 
+	${P}_{CL}=\bigl[ \begin{smallmatrix}
+		{I} & {P}_{1} \\
+		0 & {P}_{2}\T
+	\end{smallmatrix} \bigr]$ также имеют полный ранг и существуют обратные матрицы к ним.\\
+	
+	Обозначим ${P}$ и ${Q}$ как 
+	\begin{align*}
+		{P} = {P}_{CL}{Q}_{CL}^{-1} \qquad и \qquad {Q} ={Q}_{CL}{P}_{CL}^{-1}.
+	\end{align*} 
+	Далее умножая ${P}$ и ${Q}$, мы получаем единичную матрицу
+	\begin{align*}
+		{P}{Q}={P}_{CL}{Q}_{CL}^{-1}{Q}_{CL}{P}_{CL}^{-1}={I}.
+	\end{align*}
+	Таким образом ${P}={Q}^{-1}$.
+	${P}_3$ и ${Q}_3$ при необходимости можно найти из (\ref{eq: lemma mult1}-\ref{eq: lemma mult2}).
 \end{proof}
+Домножим с правой и левой стороны правую часть (\ref{eq: S procedure}) на матрицы $diag({Q}_{CL}\T, {I}, {I})$ и $diag({Q}_{CL}, {I}, {I})$ для линеаризации неравенств в переменных:
+\begin{align}
+	\begin{bmatrix}
+		{Q}_{CL}\T{A}_{CL}\T {P}_{CL} + {P}_{CL}\T{A}_{CL}{Q}_{CL} & {P}_{CL}\T{F}_{CL} \\
+		{F}_{CL}\T{P}_{CL} & 0
+	\end{bmatrix} < 
+	\begin{bmatrix}
+		0 & 0\\
+		0 & \alpha {I}
+	\end{bmatrix}.
+\end{align}
+Далее мы постепенно раскрываем и упрощаем каждый компонент уравнения
+\begin{align}
+	{P}_{CL}\T{F}_{CL} = \begin{bmatrix}
+		{I} & 0 \\
+		{P}_{1} & {P}_{2}
+	\end{bmatrix}
+	\begin{bmatrix}
+		{A}_R + {B}{D}_K{C}{R}\\ {B}_K{C}_R
+	\end{bmatrix} =
+	\begin{bmatrix}
+		{A}_R + {B}{D}_K{C}{R}\\
+		{P}_{1}{A}_R + {P}_{1}{B}{D}_K{C}{R}+{P}_1{B}_K{C}{R}
+	\end{bmatrix}
+\end{align}
+%
+\begin{align}
+	&{Q}_{CL}\T{A}_{CL}\T {P}_{CL} + {P}_{CL}\T{A}_{CL}{Q}_{CL} = \nonumber \\
+	& \begin{bmatrix}
+		{A}_N{Q}_{1} +{Q}_{1}{A}_N\T + {B}{\hat{C}}_K +{\hat{C}}_K\T{B}\T & {A}_N + {\hat{A}}_K\T +{B}{D}_K{C}{N}\\
+		{A}_N\T + {N}\T{C}\T{D}_K\T{B}\T+{\hat{A}}_K & {P}_{1}{A}_N +{A}_N\T{P}_{1}+{\hat{B}}_K{C}{N}+{N}\T{C}\T{\hat{B}}_K\T
+	\end{bmatrix}   
+\end{align}
+\begin{align}
+	{\hat{C}}_K= {D}_K{C}{N}{Q}_{1} + {C}_K{Q}_{2}\T\\
+	{\hat{B}}_K = {P}_{1}{B}{D}_K + {P}_{2}{B}_K\\
+	{\hat{A}}_K = {P}_{1}({A}_N+{B}{D}_K{C}{N}){Q}_{1}+{P}_{2}{B}_K{C}{N}{Q}_{1}+{P}_{1}{B}{C}_K{Q}_{2}\T+{P}_{2}{A}_K{Q}_{2}\T
+\end{align}
+Финальное неравенство
+\begin{align}\label{eq: final LMI}
+	\begin{bmatrix}
+		{\Theta}_1  & {A}_N + {\hat{A}}_K\T +{B}{D}_K{C}{N} & {A}_R + {B}{D}_K{C}{R}\\
+		\cdots & {\Theta}_2 & {P}_{1}{A}_R + {P}_{1}{B}{D}_K{C}{R}+{P}_1{B}_K{C}{R}\\
+		\cdots & \cdots & 0 
+	\end{bmatrix} < 
+	\begin{bmatrix}
+		0 & 0\\
+		0 & \alpha {I}
+	\end{bmatrix}
+\end{align}
+где
+\begin{align}
+	{\Theta}_1 = {A}_N{Q}_{1} +{Q}_{1}{A}_N\T + {B}{\hat{C}}_K +{\hat{C}}_K\T{B}\T \\
+	{\Theta}_2 = {P}_{1}{A}_N +{A}_N\T{P}_{1}+{\hat{B}}_K{C}{N}+{N}\T{C}\T{\hat{B}}_K\T
+\end{align}
+И держится неравенство: 
+\begin{align}\label{eq: condition}
+	\begin{bmatrix} 
+		{Q}_{1} & I \\ 
+		I & {P}_{1}
+	\end{bmatrix} > 0.
+\end{align}
+Это и является линейным матричным неравенством с переменными ${Q}_1,{P}_1, {\hat{A}}_K, {\hat{B}}_K,{\hat{C}}_K, {D}_K$ и $\alpha$.
+\end{proof}
+Целевой функцией будет являться минимизация параметра  $\alpha$ (добавить почему). Оптимизационная задача будет выглядеть следующим образом:
+%
+\begin{equation}
+	\label{eq:thm2_OCP}
+	\begin{aligned}
+		& \underset{{Q}_1,{P}_1, {\hat{A}}_K, {\hat{B}}_K,{\hat{C}}_K, {D}_K, \alpha }{\text{минимизируя}}
+		& &  \alpha, \\
+		& \text{при ограничениях}
+		& & \begin{cases}
+			\text{условия \eqref{eq: final LMI}, \eqref{eq: condition}}.
+		\end{cases}
+	\end{aligned}
+\end{equation}
+После решения оптимизационной задачи, мы можем найти коэффициенты следующим образом:
+\begin{align}
+	{P}_{2} = ({I}-{P}_{1}{Q}_{1})({Q}_{2}\T)^{-1}\\
+	{C}_K = ({\hat{C}}_K - {D}_K {C} {N} {Q}_{1} ) ({Q}_{2}\T)^{-1}\\
+	{B}_K = {P}_{2}^{-1}({\hat{B}}_K- {P}_{1}{B}{D}_K)\\
+	{A}_K = {P}_{2}^{-1}({\hat{A}}_K-{P}_{1}({A}_N+{B}{D}_K{C}{N}){Q}_{1} - {P}_{2}{B}_K{C}{C}{Q}_{1}-{P}_{1} {B}{C}_K{Q}_{2}\T)({Q}_{2}\T)^{-1}
+\end{align}
 \clearpage
