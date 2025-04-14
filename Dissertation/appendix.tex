@@ -1,9 +1,137 @@
-\chapter{Примеры вставки листингов программного кода}\label{app:A}
+\chapter{Доказательство}\label{app:A}
 
-Нужно больше подразделов приложения!
+Выражение \eqref{eq:Young_conjugated} может быть записано как:
+%
+\begin{multline}
+	\begin{bmatrix}
+		{\Pi}_1 & 0 \\ 0 & {\Sigma}_2 
+	\end{bmatrix}+
+	\begin{bmatrix}
+		0&-{BK}\\-({BK})\T&0
+	\end{bmatrix}+
+	\begin{bmatrix}
+		{M}_1{F}_1{N}_1{Q}_1 + {Q}_1({M}_1{F}_1{N}_1)\T&0 \\ 0& 0
+	\end{bmatrix}
+	\\ + \begin{bmatrix}
+		0& {Q}_1({S} {M}_1{F}_1{N}_1)\T{P}_2 \\
+		{P}_2{M}_1{F}_1{N}_1{Q}_1 - ({BK})\T & 0
+	\end{bmatrix}<0,
+\end{multline}
+%
+раскрываем:
+%
+\begin{multline}
+	\label{eq:Young_expand}
+	\begin{bmatrix}
+		{\Pi}_1 & 0 \\ 0 & {\Sigma}_2 
+	\end{bmatrix}+ \begin{bmatrix}
+		-{BK} \\ 0
+	\end{bmatrix}\begin{bmatrix}
+		0 \\ {I}
+	\end{bmatrix}\T
+	+\begin{bmatrix}
+		0 \\ {I} 
+	\end{bmatrix}\begin{bmatrix}
+		-{BK} \\0
+	\end{bmatrix}\T+\begin{bmatrix}
+		{Q}_1{N}_1\T \\0
+	\end{bmatrix}{F}_1\T\begin{bmatrix}
+		{M}_1 \\0
+	\end{bmatrix}\T \\ + \begin{bmatrix}
+		{M}_1 \\0
+	\end{bmatrix}{F}_1\begin{bmatrix}
+		{Q}_1{N}_1\T \\0
+	\end{bmatrix}\T+\begin{bmatrix}
+		{Q}_1{N}_1\T \\ 0
+	\end{bmatrix}{F}_1\T\begin{bmatrix}
+		0 \\ {P}_2{S}{M}_1
+	\end{bmatrix}\T+  \begin{bmatrix}
+		0\\ {P}_2{S}{M}_1
+	\end{bmatrix}{F}_1\begin{bmatrix}
+		{Q}_1{N}_1\T \\0
+	\end{bmatrix}\T<0.
+\end{multline}
+%
+Используя \eqref{eq:Young_relation_BMI} из леммы \ref{lemma:Young} \cite{KHELOUFI2013}, находим:
+%
+\begin{multline}
+	\label{eq:thm1_term_1}
+	\begin{bmatrix}
+		-{BK} \\ 0
+	\end{bmatrix}\begin{bmatrix}
+		0 \\ {I}
+	\end{bmatrix}\T
+	+\begin{bmatrix}
+		0 \\ {I} 
+	\end{bmatrix}\begin{bmatrix}
+		-{BK} \\0
+	\end{bmatrix}\T 
+	\\ 
+	\leq
+	\begin{bmatrix}
+		-{BK} \\ 0
+	\end{bmatrix} \epsilon_1 {H} \begin{bmatrix}
+		-{BK} \\ 0
+	\end{bmatrix}\T +\begin{bmatrix}
+		0 \\ {I}
+	\end{bmatrix}\frac{1}{\epsilon_1}{H}^{-1}\begin{bmatrix}
+		0 \\ {I}
+	\end{bmatrix}\T =
+	\begin{bmatrix}
+		{BK}\epsilon_1{H}{K}\T{B}\T & 0 \\
+		0 & \frac{1}{\epsilon_1}{H}^{-1}
+	\end{bmatrix}.
+\end{multline}
+%
+Из неравенства \eqref{eq:Young_robust_2} и леммы \ref{lemma:Young} с $\nu=1$ получаем:
+%
+\begin{multline}
+	\label{eq:thm1_term_2}
+	\begin{bmatrix}
+		{Q}_1{N}_1\T \\0
+	\end{bmatrix}{F}_1\T\begin{bmatrix}
+		{M}_1 \\0
+	\end{bmatrix}\T+\begin{bmatrix}
+		{M}_1 \\0
+	\end{bmatrix}{F}_1\begin{bmatrix}
+		{Q}_1{N}_1\T \\0
+	\end{bmatrix}\T  \\ \leq \frac{1}{\epsilon_2}\begin{bmatrix}
+		{Q}_1{N}_1\T \\0
+	\end{bmatrix}\begin{bmatrix}
+		{Q}_1{N}_1\T \\ 0
+	\end{bmatrix}\T +\epsilon_2 \begin{bmatrix}
+		{M}_1 \\0
+	\end{bmatrix}\begin{bmatrix}
+		{M}_1 \\0
+	\end{bmatrix}\T.
+\end{multline}
+%
+Похожим образом:
+%
+\begin{multline}
+	\label{eq:thm1_term_3}
+	\begin{bmatrix}
+		{Q}_1{N}_1\T \\0
+	\end{bmatrix}{F}_1\T\begin{bmatrix}
+		0 \\ {P}_2{S}{M}_1
+	\end{bmatrix}\T+\begin{bmatrix}
+		0\\ {P}_2{S}{M}_1
+	\end{bmatrix}{F}_1\begin{bmatrix}
+		{Q}_1{N}_1\T \\0
+	\end{bmatrix}\T \\ \leq  \frac{1}{\epsilon_3}\begin{bmatrix}
+		{Q}_1{N}_1\T \\0
+	\end{bmatrix}\begin{bmatrix}
+		{Q}_1{N}_1\T \\ 0
+	\end{bmatrix}\T +\epsilon_3 \begin{bmatrix}
+		0 \\ {P}_2{S}{M}_1
+	\end{bmatrix}\begin{bmatrix}
+		0 \\ {P}_2{S}{M}_1
+	\end{bmatrix}\T.
+\end{multline}
+%
+Подставляя \eqref{eq:thm1_term_1},\eqref{eq:thm1_term_2} и \eqref{eq:thm1_term_3} в \eqref{eq:Young_expand} получаем выражение \eqref{eq:thm1_LMI_after_Young}.
 
 \clearpage
 \refstepcounter{chapter}
 \addcontentsline{toc}{appendix}{\protect\chapternumberline{\thechapter}Чертёж детали}
 
-\includepdf[pages=-]{Dissertation/images/drawing.pdf}

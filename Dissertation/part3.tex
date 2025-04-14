@@ -871,7 +871,7 @@ ${Q}_1$, ${P}_2$, $\hat{{K}}$, $\hat{{L}}$, $\epsilon_2$, $\alpha$, и $\beta$.
 	{y} = {C} {N} {z} + {C} {R} {\zeta}
 \end{align}
 
-Введем регулятор по обратной связи
+Введём регулятор по обратной связи
 \begin{align}
 	\dot{{z}}_K = {A}_K {z}_K + {B}_K {y}\\
 	{u} = {C}_K {z}_K + {D}_K {y}
@@ -924,11 +924,13 @@ ${Q}_1$, ${P}_2$, $\hat{{K}}$, $\hat{{L}}$, $\epsilon_2$, $\alpha$, и $\beta$.
 	\end{bmatrix}{\zeta}
 \end{align}
 
-где матрица $\bigl[ \begin{smallmatrix}  {I} & -{D}_K \\ 0 & {I} \end{smallmatrix} \bigr]$ должна быть невырожденной, какой она и является (добавить почему).
+где матрица $\bigl[ \begin{smallmatrix}  {I} & -{D}_K \\ 0 & {I} \end{smallmatrix} \bigr]$ должна быть невырожденной, какой она и является:
 \begin{equation}
+\begin{gathered}
 	\begin{bmatrix}
 		{I} & -{D}_K \\ 0 & {I}
 	\end{bmatrix}^{-1} = 
+	\\
 	\begin{bmatrix}
 		{I} + {I}(-{D}_K)({I}-0*{I}(-{D}_K))*0*{I} & -{I}(-{D}_K)({I}-0*{I}(-{D}_K))^{-1}\\
 		-({I} - 0*{I}({D}_K))^{-1}*0*{I} &
@@ -937,10 +939,11 @@ ${Q}_1$, ${P}_2$, $\hat{{K}}$, $\hat{{L}}$, $\epsilon_2$, $\alpha$, и $\beta$.
 	\begin{bmatrix}
 		{I} & {D}_K \\ 0 & {I}
 	\end{bmatrix}
+\end{gathered}
 \end{equation}
 Подставим (6) в (5):
 \begin{align}
-	&\begin{bmatrix}
+	& \begin{bmatrix}
 		{\dot{z}} \\ {\dot{z}}_K 
 	\end{bmatrix}
 	=\left(
@@ -965,7 +968,8 @@ ${Q}_1$, ${P}_2$, $\hat{{K}}$, $\hat{{L}}$, $\epsilon_2$, $\alpha$, и $\beta$.
 	\begin{bmatrix}
 		{z} \\ {z}_K
 	\end{bmatrix}
-	+ \left(
+	+ \\
+	& \left(
 	\begin{bmatrix}
 		{B} & 0 \\
 		0 & {B}_K
