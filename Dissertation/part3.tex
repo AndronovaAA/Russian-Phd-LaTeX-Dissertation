@@ -422,7 +422,7 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 			*&* & * & * & *&*&*&-\frac{1}{\gamma_3}{I}
 		\end{bmatrix}<0.
 	\end{equation}
-	Сопрягая блочно-диагональную матрицу $\textbf{diag}({Q}_1, {I})$, где ${Q}_1 = {P}_1^{-1}$, находим:
+	Умножаем справа и слева \ref{eq:thm3_afterSchur} на $\textbf{diag}({Q}_1, {I})$, где ${Q}_1 = {P}_1^{-1}$, находим:
 	%
 	\begin{equation}
 		\label{eq:thm3_before_Young}
@@ -469,10 +469,90 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 			{X}^T{F}{Y} + {Y}\T{F}\T{X}  \leq \epsilon {X}\T{X} + \epsilon {Y}\T{Y}.
 		\end{equation}
 	\end{lemma}
+	Для того чтобы использовать неравенство Юнга перепишем систему \ref{eq:thm3_before_Young} как:
+	\begin{multline}
+	\label{eq:thm3_before_Young_2}
+	\begin{bmatrix}
+		{\Omega}_1 & 0 & {M}_1 & {M}_2 & 0& {Q}_1{N}_1\T & {Q}_1{K}_z\T{N}_2\T & {Q}_1 {N}\T{N}_3\T 
+		\\
+		* & {\Theta}_2 & {P}_2{M}_1 & {P}_2{M}_2 & {P}_2{L}_z{M}_3 & 0 & -{K}_z\T{N}_2\T & 0\\
+		* & * & -\gamma_1{I} & 0&0&0&0&0\\
+		* & * & * & -\gamma_2{I}&0&0&0&0\\
+		* & * & * & *&-\gamma_3{I}&0&0&0\\
+		* & * & * & *&*&-\frac{1}{\gamma_1}{I}&0&0\\
+		* & * & * & *&*&*&-\frac{1}{\gamma_2}{I}&0\\
+		*&* & * & * & *&*&*&-\frac{1}{\gamma_3}{I}
+	\end{bmatrix}
+	+
+	\\
+	\begin{bmatrix}
+		-B K_z \\0\\0\\0\\0\\0\\0\\0
+	\end{bmatrix}
+	\begin{bmatrix}
+		0 & I & 0&0&0&0&0&0
+	\end{bmatrix}
+	+
+	\begin{bmatrix}
+		0 \\I\\0\\0\\0\\0\\0\\0
+	\end{bmatrix}
+	\begin{bmatrix}
+		-K_z\T B\T & 0 & 0&0&0&0&0&0
+	\end{bmatrix}
+	<0,
+	\end{multline}
 	
-	Используя лемму \ref{lemma:Young}, получаем
+	Используя лемму \ref{lemma:Young}, где $P_1>0$, получаем:
+	\begin{multline}
+		\label{eq:after_Young}
+		\begin{bmatrix}
+			{\Omega}_1 & 0 & {M}_1 & {M}_2 & 0& {Q}_1{N}_1\T & {Q}_1{K}_z\T{N}_2\T & {Q}_1 {N}\T{N}_3\T 
+			\\
+			* & {\Theta}_2 & {P}_2{M}_1 & {P}_2{M}_2 & {P}_2{L}_z{M}_3 & 0 & -{K}_z\T{N}_2\T & 0\\
+			* & * & -\gamma_1{I} & 0&0&0&0&0\\
+			* & * & * & -\gamma_2{I}&0&0&0&0\\
+			* & * & * & *&-\gamma_3{I}&0&0&0\\
+			* & * & * & *&*&-\frac{1}{\gamma_1}{I}&0&0\\
+			* & * & * & *&*&*&-\frac{1}{\gamma_2}{I}&0\\
+			*&* & * & * & *&*&*&-\frac{1}{\gamma_3}{I}
+		\end{bmatrix}
+		+
+		\\
+		\begin{bmatrix}
+			B K_z \\0\\0\\0\\0\\0\\0\\0
+		\end{bmatrix}
+		\epsilon_1 Q_1
+		\begin{bmatrix}
+			K_z\T B\T & 0 & 0&0&0&0&0&0
+		\end{bmatrix}
+		+
+		\\
+		\begin{bmatrix}
+			0 \\I\\0\\0\\0\\0\\0\\0
+		\end{bmatrix}
+		\frac{1}{\epsilon_1}{Q}_1
+		\begin{bmatrix}
+			0 & I & 0&0&0&0&0&0
+		\end{bmatrix}
+		<0,
+	\end{multline}
 	
-	применяя дополнение Шура {\ref{lemma:Schur}} и вводя замену переменных $\hat{{K}}_z={K}_z{Q}_1$, $\hat{{L}}_z={P}_2{L}_z$, получаем:
+	Применим дополнение Шура из леммы {\ref{lemma:Schur}} дважды, но перед этим умножим $\epsilon_1 Q_1$ из последнего неравенства на $I =P_1 Q_1$, получая  $\epsilon_1 Q_1 P_1 Q_1$: 
+	\begin{equation}
+		\begin{bmatrix}
+			{\Omega}_1 & 0 & {M}_1 & {M}_2 & 0& {Q}_1{N}_1\T & {Q}_1{K}_z\T{N}_2\T & {Q}_1 {N}\T{N}_3\T & B K_z Q_1 & 0
+			\\
+			* & {\Theta}_2 & {P}_2{M}_1 & {P}_2{M}_2 & {P}_2{L}_z{M}_3 & 0 & -{K}_z\T{N}_2\T & 0 & 0 & I\\
+			* & * & -\gamma_1{I} & 0&0&0&0&0 &0&0\\
+			* & * & * & -\gamma_2{I}&0&0&0&0 &0&0\\
+			* & * & * & *&-\gamma_3{I}&0&0&0 &0&0\\
+			* & * & * & *&*&-\frac{1}{\gamma_1}{I}&0&0 &0&0\\
+			* & * & * & *&*&*&-\frac{1}{\gamma_2}{I}&0 &0&0\\
+			*&* & * & * & *&*&*&-\frac{1}{\gamma_3}{I} &0&0\\
+			*&* & * & * & *&*&*&* &-\frac{1}{\epsilon_1}{Q}_1&0\\
+			* & * & * & *&*&*&*&*&*&-\epsilon_1{Q}_1
+		\end{bmatrix}
+	\end{equation}
+	Вводим замену переменных $\hat{{K}}_z={K}_z{Q}_1$, $\hat{{L}}_z={P}_2{L}_z$, получаем:
 	%
 	\begin{equation}
 		\label{eq:thm3_LMI_before_alpha_beta}
