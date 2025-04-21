@@ -116,6 +116,7 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 Следуя \cite{SAVIN2021}, для получения оценки вектора состояния, вводим наблюдатель Люенбергера с состоянием $\hat{z}$:
 %
 \begin{equation}
+	\label{eq:Luenberger}
 	\dot{\hat{z}}={A}_n\hat{z}+{B}u+{L}_z(y- {C} {N}\hat{z}),
 \end{equation}
 %
@@ -131,10 +132,25 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 Рассмотрим следующий закон управления с линейной обратной связью:
 %
 \begin{equation}
+	\label{eq:control_law}
 	u={K}_z\hat{z}.
 \end{equation}
 %
-При этом динамика замкнутого цикла принимает вид:
+Подставим закон управления \ref{eq:control_law} в уравнение \ref{eq:Luenberger};
+\begin{equation}
+	\label{eq:Luenberger_K}
+	\dot{\hat{z}}={A}_n\hat{z}+{B}K_z \hat{z} +{L}_z C N z +{L}_z \Delta C N z- {L}_z {C} {N}\hat{z}),
+\end{equation}
+и подставим закон управления в ошибку восстановления для динамики:
+%
+\begin{equation}
+	\label{eq:error_dynamics_K}
+	\dot{e}_z=({A}_n-{L}_z{C}{N}) e_z +(\Delta {A}_n -{L}_z\Delta {C}{N}) z +\Delta {B} K_z \hat{z}.
+\end{equation}
+%
+Введём новый вектор состояния, объединив предыдущий вектор состояния и ошибку восстановления $ \begin{bmatrix}
+	z \\ e_z
+\end{bmatrix}$, при этом динамика замкнутого цикла принимает вид:
 %
 \begin{equation}
 	\label{eq:part2_system}
@@ -151,7 +167,7 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 %
 \begin{equation}
 	\label{eq:part2_one_uncertainty}
-	{F}_i\T{F}_i\leq {I}, \ \ i=1,2,3;
+	{F}_i\T{F}_i\leq {I}, \ \ i=1,2,3.
 \end{equation}
 %
 \begin{theorem}\label{thm:part2_LMI_1}
@@ -208,7 +224,7 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 	и коэффициенты регулятора и наблюдателя находятся следующим образом ${K}_z\ = \hat{{K}}_z{Q}_1^{-1}$ и ${L}_z = {P}_2^{-1} \hat{{L}}_z$.
 \end{theorem}
 \begin{proof}
-	Мы вводим новую переменную $\chi = [z\T \ e_z\T ]\T$ и напишем кандидата в функцию Ляпунова:
+	Мы вводим новую переменную $\chi = [z\T \ e_z\T ]\T$ и напишем кандидат-функцию Ляпунова:
 	%
 	\begin{equation}
 		\label{eq:thm3_Lyapunov_candidat}
@@ -227,7 +243,7 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 		\chi\T {P} \chi >0.
 	\end{equation}
 	%
-	Производная от кандидата в функции Ляпунова может быть записана:
+	Производная от кандидат-функции Ляпунова может быть записана:
 	%
 	\begin{equation}
 		\label{eq:thm3_after_Lyapunov}
