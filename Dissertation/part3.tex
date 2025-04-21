@@ -136,12 +136,12 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 	u={K}_z\hat{z}.
 \end{equation}
 %
-Подставим закон управления \ref{eq:control_law} в уравнение \ref{eq:Luenberger};
+Подставим закон управления \ref{eq:control_law} в уравнение \ref{eq:Luenberger}:
 \begin{equation}
 	\label{eq:Luenberger_K}
 	\dot{\hat{z}}={A}_n\hat{z}+{B}K_z \hat{z} +{L}_z C N z +{L}_z \Delta C N z- {L}_z {C} {N}\hat{z}),
 \end{equation}
-и подставим закон управления в ошибку восстановления для динамики:
+и подставим закон управления \ref{eq:control_law} в ошибку восстановления для динамики \ref{eq:part2_error_dynamics}:
 %
 \begin{equation}
 	\label{eq:error_dynamics_K}
@@ -162,7 +162,7 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 		z \\ e_z
 	\end{bmatrix}.
 \end{equation}
-%
+
 В этом подразделе мы рассмотрим случай, когда радиус неопределённости равен $\nu_i = 1$, поэтому границы неопределённости определяются как:
 %
 \begin{equation}
@@ -242,8 +242,73 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 		=
 		\chi\T {P} \chi >0.
 	\end{equation}
-	%
-	Производная от кандидат-функции Ляпунова может быть записана:
+	
+Вычислив производную от $V$ по траекториям (\ref{eq:part2_system}), мы имеем:
+\begin{align}
+	& \dot{V} = \dot{\chi}\T {P} \chi + \chi\T {P} \dot{\chi} < 0,\\
+	& \nonumber \dot{\chi}\T {P} \chi = 
+	\begin{bmatrix}
+		{z} \\
+		e_z
+	\end{bmatrix}\T
+	\begin{bmatrix}
+		{P}_1({A}_n + {B}{K}_z)
+		&
+		-{P}_1 {B}{K}_z
+		\\
+		0
+		&
+		{P}_2({A}_n + {L}_z {C}N)
+	\end{bmatrix}
+	\begin{bmatrix}
+		{z} \\
+		e_z
+	\end{bmatrix}
+	+
+	\\
+	&\begin{bmatrix}
+		{z} \\
+		e_z
+	\end{bmatrix}\T
+	\begin{bmatrix}
+	{P}_1 {M}_1 \\ {P}_2 {M}_1
+	\end{bmatrix}
+	\eta _1
+	+
+	\begin{bmatrix}
+		{z} \\
+		e_z
+	\end{bmatrix}\T
+	\begin{bmatrix}
+		{P}_1 {M}_2 \\ {P}_2 {M}_2
+	\end{bmatrix}
+	\eta_2
+	+
+	\begin{bmatrix}
+		{z} \\
+		e_z
+	\end{bmatrix}\T
+	\begin{bmatrix}
+		0 \\ {P}_2 {L}_z M_3
+	\end{bmatrix}
+	\eta_3
+	< 0,
+\end{align}
+где
+%
+\begin{align}
+	\eta_1&={F}_1\begin{bmatrix}
+		{N}_1 &0
+	\end{bmatrix}\chi ,\\
+	\eta_2&={F}_2\begin{bmatrix}
+		{N}_2{K}_z & -{N}_2{K}_z
+	\end{bmatrix}\chi, \\
+	\label{eq:eta_3_thm3}
+	\eta_3&={F}_3\begin{bmatrix}
+		-{N}_3{N} & 0
+	\end{bmatrix}\chi.
+\end{align}
+	Производная от кандидат-функции Ляпунова может быть переписана как:
 	%
 	\begin{equation}
 		\label{eq:thm3_after_Lyapunov}
@@ -266,27 +331,13 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 	%
 	\begin{align}
 		{\Theta}_1&={P}_1({A}_n+{B}{K}_z)+({A}_n+{B}{K}_z)\T{P}_1 ,\\
-		{\Theta}_2&={P}_2({A}_n-{L}_z{CN})+({A}_n-{L}_z{CN})\T{P}_2,
-	\end{align}
-	%
-	и
-	%
-	\begin{align}
-		\eta_1&={F}_1\begin{bmatrix}
-			{N}_1 &0
-		\end{bmatrix}\chi ,\\
-		\eta_2&={F}_2\begin{bmatrix}
-			{N}_2{K}_z & -{N}_2{K}_z
-		\end{bmatrix}\chi, \\
-		\label{eq:eta_3_thm3}
-		\eta_3&={F}_3\begin{bmatrix}
-			-{N}_3{N} & 0
-		\end{bmatrix}\chi.
+		{\Theta}_2&={P}_2({A}_n-{L}_z{CN})+({A}_n-{L}_z{CN})\T{P}_2.
 	\end{align}
 	%
 	Из ${F}_i\T{F}_i\leq {I}$ следует, что:
 	%
 	\begin{align}    
+		\label{eq:condition_Sproc}
 		\eta_1\T\eta_1 &\leq \chi\T \begin{bmatrix}
 			{N}_1\T \\ 0  
 		\end{bmatrix}\begin{bmatrix}
@@ -305,14 +356,15 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 			-{N}{N}_3 \ \ 0  
 		\end{bmatrix} \chi.
 	\end{align}
-	
+	Для включения условий \ref{eq:condition_Sproc} в финальное линейное неравенство используем S-процедуру.
 	\begin{lemma}\label{lemma:S_procedure}
 		(S-Процедура).
 		Рассмотрим ${M},{N} \in \mathbb{R}^{n\times n}$. Если существует скаляр $\gamma>0$, который отвечает следующему условию ${M}+\gamma {N}<0$, тогда $x\T {N} x\geq 0$ подразумевает $x\T{M}x\leq 0$ \cite{BOYED1994}.
 	\end{lemma}
-	Используя S-процедуру {\ref{lemma:S_procedure}}, мы получаем условие на положительность кандидата Ляпунова:
+	Используя лемму {\ref{lemma:S_procedure}}, мы получаем условие на положительность кандидат-функции Ляпунова:
 	%
 	\begin{multline}
+		\label{eq:after_S}
 		\begin{bmatrix}
 			{\Theta}_1 & -{P}_1{B}{K}_z & {P}_1{M}_1 & {P}_1{M}_2 &0 \\
 			* &    {\Theta}_2 & {P}_2{M}_1 & {P}_2{M}_2 & {P}_2{L}_z{M}_3\\
@@ -329,12 +381,12 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 		\end{bmatrix} 
 		<0,
 	\end{multline}
-	где $\gamma_1 > 0,\gamma_2 > 0$ и $\gamma_3 > 0$, также
+	где $\gamma_1 > 0,\gamma_2 > 0$ и $\gamma_3 > 0$ как следствие S-процедуры, и
 	%
 	\begin{equation}
 		\mathcal{X}_{\gamma}=    \gamma_1{N}_1\T{N}_1 +\gamma_2{K}_z\T{N}_2\T{N}_2{K}_z+\gamma_3{N}\T{N}_3\T{N}_3{N},
 	\end{equation}
-	
+	Далее необходимо избавиться от нелинейности в переменных в линейном матричном неравенстве, для этого воспользуемся дополнением Шура.
 	\begin{lemma}\label{lemma:Schur}
 		(Дополнение Шура \cite{Schur}).
 		Для любой симметричной матрицы ${A}\in \mathbb{S}^n$ и ${C}\in \mathbb{S}^m$ и матрицы ${B}\in \mathbb{R}^{n\times m}$, а также их конкатенации:
@@ -354,7 +406,23 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 			\item ${C}-{B}\T{A}^{-1}{B}< 0 , {A}< 0$
 		\end{enumerate}
 	\end{lemma}
-	Используя дополнение Шура {\ref{lemma:Schur}} и сопрягая блочно-диагональную матрицу $\textbf{diag}({Q}_1, {I})$, где ${Q}_1 = {P}_1^{-1}$, находим:
+	
+	Используя лемму {\ref{lemma:Schur}}:
+		\begin{equation}
+		\label{eq:thm3_afterSchur}
+		\begin{bmatrix}
+			{\Theta}_1 & -{P}_1{B}{K}_z & {P}_1{M}_1 & {P}_1{M}_2 &0& {N}_1\T & {K}_z\T{N}_2\T  & {N}\T{N}_3\T 
+			\\
+			* & {\Theta}_2 & {P}_2{M}_1 & {P}_2{M}_2 & {P}_2{L}_z{M}_3 & 0 & -{K}_z\T{N}_2\T & 0\\
+			* & * & -\gamma_1{I} & 0&0&0&0&0\\
+			* & * & * & -\gamma_2{I}&0&0&0&0\\
+			* & * & * & *&-\gamma_3{I}&0&0&0\\
+			* & * & * & *&*&-\frac{1}{\gamma_1}{I}&0&0\\
+			* & * & * & *&*&*&-\frac{1}{\gamma_2}{I}&0\\
+			*&* & * & * & *&*&*&-\frac{1}{\gamma_3}{I}
+		\end{bmatrix}<0.
+	\end{equation}
+	Сопрягая блочно-диагональную матрицу $\textbf{diag}({Q}_1, {I})$, где ${Q}_1 = {P}_1^{-1}$, находим:
 	%
 	\begin{equation}
 		\label{eq:thm3_before_Young}
@@ -376,7 +444,8 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 	\begin{equation}
 		{\Omega}_1={A}_n{Q}_1+{B}{K}_z{Q}_1+{Q}_1{A}_n\T+{Q}_1{K}_z\T{B}\T.
 	\end{equation}
-	%
+
+Для того чтобы избавиться от нелинейности в переменных ${Q}_1{K}_z\T{N}_2\T$  и ${Q}_1 {N}\T{N}_3\T $ используем неравенство Юнга.
 
 	\begin{lemma}\label{lemma:Young}
 		(Неравенство Юнга).
@@ -400,7 +469,10 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 			{X}^T{F}{Y} + {Y}\T{F}\T{X}  \leq \epsilon {X}\T{X} + \epsilon {Y}\T{Y}.
 		\end{equation}
 	\end{lemma}
-	Используя неравенство Юнга \ref{lemma:Young}, применяя дополнение Шура {\ref{lemma:Schur}} и вводя замену переменных $\hat{{K}}_z={K}_z{Q}_1$, $\hat{{L}}_z={P}_2{L}_z$, получаем:
+	
+	Используя лемму \ref{lemma:Young}, получаем
+	
+	применяя дополнение Шура {\ref{lemma:Schur}} и вводя замену переменных $\hat{{K}}_z={K}_z{Q}_1$, $\hat{{L}}_z={P}_2{L}_z$, получаем:
 	%
 	\begin{equation}
 		\label{eq:thm3_LMI_before_alpha_beta}
