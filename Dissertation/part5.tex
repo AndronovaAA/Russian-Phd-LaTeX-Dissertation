@@ -1,16 +1,22 @@
-\chapter{Мультипликативная неопределённость и регулятор с выходом}\label{ch:ch5}
+\chapter{Аддитивная неопределённость c динамической обратной связью}\label{ch:ch5}
 \section{Динамическая обратная связь}\label{sec:ch5/sect1}
 Рассмотрим следующую систему:
-\begin{align}
-	\dot{{z}} = {A}_N {z} + {A}_R {\zeta} + {B} {u}\\
-	{y} = {C} {N} {z} + {C} {R} {\zeta}
-\end{align}
+\begin{equation}
+	\label{eq:part5_linear_dynamics}
+	\begin{cases}
+		\dot z={A}_N {z} + {A}_R {\zeta} + {B} {u},\\
+		y = {C} {N} {z} + {C} {R} {\zeta},
+	\end{cases}
+\end{equation}
 
-Введём регулятор по обратной связи
-\begin{align}
-	\dot{{z}}_K = {A}_K {z}_K + {B}_K {y}\\
-	{u} = {C}_K {z}_K + {D}_K {y}
-\end{align}
+Введём регулятор с динамической обратной связью:
+\begin{equation}
+	\label{eq:part5_controller}
+	\begin{cases}
+		\dot{{z}}_K = {A}_K {z}_K + {B}_K {y},\\
+		{u} = {C}_K {z}_K + {D}_K {y},
+	\end{cases}
+\end{equation}
 Мы можем переписать предыдущую систему уравнений как:
 \begin{align}
 	&\begin{bmatrix}
