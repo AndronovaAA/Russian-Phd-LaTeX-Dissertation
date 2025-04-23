@@ -4,12 +4,13 @@
 \begin{equation}
 	\label{eq:part5_linear_dynamics}
 	\begin{cases}
-		\dot z={A}_N {z} + {A}_R {\zeta} + {B} {u},\\
+		\dot z={A}_n {z} + {A}_r {\zeta} + {B} {u},\\
 		y = {C} {N} {z} + {C} {R} {\zeta},
 	\end{cases}
 \end{equation}
+где матрицы $A_n$,  $B$ и  $С$ являются матрицами состояния, управления и наблюдения соответственно. А матрица ${A}_r$ отвечает за статическую часть матрицы состояния.
 
-Введём регулятор с динамической обратной связью:
+Рассмотрим следующий закон управления с динамической обратной связью:
 \begin{equation}
 	\label{eq:part5_controller}
 	\begin{cases}
@@ -19,6 +20,7 @@
 \end{equation}
 Мы можем переписать предыдущую систему уравнений как:
 \begin{align}
+	\label{eq:part5_system1}
 	&\begin{bmatrix}
 		{\dot{z}} \\ {\dot{z}}_K
 	\end{bmatrix}
@@ -44,6 +46,7 @@
 	\end{bmatrix}
 	\zeta
 	\\
+	\label{eq:part5_system2}
 	& \begin{bmatrix}
 		{I} & -{D}_K \\
 		0 & {I}
@@ -64,8 +67,7 @@
 		0 \\ {C} {R}
 	\end{bmatrix}{\zeta}
 \end{align}
-
-где матрица $\bigl[ \begin{smallmatrix}  {I} & -{D}_K \\ 0 & {I} \end{smallmatrix} \bigr]$ должна быть невырожденной, какой она и является:
+где матрица $\bigl[ \begin{smallmatrix}  {I} & -{D}_K \\ 0 & {I} \end{smallmatrix} \bigr]$ должна быть невырожденной, котороя она и будет всегда являться, следуя:
 \begin{equation}
 	\begin{gathered}
 		\begin{bmatrix}
@@ -82,8 +84,9 @@
 		\end{bmatrix}
 	\end{gathered}
 \end{equation}
-Подставим (6) в (5):
+Подставим \ref{eq:part5_system2} в \ref{eq:part5_system1}:
 \begin{align}
+	\nonumber
 	& \begin{bmatrix}
 		{\dot{z}} \\ {\dot{z}}_K 
 	\end{bmatrix}
@@ -128,7 +131,9 @@
 	\end{bmatrix}\right)
 	{\zeta}
 \end{align}
+Раскроем скобки и упростим выражение:
 \begin{align}
+	\label{eq:part5_cl}
 	&\begin{bmatrix}
 		{\dot{z}} \\ {\dot{z}}_K 
 	\end{bmatrix}
@@ -151,41 +156,78 @@
 	{A}_{cl} = \begin{bmatrix}
 		{A}_N + {B}{D}_K{C}{N} & {B}{C}_K \\
 		{B}_K{C}{N} & {A}_K
-	\end{bmatrix}
-	\\
+	\end{bmatrix},
+	\quad
 	{z}_{cl} = \begin{bmatrix}
 		{\dot{z}} \\ {\dot{z}}_K 
-	\end{bmatrix}
-	\\
+	\end{bmatrix},
+	\quad
 	{F}_{cl} = \begin{bmatrix}
 		{A}_R + {B}{D}_K{C}{R}\\ {B}_K{C}_R
-	\end{bmatrix}
+	\end{bmatrix}.
 \end{align}
-Мы можем переписать (8), как:
+Используя новые обозначения, перепишем \ref{eq:part5_cl}, как:
 \begin{align}
-	&{\dot{z}}_{cl} = {A}_{cl} {z}_{cl}+ {F}_{cl}\zeta
+	\label{eq:part5_system}
+	&{\dot{z}}_{cl} = {A}_{cl} {z}_{cl}+ {F}_{cl}\zeta.
 \end{align}
 \begin{theorem}
-	Система стабильна
+	Система \eqref{eq:part5_system} асимптотически устойчива, если существуют положительно-определённые матрицы ${Q}_1>0$, ${P}_1>0$, матрицы $\hat{{A}_K}$,  $\hat{{B}_K}$, $\hat{{C}_K}$ и $D_K$
+	и положительный скаляр $\alpha>0$ такие, что выполняется следующие линейно-матричные неравенства:
+		\begin{align}\label{eq:part5_finalLMI}
+		\begin{bmatrix}
+			{\Theta}_1  & {A}_N + {\hat{A}}_K\T +{B}{D}_K{C}{N} & {A}_R + {B}{D}_K{C}{R}\\
+			\cdots & {\Theta}_2 & {P}_{1}{A}_R + {P}_{1}{B}{D}_K{C}{R}+{P}_1{B}_K{C}{R}\\
+			\cdots & \cdots & 0 
+		\end{bmatrix} < 
+		\begin{bmatrix}
+			0 & 0\\
+			0 & \alpha {I}
+		\end{bmatrix},
+	\end{align}
+	где
+	\begin{align}
+		{\Theta}_1 = {A}_N{Q}_{1} +{Q}_{1}{A}_N\T + {B}{\hat{C}}_K +{\hat{C}}_K\T{B}\T, \\
+		{\Theta}_2 = {P}_{1}{A}_N +{A}_N\T{P}_{1}+{\hat{B}}_K{C}{N}+{N}\T{C}\T{\hat{B}}_K\T.
+	\end{align}
+	И
+	\begin{align}\label{eq: condition}
+		\begin{bmatrix} 
+			{Q}_{1} & I \\ 
+			I & {P}_{1}
+		\end{bmatrix} > 0.
+	\end{align}
+	И коэффициенты находятся следующим образом 
+	\begin{align}
+		&{P}_{2} = ({I}-{P}_{1}{Q}_{1})({Q}_{2}\T)^{-1},\\
+		&{C}_K = ({\hat{C}}_K - {D}_K {C} {N} {Q}_{1} ) ({Q}_{2}\T)^{-1},\\
+		&{B}_K = {P}_{2}^{-1}({\hat{B}}_K- {P}_{1}{B}{D}_K),\\
+		&{A}_K = {P}_{2}^{-1}({\hat{A}}_K-{P}_{1}({A}_N+{B}{D}_K{C}{N}){Q}_{1} - {P}_{2}{B}_K{C}{C}{Q}_{1}-{P}_{1} {B}{C}_K{Q}_{2}\T)({Q}_{2}\T)^{-1}.
+	\end{align}
 \end{theorem}
 \begin{proof}
-	Введём кандидата в функцию Ляпунова ${V} = {z}_{cl}\T {P}{z}_{cl} \geq 0$ и её производную от времени:
+	Введём кандидата в функцию Ляпунова ${V} = {z}_{cl}\T {P}{z}_{cl} \geq 0$ и её производную:
 	\begin{align}
 		{\dot{V}} = {z}_{cl}\T {P} {A}_{cl} {z}_{cl} +
 		{z}_{cl}\T {A}_{cl}\T {z}_{cl} 
 		+
 		{z}_{cl}\T {P} {F}_{cl} {\zeta} +
 		{\zeta}\T {F}_{cl}\T {z}_{cl}
-		\leq 0
+		\leq 0,
 	\end{align}
-	где система считается квадратичной устойчивой в конечное время тогда и только тогда, когда существует положительно-определённая матрица ${P} = \bigl[ \begin{smallmatrix}  {P}_1 & {P}_2 \\ {P}_2\T & {P}_3 \end{smallmatrix} \bigr]$ которые удовлетворяют следующим линейному матричному неравенству
-	\begin{align}
-		{z}_{cl}\T {P} {A}_{cl} {z}_{cl} +
-		{z}_{cl}\T {A}_{cl}\T {z}_{cl} 
-		+
-		{z}_{cl}\T {P} {F}_{cl} {\zeta} +
-		{\zeta}\T {F}_{cl}\T {z}_{cl}
-		\leq 0
+	где система считается квадратичной устойчивой в конечное время тогда и только тогда, когда существует положительно-определённая матрица ${P} = \bigl[ \begin{smallmatrix}  {P}_1 & {P}_2 \\ {P}_2\T & {P}_3 \end{smallmatrix} \bigr]$.
+	Производная от кандидат-функции Ляпунова может быть переписана как:
+		\begin{align}
+			\begin{bmatrix}
+				z_cl \\ \zeta
+			\end{bmatrix}\T
+		\begin{bmatrix}
+			{P} {A}_{cl} + {A}_{cl}\T {P} & {P} {F}_{cl} \\
+			{F}_{cl} \T {P} & 0
+		\end{bmatrix} 
+		\begin{bmatrix}
+			z_cl & \zeta
+		\end{bmatrix}\leq 0.
 	\end{align}
 	Перепишем как
 	\begin{align}
@@ -252,7 +294,7 @@
 				0 & {I}
 			\end{bmatrix}
 		\end{align}
-		После последнего перемножения, мы получаем:
+		Раскрыв скобки в последнем уравнении, мы получаем:
 		\begin{align}
 			&{P}_{1}{Q}_{1}+{P}_{2}{Q}_{2}\T ={I}\\
 			&{P}_{1}\T{Q}_{2}+{P}_{2}{Q}_{3} =0\label{eq: lemma mult1}\\
@@ -269,12 +311,12 @@
 			\begin{bmatrix}
 				{Q}_{1} & {I}\\
 				{Q}_{2}\T & 0
-			\end{bmatrix}\\
+			\end{bmatrix},\\
 			{P}_{CL}=
 			\begin{bmatrix}
 				{I} & {P}_{1} \\
 				0 & {P}_{2}\T
-			\end{bmatrix}
+			\end{bmatrix}.
 		\end{align}
 		Матрица ${Q}_{2}$ имеет полный ранг и матрица ${Q}_{CL}$ тоже имеет полный ранг, тогда
 		\begin{align}
@@ -282,8 +324,9 @@
 			\begin{bmatrix} 
 				{Q}_{1} & I \\ 
 				I & {P}_{1}
-			\end{bmatrix}
+			\end{bmatrix}.
 		\end{align}
+		
 		И наоборот, предположим ii). верно. Мы можем умножить на $-1$ и применить дополнение Шура к неравенству 
 		$\bigl( \begin{smallmatrix} 
 			{Q}_{1} & I \\ 
@@ -333,7 +376,7 @@
 		\begin{bmatrix}
 			{A}_R + {B}{D}_K{C}{R}\\
 			{P}_{1}{A}_R + {P}_{1}{B}{D}_K{C}{R}+{P}_1{B}_K{C}{R}
-		\end{bmatrix}
+		\end{bmatrix},
 	\end{align}
 	%
 	\begin{align}
@@ -341,12 +384,12 @@
 		& \begin{bmatrix}
 			{A}_N{Q}_{1} +{Q}_{1}{A}_N\T + {B}{\hat{C}}_K +{\hat{C}}_K\T{B}\T & {A}_N + {\hat{A}}_K\T +{B}{D}_K{C}{N}\\
 			{A}_N\T + {N}\T{C}\T{D}_K\T{B}\T+{\hat{A}}_K & {P}_{1}{A}_N +{A}_N\T{P}_{1}+{\hat{B}}_K{C}{N}+{N}\T{C}\T{\hat{B}}_K\T
-		\end{bmatrix}   
+		\end{bmatrix},   
 	\end{align}
 	\begin{align}
-		{\hat{C}}_K= {D}_K{C}{N}{Q}_{1} + {C}_K{Q}_{2}\T\\
-		{\hat{B}}_K = {P}_{1}{B}{D}_K + {P}_{2}{B}_K\\
-		{\hat{A}}_K = {P}_{1}({A}_N+{B}{D}_K{C}{N}){Q}_{1}+{P}_{2}{B}_K{C}{N}{Q}_{1}+{P}_{1}{B}{C}_K{Q}_{2}\T+{P}_{2}{A}_K{Q}_{2}\T
+		&{\hat{C}}_K= {D}_K{C}{N}{Q}_{1} + {C}_K{Q}_{2}\T\\
+		&{\hat{B}}_K = {P}_{1}{B}{D}_K + {P}_{2}{B}_K\\
+		&{\hat{A}}_K = {P}_{1}({A}_N+{B}{D}_K{C}{N}){Q}_{1}+{P}_{2}{B}_K{C}{N}{Q}_{1}+{P}_{1}{B}{C}_K{Q}_{2}\T+{P}_{2}{A}_K{Q}_{2}\T
 	\end{align}
 	Финальное неравенство
 	\begin{align}\label{eq: final LMI}
@@ -362,8 +405,8 @@
 	\end{align}
 	где
 	\begin{align}
-		{\Theta}_1 = {A}_N{Q}_{1} +{Q}_{1}{A}_N\T + {B}{\hat{C}}_K +{\hat{C}}_K\T{B}\T \\
-		{\Theta}_2 = {P}_{1}{A}_N +{A}_N\T{P}_{1}+{\hat{B}}_K{C}{N}+{N}\T{C}\T{\hat{B}}_K\T
+		&{\Theta}_1 = {A}_N{Q}_{1} +{Q}_{1}{A}_N\T + {B}{\hat{C}}_K +{\hat{C}}_K\T{B}\T \\
+		&{\Theta}_2 = {P}_{1}{A}_N +{A}_N\T{P}_{1}+{\hat{B}}_K{C}{N}+{N}\T{C}\T{\hat{B}}_K\T
 	\end{align}
 	И держится неравенство: 
 	\begin{align}\label{eq: condition}
@@ -387,13 +430,6 @@
 		\end{cases}
 	\end{aligned}
 \end{equation}
-После решения оптимизационной задачи, мы можем найти коэффициенты следующим образом:
-\begin{align}
-	{P}_{2} = ({I}-{P}_{1}{Q}_{1})({Q}_{2}\T)^{-1}\\
-	{C}_K = ({\hat{C}}_K - {D}_K {C} {N} {Q}_{1} ) ({Q}_{2}\T)^{-1}\\
-	{B}_K = {P}_{2}^{-1}({\hat{B}}_K- {P}_{1}{B}{D}_K)\\
-	{A}_K = {P}_{2}^{-1}({\hat{A}}_K-{P}_{1}({A}_N+{B}{D}_K{C}{N}){Q}_{1} - {P}_{2}{B}_K{C}{C}{Q}_{1}-{P}_{1} {B}{C}_K{Q}_{2}\T)({Q}_{2}\T)^{-1}
-\end{align}
 
 \section{Эксперименты}\label{sec:ch5/sect2}
 Сначала мы продемонстрируем работу предложенных методов. Мы решаем оптимизационную задачу \eqref{eq:thm1_OCP} для случая смешанной неопределённости (аддитивной и мультипликативной) и оптимизационную задачу \eqref{eq:thm3_OCP} только для мультипликативной неопределённости. Мы решаем обе задачи для различных значений $\epsilon_1$. На рисунке \ref{fig:cost} показано, как их соответствующие оптимальные затраты зависят от выбора $\epsilon_1$. Результаты показывают, что задача выполнима, а оптимальная стоимость как функция от $\epsilon_1$ описывает выпуклую кривую, что упрощает выбор оптимального значения этого параметра.
