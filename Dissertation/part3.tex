@@ -652,8 +652,15 @@ ${N}_3 \in \mathbb{R}^{q \times n}$ - известные матрицы,
 $\epsilon_1=\frac{\kappa}{1-\kappa}$, из чего находим диапазон $\kappa$ как $0 < \kappa < 1$, так как $\epsilon_1 > 0$ \cite{Li1997}. Разделив диапазон $\kappa$ поровну, находим значения $\epsilon_1$, связанные с каждым значением $\kappa$, и решаем задачу \eqref{eq:thm3_OCP} для каждого из них; оптимальным считается тот, который обеспечивает наименьшую стоимость. Этот метод был представлен в \cite{Li1997}.
 
 \section{Эксперименты}\label{sec:ch3/sect3}
-
 \subsection{Описание робота}\label{sec:ch3/sect3/sub1}
+В этом разделе мы численно подтверждаем приведённые ранее теоремы для нахождения оптимального робастного управления на примере реального четвероногого робота Unitree A1, изображённого на Рисунке \cref{fig:unitree}.
+\begin{figure}[ht]
+	\centerfloat{
+		\includegraphics[scale=0.35]{images/unitree.png}
+	}
+	\caption{Unitree A1}\label{fig:unitree}
+\end{figure} 
+
 \begin{figure}[ht]
 	\centerfloat{
 		\includegraphics[scale=0.7]{images/FlatQuadruped.jpeg}
