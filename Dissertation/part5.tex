@@ -8,14 +8,14 @@
 		y = {C} {N} {z} + {C} {R} {\zeta},
 	\end{cases}
 \end{equation}
-где матрицы $A_n$,  $B$ и  $С$ являются матрицами состояния, управления и наблюдения соответственно. А матрица ${A}_r$ отвечает за статическую часть матрицы состояния.
+где матрицы $A_n$,  $B$ и $C$ являются матрицами состояния, управления и наблюдения соответственно. А матрица ${A}_r$ отвечает за статическую часть матрицы состояния.
 
 Рассмотрим следующий закон управления с динамической обратной связью:
 \begin{equation}
 	\label{eq:part5_controller}
 	\begin{cases}
 		\dot{{z}}_K = {A}_K {z}_K + {B}_K {y},\\
-		{u} = {C}_K {z}_K + {D}_K {y},
+		{u} = {C}_K {z}_K + {D}_K {y}.
 	\end{cases}
 \end{equation}
 Мы можем переписать предыдущую систему уравнений как:
@@ -44,7 +44,7 @@
 	\begin{bmatrix}
 		{A}_R \\ 0 
 	\end{bmatrix}
-	\zeta
+	\zeta,
 	\\
 	\label{eq:part5_system2}
 	& \begin{bmatrix}
@@ -65,7 +65,7 @@
 	+
 	\begin{bmatrix}
 		0 \\ {C} {R}
-	\end{bmatrix}{\zeta}
+	\end{bmatrix}{\zeta},
 \end{align}
 где матрица $\bigl[ \begin{smallmatrix}  {I} & -{D}_K \\ 0 & {I} \end{smallmatrix} \bigr]$ должна быть невырожденной, котороя она и будет всегда являться, следуя:
 \begin{equation}
@@ -74,17 +74,18 @@
 			{I} & -{D}_K \\ 0 & {I}
 		\end{bmatrix}^{-1} = 
 		\\
-		\begin{bmatrix}
+		=\begin{bmatrix}
 			{I} + {I}(-{D}_K)({I}-0*{I}(-{D}_K))*0*{I} & -{I}(-{D}_K)({I}-0*{I}(-{D}_K))^{-1}\\
 			-({I} - 0*{I}({D}_K))^{-1}*0*{I} &
 			{I}-(0*{I}(-{D}_K))^{-1}
-		\end{bmatrix}= 
+		\end{bmatrix}= \\
+		=
 		\begin{bmatrix}
 			{I} & {D}_K \\ 0 & {I}
-		\end{bmatrix}
+		\end{bmatrix}.
 	\end{gathered}
 \end{equation}
-Подставим \ref{eq:part5_system2} в \ref{eq:part5_system1}:
+Подставим \eqref{eq:part5_system2} в \eqref{eq:part5_system1}:
 \begin{align}
 	\nonumber
 	& \begin{bmatrix}
@@ -113,7 +114,7 @@
 		{z} \\ {z}_K
 	\end{bmatrix}
 	+ \\
-	& \left(
+	& + \left(
 	\begin{bmatrix}
 		{B} & 0 \\
 		0 & {B}_K
@@ -129,7 +130,7 @@
 	\begin{bmatrix}
 		{A}_R \\ 0 
 	\end{bmatrix}\right)
-	{\zeta}
+	{\zeta}.
 \end{align}
 Раскроем скобки и упростим выражение:
 \begin{align}
@@ -149,7 +150,7 @@
 	\begin{bmatrix}
 		{A}_R + {B}{D}_K{C}{R}\\ {B}_K{C}_R
 	\end{bmatrix}
-	{\zeta}
+	{\zeta}.
 \end{align}
 Обозначим:
 \begin{align}
@@ -166,14 +167,14 @@
 		{A}_R + {B}{D}_K{C}{R}\\ {B}_K{C}_R
 	\end{bmatrix}.
 \end{align}
-Используя новые обозначения, перепишем \ref{eq:part5_cl}, как:
+Используя новые обозначения, перепишем \eqref{eq:part5_cl}, как:
 \begin{align}
 	\label{eq:part5_system}
 	&{\dot{z}}_{cl} = {A}_{cl} {z}_{cl}+ {F}_{cl}\zeta.
 \end{align}
 \begin{theorem}
-	Система \eqref{eq:part5_system} асимптотически устойчива, если существуют положительно-определённые матрицы ${Q}_1>0$, ${P}_1>0$, матрицы $\hat{{A}_K}$,  $\hat{{B}_K}$, $\hat{{C}_K}$ и $D_K$
-	и положительный скаляр $\alpha>0$ такие, что выполняется следующие линейно-матричные неравенства:
+	Система \eqref{eq:part5_system} асимптотически устойчива, если существуют положительно-определённые матрицы ${Q}_1>0$, ${P}_1>0$, матрицы $\hat{{A}}_K$,  $\hat{{B}}_K$, $\hat{{C}}_K$ и $D_K$
+	и положительный скаляр $\alpha>0$ такие, что выполняется следующие линейные матричные неравенства:
 		\begin{align}\label{eq:part5_finalLMI}
 		\begin{bmatrix}
 			{\Theta}_1  & {A}_N + {\hat{A}}_K\T +{B}{D}_K{C}{N} & {A}_R + {B}{D}_K{C}{R}\\
@@ -197,7 +198,7 @@
 			I & {P}_{1}
 		\end{bmatrix} > 0.
 	\end{align}
-	И коэффициенты находятся следующим образом 
+	И коэффициенты регулятора находятся следующим образом 
 	\begin{align}
 		&{P}_{2} = ({I}-{P}_{1}{Q}_{1})({Q}_{2}\T)^{-1},\\
 		&{C}_K = ({\hat{C}}_K - {D}_K {C} {N} {Q}_{1} ) ({Q}_{2}\T)^{-1},\\
@@ -206,17 +207,17 @@
 	\end{align}
 \end{theorem}
 \begin{proof}
-	Введём кандидата в функцию Ляпунова ${V} = {z}_{cl}\T {P}{z}_{cl} \geq 0$ и её производную:
+	Введём кандидата в функцию Ляпунова ${V} = {z}_{cl}\T {P}{z}_{cl} > 0$ и её производную:
 	\begin{align}
 		{\dot{V}} = {z}_{cl}\T {P} {A}_{cl} {z}_{cl} +
 		{z}_{cl}\T {A}_{cl}\T {z}_{cl} 
 		+
 		{z}_{cl}\T {P} {F}_{cl} {\zeta} +
 		{\zeta}\T {F}_{cl}\T {z}_{cl}
-		\leq 0,
+		< 0,
 	\end{align}
-	где система считается квадратичной устойчивой в конечное время тогда и только тогда, когда существует положительно-определённая матрица ${P} = \bigl[ \begin{smallmatrix}  {P}_1 & {P}_2 \\ {P}_2\T & {P}_3 \end{smallmatrix} \bigr]$.
-	Производная от кандидат-функции Ляпунова может быть переписана как:
+	где система считается асимптотически устойчивой в конечное время тогда и только тогда, когда существует положительно--определённая матрица ${P} = \bigl[ \begin{smallmatrix}  {P}_1 & {P}_2 \\ {P}_2\T & {P}_3 \end{smallmatrix} \bigr]$.
+	Производная от кандидата в функции Ляпунова может быть переписана как:
 		\begin{align}
 			\begin{bmatrix}
 				z_cl \\ \zeta
@@ -227,14 +228,14 @@
 		\end{bmatrix} 
 		\begin{bmatrix}
 			z_cl & \zeta
-		\end{bmatrix}\leq 0.
+		\end{bmatrix} < 0.
 	\end{align}
 	Перепишем как
 	\begin{align}
 		\begin{bmatrix}
 			{P} {A}_{cl} + {A}_{cl}\T {P} & {P} {F}_{cl} \\
 			{F}_{cl} \T {P} & 0
-		\end{bmatrix} \leq 0.
+		\end{bmatrix} < 0.
 	\end{align}
 	Введём релаксацию, добавляя параметр $\alpha$, который и будет условием релаксации:
 	\begin{align}\label{eq: S procedure}
@@ -279,8 +280,8 @@
 	\begin{proof}
 		Из i)., берём 
 		\begin{align}
-			&{P} = {Q}^{-1}\\
-			&{P}{Q}={I}\\
+			&{P} = {Q}^{-1},\\
+			&{P}{Q}={I},\\
 			&\begin{bmatrix} 
 				{P}_{1} & {P}_{2}\\ 
 				{P}_{2}\T & {P}_{3} 
@@ -292,14 +293,14 @@
 			\begin{bmatrix}
 				{I} & 0 \\
 				0 & {I}
-			\end{bmatrix}
+			\end{bmatrix}.
 		\end{align}
 		Раскрыв скобки в последнем уравнении, мы получаем:
 		\begin{align}
-			&{P}_{1}{Q}_{1}+{P}_{2}{Q}_{2}\T ={I}\\
-			&{P}_{1}\T{Q}_{2}+{P}_{2}{Q}_{3} =0\label{eq: lemma mult1}\\
-			&{P}_{2}\T{Q}_{1}+{P}_{3}{Q}_{2}\T=0\\
-			&{P}_{2}\T{Q}_{2}+{P}_{3}{Q}_{3}= {I} \label{eq: lemma mult2}
+			&{P}_{1}{Q}_{1}+{P}_{2}{Q}_{2}\T ={I},\\
+			&{P}_{1}\T{Q}_{2}+{P}_{2}{Q}_{3} =0\label{eq: lemma mult1},\\
+			&{P}_{2}\T{Q}_{1}+{P}_{3}{Q}_{2}\T=0,\\
+			&{P}_{2}\T{Q}_{2}+{P}_{3}{Q}_{3}= {I} \label{eq: lemma mult2}.
 		\end{align}
 		Из данных уравнений мы получаем:
 		\begin{align}
@@ -318,7 +319,7 @@
 				0 & {P}_{2}\T
 			\end{bmatrix}.
 		\end{align}
-		Матрица ${Q}_{2}$ имеет полный ранг и матрица ${Q}_{CL}$ тоже имеет полный ранг, тогда
+		Матрица ${Q}_{2}$ имеет полный ранг, и матрица ${Q}_{CL}$ тоже имеет полный ранг, тогда
 		\begin{align}
 			0<{Q}_{CL}\T {P} {Q}_{CL} = {Q}_{CL}\T {P}_{CL} = 
 			\begin{bmatrix} 
@@ -344,14 +345,15 @@
 		
 		Обозначим ${P}$ и ${Q}$ как 
 		\begin{align*}
-			{P} = {P}_{CL}{Q}_{CL}^{-1} \qquad и \qquad {Q} ={Q}_{CL}{P}_{CL}^{-1}.
+			{P} = {P}_{CL}{Q}_{CL}^{-1}, \qquad {Q} ={Q}_{CL}{P}_{CL}^{-1}.
 		\end{align*} 
-		Далее умножая ${P}$ и ${Q}$, мы получаем единичную матрицу
+		Далее перемножая ${P}$ и ${Q}$, мы получаем единичную матрицу
 		\begin{align*}
 			{P}{Q}={P}_{CL}{Q}_{CL}^{-1}{Q}_{CL}{P}_{CL}^{-1}={I}.
 		\end{align*}
 		Таким образом ${P}={Q}^{-1}$.
-		${P}_3$ и ${Q}_3$ при необходимости можно найти из (\ref{eq: lemma mult1}-\ref{eq: lemma mult2}).
+		
+		${P}_3$ и ${Q}_3$ при необходимости можно найти из \eqref{eq: lemma mult1}-\eqref{eq: lemma mult2}.
 	\end{proof}
 	Домножим с правой и левой стороны правую часть (\ref{eq: S procedure}) на матрицы $diag({Q}_{CL}\T, {I}, {I})$ и $diag({Q}_{CL}, {I}, {I})$ для линеаризации неравенств в переменных:
 	\begin{align}
@@ -381,15 +383,15 @@
 	%
 	\begin{align}
 		&{Q}_{CL}\T{A}_{CL}\T {P}_{CL} + {P}_{CL}\T{A}_{CL}{Q}_{CL} = \nonumber \\
-		& \begin{bmatrix}
+		& = \begin{bmatrix}
 			{A}_N{Q}_{1} +{Q}_{1}{A}_N\T + {B}{\hat{C}}_K +{\hat{C}}_K\T{B}\T & {A}_N + {\hat{A}}_K\T +{B}{D}_K{C}{N}\\
 			{A}_N\T + {N}\T{C}\T{D}_K\T{B}\T+{\hat{A}}_K & {P}_{1}{A}_N +{A}_N\T{P}_{1}+{\hat{B}}_K{C}{N}+{N}\T{C}\T{\hat{B}}_K\T
 		\end{bmatrix},   
 	\end{align}
 	\begin{align}
-		&{\hat{C}}_K= {D}_K{C}{N}{Q}_{1} + {C}_K{Q}_{2}\T\\
-		&{\hat{B}}_K = {P}_{1}{B}{D}_K + {P}_{2}{B}_K\\
-		&{\hat{A}}_K = {P}_{1}({A}_N+{B}{D}_K{C}{N}){Q}_{1}+{P}_{2}{B}_K{C}{N}{Q}_{1}+{P}_{1}{B}{C}_K{Q}_{2}\T+{P}_{2}{A}_K{Q}_{2}\T
+		&{\hat{C}}_K= {D}_K{C}{N}{Q}_{1} + {C}_K{Q}_{2}\T,\\
+		&{\hat{B}}_K = {P}_{1}{B}{D}_K + {P}_{2}{B}_K,\\
+		&{\hat{A}}_K = {P}_{1}({A}_N+{B}{D}_K{C}{N}){Q}_{1}+{P}_{2}{B}_K{C}{N}{Q}_{1}+{P}_{1}{B}{C}_K{Q}_{2}\T+{P}_{2}{A}_K{Q}_{2}\T.
 	\end{align}
 	Финальное неравенство
 	\begin{align}\label{eq: final LMI}

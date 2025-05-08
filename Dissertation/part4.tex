@@ -5,10 +5,10 @@
 %
 \begin{equation}
 	\label{eq:part2_nu_uncertainty}
-	{F}_i\T{F}_i\leq \nu_i {I}, \ \ i=1,2,3;
+	{F}_i\T{F}_i\leq \nu_i {I}, \ \ i=1,2,3.
 \end{equation}
 %
-Мы можем предложить условия на изменение коэффициента регулятора и наблюдателя, которые гарантируют устойчивость при любом допустимом значении ${F}_1$ для заданного радиуса неопределённости $\nu$:
+Мы можем предложить условия на изменение коэффициента регулятора и наблюдателя, которые гарантируют устойчивость при любом допустимом значении ${F}_i$ для заданного радиуса неопределённости $\nu$:
 \begin{theorem}\label{thm:part2_LMI_2}
 	Система (\ref{eq:part2_system}) асимптотически стабильна для всех матриц
 	$\Delta {A}_n={M}_1{F}_1{N}_1$, 
@@ -44,7 +44,7 @@
 	и ${\Lambda}_1$, ${\Lambda}_2$ определены в \eqref{eq:Lambda_1} и \eqref{eq:Lambda_2}. 
 \end{theorem}
 \begin{proof}
-	Доказательство этой теоремы мы начинаем аналогично доказательству Теоремы \ref{thm:part2_LMI_1}; шаги, представленные уравнениями \eqref{eq:thm3_Lyapunov_candidat}-\eqref{eq:eta_3_thm3}, те же самые. Отсюда, используя \eqref{eq:part2_nu_uncertainty}, мы получаем:
+	Доказательство этой теоремы мы начинаем аналогично доказательству Теоремы \ref{thm:part2_LMI_1}, шаги, представленные уравнениями \eqref{eq:thm3_Lyapunov_candidat}-\eqref{eq:eta_3_thm3}, те же самые. Отсюда, используя \eqref{eq:part2_nu_uncertainty}, мы получаем:
 	\begin{align}
 		\label{eq:eta1_bound}
 		\eta_1\T\eta_1 &\leq \chi\T \begin{bmatrix}
@@ -66,7 +66,7 @@
 		\end{bmatrix} \chi.
 	\end{align}
 	%
-	Используя S-процедуру из леммы \ref{lemma:S_procedure} для включения вышеуказанных условий и обозначая $\bar{\mu}_i=\frac{1}{\mu_i}$, получаем:
+	Используя S--процедуру из Леммы \ref{lemma:S_procedure} для включения вышеуказанных условий и обозначая $\bar{\mu}_i=\frac{1}{\mu_i}$, получаем:
 	\begin{multline}
 		\begin{bmatrix}
 			{\Theta}_1 & -{P}_1{B}{K}_z & {P}_1{M}_1 & {P}_1{M}_2 &0 \\
@@ -75,7 +75,7 @@
 			* & * & * & 0&0 \\
 			* & * & * & *&0
 		\end{bmatrix} + \\
-		\begin{bmatrix}
+		+ \begin{bmatrix}
 			\mathcal{X}_{\mu}& -\mu_2{K}_z\T{N}_2\T{N}_2{K}_z &0 &0 & 0\\
 			*&\mu_2{K}_z\T{N}_2\T{N}_2{K}_z&0&0&0\\
 			*&*&-\gamma_1{I}&0&0\\
@@ -90,8 +90,45 @@
 		\mathcal{X}_{\mu}=\mu_1{N}_1\T{N}_1 +\mu_2{K}_z\T{N}_2\T{N}_2{K}_z+\mu_3{N}\T{N}_3\T{N}_3{N},
 	\end{equation}
 	и $\mu_i=\gamma_i\nu_i$ для $i=1,2,3$.
-Используя дополнение Шура для избавления от билинейности в переменных из леммы \ref{lemma:Schur}:
+	
+Перепишем предыдущее неравенство как:
+	\begin{multline}
+		\label{eq:thm4_before_1Schur}
+	\begin{bmatrix}
+		{\Theta}_1 + \mathcal{X}_{S} & -{P}_1{B}{K}_z -\mu_2{K}_z\T{N}_2\T{N}_2{K}_z & {P}_1{M}_1 & {P}_1{M}_2 &0 \\
+		* &    {\Theta}_2 + \mu_2{K}_z\T{N}_2\T{N}_2{K}_z & {P}_2{M}_1 & {P}_2{M}_2 & {P}_2{L}_z{M}_3\\
+		* & * & -\gamma_1{I} & 0&0\\
+		* & * & * & -\gamma_2{I}&0 \\
+		* & * & * & *&-\gamma_3{I}
+	\end{bmatrix} + \\
+	+ \begin{bmatrix}
+		N_1\T \\ 0 \\0\\0\\0
+	\end{bmatrix} \mu_1
+	\begin{bmatrix}
+		N_1 & 0 & 0 & 0&0
+	\end{bmatrix}
+	<0,
+\end{multline}
+	где
+%
+\begin{equation}
+	\mathcal{X}_{S}=\mu_2{K}_z\T{N}_2\T{N}_2{K}_z+\mu_3{N}\T{N}_3\T{N}_3{N}.
+\end{equation}
+Используя дополнение Шура из Леммы \ref{lemma:Schur}:
+	\begin{equation}
+	\label{eq:thm4_after_1Schur}
+	\begin{bmatrix}
+		{\Theta}_1 + \mathcal{X}_{S} & -{P}_1{B}{K}_z -\mu_2{K}_z\T{N}_2\T{N}_2{K}_z & {P}_1{M}_1 & {P}_1{M}_2 &0 & N_1\T\\
+		* &    {\Theta}_2 + \mu_2{K}_z\T{N}_2\T{N}_2{K}_z & {P}_2{M}_1 & {P}_2{M}_2 & {P}_2{L}_z{M}_3 &0\\
+		* & * & -\gamma_1{I} & 0&0&0\\
+		* & * & * & -\gamma_2{I}&0&0 \\
+		* & * & * & *&-\gamma_3{I}&0 \\
+			* & * & * & *& *& -\bar{\mu}_1{I}
+	\end{bmatrix}
+	<0.
+\end{equation}
 	%
+Повторяем шаги \eqref{eq:thm4_before_1Schur}--\eqref{eq:thm4_after_1Schur} два раза для устранения билинейности в переменных:
 	\begin{equation}
 		\label{eq:thm4_after_Schur}
 		\begin{bmatrix}
@@ -107,7 +144,7 @@
 		\end{bmatrix}<0.
 	\end{equation}
 	%
-Умножаем справа и слева \ref{eq:thm4_after_Schur} на $\textbf{diag}({Q}_1, {I})$, где ${Q}_1 = {P}_1^{-1}$, находим:
+Умножаем справа и слева \eqref{eq:thm4_after_Schur} на $\text{diag}({Q}_1, {I})$, где ${Q}_1 = {P}_1^{-1}$:
 %
 \begin{equation}
 	\label{eq:thm4_before_Young}
@@ -123,27 +160,51 @@
 		*&* & * & * & *&*&*&-\bar{\mu}_3{I}
 	\end{bmatrix}<0,
 \end{equation}
-Используем леммы \ref{lemma:Young}, \ref{lemma:Schur} и замены переменных аналогично выражениям (\ref{eq:thm3_before_Young_2})-(\ref{eq:thm3_LMI_before_alpha_beta_1}), получаем
 
-	\begin{equation}
-	\label{eq:thm4_LMI_before_alpha_beta}
+Повторяя шаги \eqref{eq:thm3_before_Young_2}--\eqref{eq:after_Young_2}, 
+используем Леммы \ref{lemma:Young} и \ref{lemma:Schur}, получаем:
+\begin{equation}
+	\label{eq:thm4_final_LMI_var}
 	\begin{bmatrix}
-		{\Lambda}_1 & 0 & {M}_1 & {M}_2&0 & {Q}_1{N}_1\T & {Q}_1{K}_z\T{N}_2\T & {Q}_1 {N}\T{N}_3\T & {B}{K}_z Q_1& 0\\
-		* & {\Lambda}_2 & {P}_2{M}_1 & {P}_2{M}_2 & \hat{{L}}_z{M}_3& 0& 0&0&0&{I} \\
-		* & * & -\gamma_1{I} & 0&0&0&0&0&0&0\\
-		* & * &*  & -\gamma_2{I}&0&0&0&0&0&0\\
-		*& * & * &*  & -\gamma_3{I}&0&0&0&0&0\\
-		* &* & * & * & *&-\bar{\mu}_1{I}&0&0&0&0\\
-		* & * & * &*& *&*&-\bar{\mu}_2{I}& 0&{N}_2{K}_z Q_1&0\\
-		*&*&* &* & * & * & *&-\bar{\mu}_3{I}&0&0\\
-		* & * & *&*&* & *&*&*&-\frac{1}{\epsilon_1}{Q}_1&0\\
-		* & * & * & *&*&*&*&*&*&-\epsilon_1{Q}_1\\
-	\end{bmatrix}<0.
+		\mathcal{K}_{11} & \mathcal{K}_{12} \\
+		* & \mathcal{K}_{22}
+	\end{bmatrix}<0,
 \end{equation}
+где
+\begin{equation}
+	\mathcal{K}_{11}= \begin{bmatrix}
+		{\Lambda}_1 & 0 & {M}_1 & {M}_2&0  \\
+		* & {\Lambda}_2 & {P}_2{M}_1 & {P}_2{M}_2 & \hat{{L}}_z{M}_3\\
+		* & * & -\gamma_1{I} & 0&0\\
+		* & * &*  & -\gamma_2{I} &0\\
+		*& * & * &*  &-\gamma_3{I}\\
+	\end{bmatrix},
+\end{equation}
+%
+\begin{equation}
+	\mathcal{K}_{12}= \begin{bmatrix}
+		{Q}_1{N}_1\T & \hat{{K}}_z\T{N}_2\T & {Q}_1 {N}\T{N}_3\T & {B}\hat{{K}}_z & 0\\
+		0&0&0&0&I\\
+		0&0& 0&0&0\\
+		0&0&0& 0&0\\
+		0&0&0&0&0\\
+	\end{bmatrix},
+\end{equation}
+%
+\begin{equation}
+	\mathcal{K}_{22}=
+	\begin{bmatrix}
+		-\bar{\mu}_1{I}&0&0&0&0 \\
+		*&-\bar{\mu}_2{I}& 0&{N}_2\hat{{K}}_z&0\\
+		* & *&-\bar{\mu}_3{I}&0&0\\
+		* & *&*&-\frac{1}{\epsilon_1}{Q}_1&0\\
+		*&*&*&*&-\epsilon_1{Q}_1\\
+	\end{bmatrix}.
+\end{equation}%
 
-Продолжая, как и в предыдущих доказательствах, использовать замену переменных, мы приходим к окончательному линейному матричному неравенству \eqref{eq:thm4_final_LMI}.
+Используем замену переменных $\hat{{K}}_z={K}_z{Q}_1$, $\hat{{L}}_z={P}_2{L}_z$, приходим к окончательному линейному матричному неравенству \eqref{eq:thm4_final_LMI}.
 \end{proof}
-В отличие от предыдущей задачи оптимизации, здесь не существует естественной формулировки целевой функции. Мы предлагаем два варианта целевой функции:
+В отличие от предыдущей задачи оптимизации, здесь не существует естественной формулировки целевой функции. Предлагается два варианта целевой функции:
 \begin{align}
 	\label{eq:cost_lin}
 	J_\text{lin} &= \sum_{i=1}^{3}\left(\bar{\mu}_i+\gamma_i\right) \\ 
@@ -151,7 +212,7 @@
 	J_\text{quad} & =  \sum_{i=1}^{3}\left((\bar{\mu}_i-\varpi)^2+(\gamma_i-\varpi)^2\right) + \varpi^2,
 \end{align}
 %
-где $\varpi$ - свободная переменная. Целью обеих функций затрат является максимизация $\nu_i$, которая достигается минимизацией либо $J_\text{lin}$, либо $J_\text{quad}$. Максимизируя $\nu_i$, мы достигаем устойчивости к большему набору неопределённых матриц $\Delta {A}_n$, $\Delta {B}$ и $\Delta {C}$.
+где $\varpi$ --- свободная переменная. Целью обеих целевых функций является максимизация $\nu_i$, которая достигается минимизацией либо $J_\text{lin}$, либо $J_\text{quad}$. Максимизируя $\nu_i$, мы достигаем устойчивости к большему набору неопределённых матриц $\Delta {A}_n$, $\Delta {B}$ и $\Delta {C}$.
 
 Кроме того, может быть интересно ограничить набор неопределённых матриц, ограничив $\nu_i \leq 1$. Утверждение $\nu_i=\frac{1}{\bar{\mu_i}\gamma_i} \leq 1$ преобразуется в $\frac{1}{\bar{\mu}_i}\leq \gamma_i$, и, используя дополнение Шура, мы получаем линейное ограничение: 
 %
@@ -168,9 +229,9 @@
 \begin{equation}
 	\label{eq:thm4_OCP}
 	\begin{aligned}
-		& \underset{\bar{\mu}_i,\gamma_i,{Q}_1, {P}_2,\hat{{K}} , \hat{{L}} }{\text{minimize}}
+		& \underset{\bar{\mu}_i,\gamma_i,{Q}_1, {P}_2,\hat{{K}} , \hat{{L}} }{\text{минимизируя}}
 		& &  \sum_{i=1}^{3}\left(\bar{\mu}_i+\gamma_i\right), \\
-		& \text{subject to}
+		& \text{при ограничениях}
 		& & \begin{cases}
 			{Q}_1>0, \ \
 			{P}_2>0, \ \
@@ -198,7 +259,7 @@
 	\end{cases}
 \end{equation}
 %
-где $z$ это динамические состояния, $\zeta = \text{const}$ - статические состояния и $\Delta {A}_n$ представляет мультипликативную модель неопределённостей и имеет следующую структуру:
+где $z$ --- это динамические состояния, $\zeta = \text{const}$ --- статические состояния и $\Delta {A}_n$ представляет мультипликативную модель неопределённостей и имеет следующую структуру:
 %
 \begin{equation}
 	\label{eq:part1_uncertainty}
@@ -206,9 +267,9 @@
 \end{equation}
 %
 где ${M_1} \in \mathbb{R}^{n_z \times d}$ и 
-${N_1} \in \mathbb{R}^{d \times n_z}$ известные матрицы, ${F}_1$ - неизвестная матрица ограниченная по норме и $\nu$ - неизвестный радиус - скаляр, определяющий лимит наложенный на норму ${F}_1$.
+${N_1} \in \mathbb{R}^{d \times n_z}$ --- известные матрицы, ${F}_1$ --- неизвестная матрица ограниченная по норме и $\nu$ --- неизвестный радиус --- скаляр, определяющий лимит наложенный на норму ${F}_1$.
 
-Следуя \cite{SAVIN2021} мы можем ввести наблюдатель Люенберга:
+Следуя \cite{SAVIN2021} вводим наблюдатель Люенберга:
 %
 \begin{equation}
 	\begin{bmatrix}
@@ -230,9 +291,9 @@ ${N_1} \in \mathbb{R}^{d \times n_z}$ известные матрицы, ${F}_1$
 	\end{bmatrix} \right),
 \end{equation}
 %
-где ${L}$ - коэффициент наблюдателя.
+где ${L}$ --- коэффициент наблюдателя.
 
-Определим ошибку оценки состояния как $e = [ (z-\hat{z})\T \ \ (\zeta-\hat{\zeta})\T ]\T$ и введём блочную матрицу:
+Определим ошибку оценки состояния как $e = [ (z-\hat{z})\T \ \ (\zeta-\hat{\zeta})\T ]\T$ и введём блочные матрицы:
 ${S} = \begin{bmatrix}
 	{I} \\ 0
 \end{bmatrix}$, 
@@ -241,9 +302,10 @@ $
 {A}_c=    \begin{bmatrix}
 	{A}_r  & {A}_{\rho} \\
 	0  & 0
-\end{bmatrix}
+\end{bmatrix}.
 $
-записываем ошибку наблюдателя динамики:
+
+Записываем ошибку наблюдателя динамики:
 %
 \begin{equation}
 	\label{eq:part1_error_dynamics}
@@ -258,7 +320,7 @@ $
 %
 и определяем ${K}=\begin{bmatrix}
 	{K}_z & {K}_{\zeta}
-\end{bmatrix}$ записываем динамическую систему с обратной связью:
+\end{bmatrix}$, записываем динамическую систему с обратной связью:
 %
 \begin{equation}
 	\label{eq:part1_active_dynamics}
@@ -306,7 +368,7 @@ $
 			* & * & * & * & *& * & -2\beta {I} & 0 & \alpha {I} \\
 			* & * & * & * & *&*&* &-{I}&0\\
 			* & * & * & * & *&*&*&* &-{I}
-		\end{bmatrix} <0.
+		\end{bmatrix} <0,
 	\end{equation}
 	%
 	где
@@ -331,25 +393,28 @@ $
 	и коэффициенты регулятора и наблюдателя находятся как ${L}={P}^{-1}_2\hat{{L}}$
 	и ${KS}=\hat{{K}}{Q}^{-1}_1$.  
 \end{theorem}
-Используя теорему \ref{thm:part1_LMI_1} и добавляя выпуклую целевую функцию, мы формулируем робастную конструкцию управления в виде полуопределённой программы:
+
+Доказательство Теоремы \ref{thm:part1_LMI_1} приведено в \cite{scbib1}.
+
+Используя Теорему \ref{thm:part1_LMI_1} и добавляя выпуклую целевую функцию, мы формулируем робастную конструкцию управления в виде полуопределённой программы:
 %
 \begin{equation}
 	\label{eq:thm1_OCP}
 	\begin{aligned}
-		& \underset{\epsilon_2,\alpha,\beta, {Q}_1, {P}_2,\hat{{K}} , \hat{{L}} }{\text{minimize}}
+		& \underset{\epsilon_2,\alpha,\beta, {Q}_1, {P}_2,\hat{{K}} , \hat{{L}} }{\text{минимизируя}}
 		& & \operatorname{tr}({Q}_1\T{W}_z{Q}_1)+ \operatorname{tr}({P}_2\T{W}_e{P}_2)+ \operatorname{tr}(\hat{{K}}\T{W}_k\hat{{K}})+\operatorname{tr}(\hat{{L}}\T{W}_l\hat{{L}}), \\
-		& \text{subject to}
+		& \text{при ограничениях}
 		& & \begin{cases}
 			{Q}_1>0, \ \
 			{P}_2>0, \ \
 			\epsilon_2>0, \ \
 			\alpha>0, \ \
 			\beta>0, \\
-			\text{condition \eqref{eq:thm1_final_LMI_ab} },
+			\text{условие \eqref{eq:thm1_final_LMI_ab} },
 		\end{cases}
 	\end{aligned}
 \end{equation}
-где ${W}_z,{W}_e,{W}_k$ и ${W}_l$ - весовые матрицы.
+где ${W}_z, {W}_e, {W}_k$ и ${W}_l$ --- весовые матрицы.
  
 \subsection{Мягкая неопределённость}\label{sec:ch4/sect2/sub2}
 
@@ -364,7 +429,7 @@ $
 %
 \begin{theorem}\label{thm:part1_LMI_2}
 	Система \eqref{eq:part1_system}
-	асимптотически устойчива для любой $\Delta {A}_n =$${M}_1{F}_1{N}_1$ с ${F}_1\T{F}_1\leq \nu {I}$, если существуют положительно-определённые матрицы ${Q}_1>0$, ${P}_2>0$, матрицы $\hat{{K}}, \hat{{L}}$ и скаляр $\bar{\epsilon}>0$ такие, что следующее линейное матричное неравенство выполнимо: 
+	асимптотически устойчива для любой $\Delta {A}_n =$${M}_1{F}_1{N}_1$ с ${F}_1\T{F}_1\leq \nu {I}$, если существуют положительно--определённые матрицы ${Q}_1>0$, ${P}_2>0$, матрицы $\hat{{K}}, \hat{{L}}$ и скаляр $\bar{\epsilon}>0$ такие, что следующее линейное матричное неравенство выполнимо: 
 	%
 	\begin{equation}
 		\label{eq:thm2_final_LMI}
@@ -382,10 +447,10 @@ $
 	%
 	\begin{equation}
 		\label{eq:Upsilon_1}
-		{\Upsilon}_1={Q}_1{A}_n\T+{A}_n{Q}_1+{B}\hat{{K}}+\hat{{K}}\T{B}\T, 
+		{\Upsilon}_1={Q}_1{A}_n\T+{A}_n{Q}_1+{B}\hat{{K}}+\hat{{K}}\T{B}\T.
 	\end{equation}
-	Матрицы ${\Psi}_2$, ${\Xi}$ те же, что и в уравнениях \eqref{eq:Psi_2},\eqref{eq:H_Xi_variables},
-	а коэффициенты регулятора и наблюдателя задаются ${L}={P}^{-1}_2\hat{{L}}$.
+	Матрицы ${\Psi}_2$, ${\Xi}$ те же, что и в уравнениях \eqref{eq:Psi_2}, \eqref{eq:H_Xi_variables},
+	а коэффициенты регулятора и наблюдателя задаются ${L}={P}^{-1}_2\hat{{L}}$
 	и ${KS}=\hat{{K}}{Q}^{-1}_1$.
 \end{theorem}
 В качестве целевой функции мы можем использовать минимизацию $\bar{\epsilon}$, что эквивалентно максимизации $\nu$, так как $\nu=\frac{1}{\bar{\epsilon}^2}$. Тогда задача оптимизации приобретает вид:
@@ -393,14 +458,14 @@ $
 \begin{equation}
 	\label{eq:thm5_OCP}
 	\begin{aligned}
-		& \underset{\bar{\epsilon},{Q}_1, {P}_2,\hat{{K}} , \hat{{L}} }{\text{minimize}}
+		& \underset{\bar{\epsilon},{Q}_1, {P}_2,\hat{{K}} , \hat{{L}} }{\text{минимизируя}}
 		& &  \bar{\epsilon}, \\
-		& \text{subject to}
+		& \text{при ограничениях}
 		& & \begin{cases}
 			{Q}_1>0, \ \
 			{P}_2>0, \ \
 			\bar{\epsilon}>0, \\
-			\text{condition \eqref{eq:thm2_final_LMI} }.
+			\text{условие \eqref{eq:thm2_final_LMI} }.
 		\end{cases}
 	\end{aligned}
 \end{equation}
@@ -426,9 +491,9 @@ $
 	\caption{Верхняя граница радиусов неопределённости $\nu_i$, когда $\nu$ не ограничено для задачи \eqref{eq:thm4_OCP}; графики построены относительно значения свободного параметра $\epsilon_1$; вертикальная ось масштабирована логарифмически, обе оси без единиц.}\label{fig:mult_soft_nu}
 \end{figure} 
 Сначала, решаем оптимизационную задачу \eqref{eq:thm4_OCP} для различных значений $\epsilon_1$ для мягкой мультипликативной неопределённости. 
-На рисунке~\ref{fig:mult_soft_nu} показано, как наибольший радиус неопределённости $\nu$, который может выдержать регулятор, зависит от параметра $\epsilon_1$ (показан сплошной синей линией). График вогнутый, и появляется чётко определённое оптимальное решение. На этом же рисунке показан график, построенный при наложении условия \eqref{eq:mu_gamma_limit} (показано пунктирной красной линией). Видно, что наибольший радиус неопределённости ограничивается значением 1.
+На Рисунке~\ref{fig:mult_soft_nu} показано, как наибольший радиус неопределённости $\nu$, который может выдержать регулятор, зависит от параметра $\epsilon_1$ (показан сплошной синей линией). График вогнутый, и появляется чётко определённое оптимальное решение. На этом же рисунке показан график, построенный при наложении условия \eqref{eq:mu_gamma_limit} (показано пунктирной красной линией). Видно, что наибольший радиус неопределённости ограничивается значением 1.
 
-На рисунке \ref{fig:mult_soft_less_than_unit} ограничим мягкую неопределённость 1.
+На Рисунке \ref{fig:mult_soft_less_than_unit} ограничим мягкую неопределённость 1.
 \begin{figure}[ht]
 	\centerfloat{
 		\includegraphics[scale=1.35]{images/mult_soft_less_than_unit.JPG}
@@ -440,11 +505,11 @@ $
 Затем решим оптимизационную задачу \eqref{eq:thm4_OCP} с квадратичной целевой функцией \eqref{eq:cost_lin}:
 
 \begin{equation}
-	\label{eq:thm5_OCP}
+	\label{eq:thm5_OCP_qp}
 	\begin{aligned}
-		& \underset{\bar{\mu}_i,\gamma_i, \varpi, {Q}_1, {P}_2,\hat{{K}} , \hat{{L}} }{\text{minimize}}
+		& \underset{\bar{\mu}_i,\gamma_i, \varpi, {Q}_1, {P}_2,\hat{{K}} , \hat{{L}} }{\text{минимизируя}}
 		& &  \sum_{i=1}^{3}\left((\bar{\mu}_i-\varpi)^2+(\gamma_i-\varpi)^2\right) + \varpi^2, \\
-		& \text{subject to}
+		& \text{при ограничениях}
 		& & \begin{cases}
 			{Q}_1>0, \ \
 			{P}_2>0, \ \
@@ -471,4 +536,4 @@ $
 	\caption{Верхняя граница радиусов неопределённости $\nu_i$, когда $\nu$ ограничено для задачи \eqref{eq:thm5_OCP}; графики построены относительно значения свободного параметра $\epsilon_1$; вертикальная ось масштабирована логарифмически, обе оси без единиц.}\label{fig:mult_soft_leq_qp}
 \end{figure}
 
-На рисунке \ref{fig:mult_soft_leq_qp} показана зависимость радиусов неопределённости от параметра $\epsilon_1$
+На Рисунке \ref{fig:mult_soft_leq_qp} показана зависимость радиусов неопределённости от параметра $\epsilon_1$.
