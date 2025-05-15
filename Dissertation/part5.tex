@@ -186,17 +186,16 @@
 			0 & \alpha {I}
 		\end{bmatrix},
 	\end{align}
+		\begin{align}\label{eq: condition}
+		\begin{bmatrix} 
+			{Q}_{1} & I \\ 
+			I & {P}_{1}
+		\end{bmatrix} > 0,
+	\end{align}
 	где
 	\begin{align}
 		{\Theta}_1 = {A}_N{Q}_{1} +{Q}_{1}{A}_N\T + {B}{\hat{C}}_K +{\hat{C}}_K\T{B}\T, \\
 		{\Theta}_2 = {P}_{1}{A}_N +{A}_N\T{P}_{1}+{\hat{B}}_K{C}{N}+{N}\T{C}\T{\hat{B}}_K\T.
-	\end{align}
-	И
-	\begin{align}\label{eq: condition}
-		\begin{bmatrix} 
-			{Q}_{1} & I \\ 
-			I & {P}_{1}
-		\end{bmatrix} > 0.
 	\end{align}
 	И коэффициенты регулятора находятся следующим образом 
 	\begin{align}
