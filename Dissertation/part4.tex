@@ -1,5 +1,5 @@
-\chapter{Обобщение метода для неопределённостей}\label{ch:ch4}
-\section{Мультипликативная мягкая неопределённость}\label{sec:ch4/sect1}
+\chapter{Обобщение численного метода с линейными матричными неравенствами для оптимального робастного управления для систем с мультипликативными неопределённостями}\label{ch:ch4}
+\section{Метод для нахождения оптимального робастного управления для системы с мультипликативными неопределённостями с разным радиусом}\label{sec:ch4/sect1}
 
 В этом подразделе мы рассмотрим случай, когда неопределённости ограничены следующим образом:
 %
@@ -44,7 +44,7 @@
 	и ${\Lambda}_1$, ${\Lambda}_2$ определены в \eqref{eq:Lambda_1} и \eqref{eq:Lambda_2}. 
 \end{theorem}
 \begin{proof}
-	Доказательство этой теоремы мы начинаем аналогично доказательству Теоремы \ref{thm:part2_LMI_1}, шаги, представленные уравнениями \eqref{eq:thm3_Lyapunov_candidat}-\eqref{eq:eta_3_thm3}, те же самые. Отсюда, используя \eqref{eq:part2_nu_uncertainty}, мы получаем:
+	Доказательство этой теоремы мы начинаем аналогично доказательству теоремы \ref{thm:part2_LMI_1}, шаги, представленные уравнениями \eqref{eq:thm3_Lyapunov_candidat}--\eqref{eq:eta_3_thm3}, те же самые. Отсюда, используя \eqref{eq:part2_nu_uncertainty}, мы получаем:
 	\begin{align}
 		\label{eq:eta1_bound}
 		\eta_1\T\eta_1 &\leq \chi\T \begin{bmatrix}
@@ -66,7 +66,7 @@
 		\end{bmatrix} \chi.
 	\end{align}
 	%
-	Используя S--процедуру из Леммы \ref{lemma:S_procedure} для включения вышеуказанных условий и обозначая $\bar{\mu}_i=\frac{1}{\mu_i}$, получаем:
+	Используя S--процедуру из леммы \ref{lemma:S_procedure} для включения вышеуказанных условий в финальное неравенство и обозначая $\bar{\mu}_i=\frac{1}{\mu_i}$, получаем:
 	\begin{multline}
 		\begin{bmatrix}
 			{\Theta}_1 & -{P}_1{B}{K}_z & {P}_1{M}_1 & {P}_1{M}_2 &0 \\
@@ -114,7 +114,7 @@
 \begin{equation}
 	\mathcal{X}_{S}=\mu_2{K}_z\T{N}_2\T{N}_2{K}_z+\mu_3{N}\T{N}_3\T{N}_3{N}.
 \end{equation}
-Используя дополнение Шура из Леммы \ref{lemma:Schur}:
+Используя дополнение Шура из леммы \ref{lemma:Schur}:
 	\begin{equation}
 	\label{eq:thm4_after_1Schur}
 	\begin{bmatrix}
@@ -162,7 +162,7 @@
 \end{equation}
 
 Повторяя шаги \eqref{eq:thm3_before_Young_2}--\eqref{eq:after_Young_2}, 
-используем Леммы \ref{lemma:Young} и \ref{lemma:Schur}, получаем:
+используем леммы \ref{lemma:Young} и \ref{lemma:Schur} , получаем:
 \begin{equation}
 	\label{eq:thm4_final_LMI_var}
 	\begin{bmatrix}
@@ -207,7 +207,7 @@
 В отличие от предыдущей задачи оптимизации, здесь не существует естественной формулировки целевой функции. Предлагается два варианта целевой функции:
 \begin{align}
 	\label{eq:cost_lin}
-	J_\text{lin} &= \sum_{i=1}^{3}\left(\bar{\mu}_i+\gamma_i\right) \\ 
+	J_\text{lin} &= \sum_{i=1}^{3}\left(\bar{\mu}_i+\gamma_i\right), \\ 
 	\label{eq:cost_quad}
 	J_\text{quad} & =  \sum_{i=1}^{3}\left((\bar{\mu}_i-\varpi)^2+(\gamma_i-\varpi)^2\right) + \varpi^2,
 \end{align}
@@ -238,7 +238,7 @@
 			\bar{\mu}_i>0, \ \
 			\gamma_i>0, \ \
 			\text{для} \ \ i=1,2,3; \\
-			\text{условия \eqref{eq:thm4_final_LMI}, \eqref{eq:mu_gamma_limit} }.
+			\text{условия \eqref{eq:thm4_final_LMI} }.
 		\end{cases}
 	\end{aligned}
 \end{equation}
