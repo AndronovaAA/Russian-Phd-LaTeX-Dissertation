@@ -1,17 +1,23 @@
 % Общие стили оформления.
 % Возможные варианты значений ищите в описании библиотеки beamer
-\usetheme{Pittsburgh}
-\usecolortheme{whale}
+\usetheme[progressbar=frametitle]{metropolis}
+%\usecolortheme{whale}
 
+\definecolor{mydarkred}{RGB}{ 71, 0, 0}
+\definecolor{mygreen}{HTML}{A9AD9B}
 % \usetheme[secheader]{Boadilla}
-% \usecolortheme{seahorse}
-
+%\usecolortheme{mydarkred}
+\setbeamercolor{frametitle}{bg=mydarkred, fg=white}
+\setbeamercolor{progress bar}{bg=mygreen!20, fg=mygreen}
 % Размер полей слайдов
 \setbeamersize{text margin left=1cm,%
                text margin right=1cm}
 
 % выключение кнопок навигации
 \beamertemplatenavigationsymbolsempty
+
+\usepackage{ragged2e}
+\justifying
 
 % Размеры шрифтов
 \setbeamerfont{title}{size=\large}
@@ -29,7 +35,7 @@
 % http://www.cpt.univ-mrs.fr/~masson/latex/Beamer-appearance-cheat-sheet.pdf
 
 % Цвет элементов
-\setbeamercolor{footline}{fg=blue}
+\setbeamercolor{footline}{fg=black}
 \setbeamercolor{bibliography item}{fg=black}
 \setbeamercolor{bibliography entry author}{fg=black}
 \setbeamercolor{bibliography entry title}{fg=black}
@@ -64,7 +70,7 @@
     \hbox{%
         \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{}%
             % И. О. Фамилия, Организация кратко
-            \thesisAuthorShort, \thesisOrganizationShort
+            \thesisAuthorShort
         \end{beamercolorbox}%
         \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{}%
             % Город, 20XX
