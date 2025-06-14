@@ -9,6 +9,7 @@
 %\usecolortheme{mydarkred}
 \setbeamercolor{frametitle}{bg=mydarkred, fg=white}
 \setbeamercolor{progress bar}{bg=mygreen!20, fg=mygreen}
+\definecolor{mydarkgreen}{HTML}{172400}
 % Размер полей слайдов
 \setbeamersize{text margin left=1cm,%
                text margin right=1cm}
@@ -16,8 +17,8 @@
 % выключение кнопок навигации
 \beamertemplatenavigationsymbolsempty
 
-\usepackage{ragged2e}
-\justifying
+%\usepackage{ragged2e}
+%\justifying
 
 % Размеры шрифтов
 \setbeamerfont{title}{size=\large}
@@ -45,6 +46,9 @@
 % Названия классов элементов можно найти здесь
 % http://www.cpt.univ-mrs.fr/~masson/latex/Beamer-appearance-cheat-sheet.pdf
 
+\setbeamercolor{block body}{bg=mydarkgreen!8}
+\setbeamercolor{block title}{bg=mydarkgreen,fg=black!2}
+
 % Нумеровать список статей
 % https://tex.stackexchange.com/a/419506/104425
 \setbeamertemplate{bibliography item}{\insertbiblabel}
@@ -63,6 +67,15 @@
     \gdef\beamer@notes{}%
 }
 \makeatother
+
+\newcommand{\T}{^\top}
+
+\usepackage{ragged2e}
+\justifying
+
+\setbeamertemplate{blocks}[rounded][shadow]
+
+\usepackage{nccmath}
 
 % footer презентации
 \setbeamertemplate{footline}{
