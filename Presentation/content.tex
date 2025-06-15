@@ -12,8 +12,12 @@
 	\end{minipage}
 	\hfill
 	\begin{minipage}[t]{0.47\linewidth}
-		\textbf{Составная \\ подпись 2}
-		
+		Математическая модель для описания динамики шагающего робота:
+		\begin{itemize}
+			\item С явными механическими ограничениями;
+			\item Линеаризованная;
+			\item С параметрическими неопределённостями.
+		\end{itemize}		
 	\end{minipage}
 \end{frame}
 
@@ -21,7 +25,7 @@
     \frametitle{Управление шагающими роботами}
 	\begin{figure}
 	\centering
-	\includegraphics[scale=0.6]{images/table.JPG}
+	\includegraphics[scale=0.59]{images/table.JPG}
 	\caption{Методы управления и наблюдения для систем с механическими ограничениями.}
 	\label{fig:table}
 \end{figure}
@@ -58,12 +62,29 @@
 
 \begin{frame}
     \frametitle{Ортогональная декомпозиция}
-    \centering
+    Конфигурация шагающего робота может быть описана вектором обобщённых координат $q$. Обобщённые координаты и их производные $\dot{q}$ вместе образуют вектор состояния робота $x$. \\
+    
+    Взаимодействие робота с окружающей средой может быть описано как ограничение на скорость изменения состояния: ${G}\dot{x}= 0$. Это мотивирует ортогональную декомпозицию вектора состояния:
+    \begin{align}\label{eq:1}
+    	{x}= {N} {z}^* + {R} {\zeta}^*
+    \end{align}
+    где ${z}^*$ --- координаты состояния, изменяющиеся со временем, и ${\zeta}^* = const$; матрицы ${N}$ и ${R}$ являются ортонормированными базисами в пространстве нулей и строк матрицы ограничений ${G}$.
 \end{frame}
 
 \begin{frame}
 	\frametitle{Линеаризация}
-	\centering
+	Рассмотрим динамику $\dot z^* = f(z^*, \zeta^*)$ с параметрами $\zeta^* = \text{const}$ и ее разложение Тейлора в окрестности точки $z^* = z_0$, $\zeta^* = \zeta_0$. Обозначим $z = z^* - z_0$ и $\zeta = \zeta^* - \zeta_0$.
+	Опустив квадратичные члены и члены высших порядков, но сохранив линейные и билинейные члены, запишем приближенную динамику в виде:
+	
+	\begin{equation}
+		\label{eq:model_linearization_1}
+		\dot z = \frac{\partial f}{\partial z} z + \Delta {A}(\zeta) z + \frac{\partial f}{\partial \zeta} \zeta,
+	\end{equation}
+	где $\Delta {A}(\zeta) = \frac{\partial}{\partial z} (\frac{\partial f}{\partial \zeta} \zeta)$.
+	
+	\vfill
+	
+	Модель \eqref{eq:model_linearization_1} включает в себя как мультипликативные, так и аддитивные неопределённости. Мы можем интерпретировать постоянные параметры $\zeta$ как неопределённые параметры модели, либо как статические компоненты состояния шагающего робота. В последнем случае мы приходим к модели шагающего робота на временном интервале между последовательными шагами.
 \end{frame}
 
 \subsection{Методы оптимального робастного управления}
@@ -75,9 +96,22 @@
     	\label{eq:part2_linear_dynamics}
     	\begin{cases}
     		\dot z=({A}_n+\Delta {A}_n)z + ({B}+\Delta {B})u,\\
-    		y = ({C}+ \Delta {C}){N}  z.
+    		y = ({C}+ \Delta {C}){N}  z,
     	\end{cases}
     \end{equation}
+    где $A_n \in \mathbb{R}^{n_z \times n_z}$ --- матрица состояния, $B \in \mathbb{R}^{n_z \times m}$ --- матрица управления, $C \in \mathbb{R}^{l \times n}$ --- матрица наблюдения, а неопределённые матрицы состояния, управления и наблюдения определяются как:
+    %
+    \begin{equation}
+    	\label{eq:part2_uncertainty}
+    	\Delta {A}_n={M}_1{F}_1{N}_1, \ \ \Delta {B}= {M}_2{F}_2{N}_2, \ \
+    	\Delta {C} = {M}_3{F}_3{N}_3,
+    \end{equation}
+    %
+    где ${M}_1 \in \mathbb{R}^{n_z \times d}$, 
+    ${N}_1 \in \mathbb{R}^{d \times n_z}$ , ${M}_2 \in \mathbb{R}^{n_z \times p}$,
+    ${N}_2 \in \mathbb{R}^{p \times m}$, ${M}_3 \in \mathbb{R}^{l \times q}$,
+    ${N}_3 \in \mathbb{R}^{q \times n}$ --- известные матрицы, 
+    а ${F}_i$ --- неизвестные матрицы ограниченные по норме ${F}_i\T{F}_i\leq \nu_i {I}$, где $\nu_i$ --- радиусы неопределённости.
     
     Вводим наблюдатель Люенбергера с состоянием $\hat{z}$:
     %
@@ -87,17 +121,17 @@
     \end{equation}
     %
     где ${L}_z$ --- матрица наблюдателя. 
-    
-    Рассмотрим следующий закон управления с линейной обратной связью:
-    %
-    \begin{equation}
-    	\label{eq:control_law}
-    	u={K}_z\hat{z}.
-    \end{equation}
+ 
 \end{frame}
 
 \begin{frame}
 	\frametitle{Система с мультипликативными неопределённостями}
+	    Рассмотрим следующий закон управления с линейной обратной связью:
+	%
+	\begin{equation}
+		\label{eq:control_law}
+		u={K}_z\hat{z}.
+	\end{equation}
 	После введения ошибки как $e_z=z-\hat{z}$, получаем систему:
 	\begin{equation}
 		\label{eq:part2_system}
@@ -195,8 +229,8 @@
 		\end{bmatrix}
 		{\zeta}.
 	\end{align}
-	\begin{block}{Теорема 3}
-		Система \eqref{eq:part5_cl}  асимптотически устойчива, если существуют положительно определённые матрицы ${Q}_1>0$, ${P}_1>0$, матрицы $\hat{{A}}_K$,  $\hat{{B}}_K$, $\hat{{C}}_K$ и $D_K$
+	\begin{block}{Теорема 2}
+		Система \eqref{eq:part5_cl}  асимптотически устойчива, если существуют положительно определённые матрицы ${Q}_1>0$, ${Q}_2>0$, ${P}_1>0$, матрицы $\hat{{A}}_K$,  $\hat{{B}}_K$, $\hat{{C}}_K$ и $D_K$
 		и положительный скаляр $\alpha>0$ такие, что выполняется следующие линейные матричные неравенства:
 		\[
 		\begin{medsize}
@@ -221,7 +255,7 @@
 
 \begin{frame}
 	\frametitle{Управление с динамической обратной связью}
-	\begin{block}{Теорема 3. Продолжение}
+	\begin{block}{Теорема 2. Продолжение}
 	\begin{align*}
 		&{\Theta}_1 = {A}_N{Q}_{1} +{Q}_{1}{A}_N\T + {B}{\hat{C}}_K +{\hat{C}}_K\T{B}\T, \\
 		&{\Theta}_2 = {P}_{1}{A}_N +{A}_N\T{P}_{1}+{\hat{B}}_K{C}{N}+{N}\T{C}\T{\hat{B}}_K\T.
@@ -258,9 +292,8 @@
 	\end{equation}
 	где $\nu_i$ --- радиусы неопределённости --- скаляры, определяющие ограничения, накладываемые на нормы ${F}_i$. 
 	
-	$\mu_i=\gamma_i\nu_i$ для $i=1,2,3$.
-	$\bar{\mu}_i=\frac{1}{\mu_i}$
-	В отличие от предыдущей задачи оптимизации, здесь не существует естественной формулировки целевой функции. Предлагается два варианта целевой функции:
+	Обозначим $\mu_i=\gamma_i\nu_i$ и $\bar{\mu}_i=\frac{1}{\mu_i}$ для $i=1,2,3$.
+	Используя данные переменные, можно сформулировать следующие целевые функции:
 	\begin{align}
 		\label{eq:cost_lin}
 		J_\text{lin} &= \sum_{i=1}^{3}\left(\bar{\mu}_i+\gamma_i\right), \\ 
@@ -273,7 +306,7 @@
 
 \begin{frame}
 	\frametitle{Применение методов}
-	Выбираем линейную целевую функцию, задача оптимизационного управления приобретает вид:
+	Выбираем линейную целевую функцию, и задача оптимизационного управления приобретает вид:
 	%
 	\begin{equation}
 		\label{eq:thm4_OCP}
@@ -292,7 +325,7 @@
 		\end{aligned}
 	\end{equation}
 	%
-	Данная задача оптимизации имеет параметр $\epsilon_1$ который мы можем найти решетчатым поиском.
+	Данная задача оптимизации c переменными $\bar{\mu}_i,\gamma_i,{Q}_1, {P}_2,\hat{{K}}, \hat{{L}}$ имеет параметр $\epsilon_1$, который мы можем найти решетчатым поиском.
 \end{frame}
 
 \begin{frame}
@@ -305,7 +338,8 @@
 	\end{figure}
 \end{frame}
 
-\begin{frame}{Применение методов}
+\begin{frame}
+	\frametitle{Применение методов}
 	\begin{figure}
 		\centering
 		\includegraphics[scale=0.8]{images/mult_soft_nu_eps_qp.JPG}
@@ -314,150 +348,66 @@
 	\end{figure}
 \end{frame}
 
-\subsection{Комплексы программ}
+\begin{frame}
+	\frametitle{Применение методов}
+	Сформулируем оптимизационную задачу для системы с обратной динамической связью.
+	Целевой функцией будет являться минимизация переменных матриц ${Q}_1, {Q}_2, {P}_1, {\hat{A}}_K, {\hat{B}}_K,{\hat{C}}_K, {D}_K$:
+	\begin{align}
+		\label{eq:cost_output}
+		J_\text{out} &= \operatorname{tr}({Q}_1\T{W}_{q1}{Q}_1) + \operatorname{tr}({P}_1\T{W}_p{P}_1) + \operatorname{tr}({Q}_2\T{W}_{q2}{Q}_2) + \\
+		 &\operatorname{tr}({\hat{A}}_K\T{W}_a{\hat{A}}_K) + \operatorname{tr}({\hat{B}}_K\T{W}_b{\hat{B}}_K) + \operatorname{tr}({\hat{C}}_K\T{W}_c{\hat{C}}_K) + \operatorname{tr}({D}_K\T{W}_d{D}_K). \nonumber
+	\end{align}
+	Cкаляр $\alpha$ также является переменной. Оптимизационная задача будет выглядеть следующим образом:
+	%
+	\begin{equation}
+		\begin{aligned}
+			\label{eq:thm2_OCP}
+			& \underset{{Q}_1, {Q}_2, {P}_1, {\hat{A}}_K, {\hat{B}}_K,{\hat{C}}_K, {D}_K, \alpha }{\text{минимизируя}}
+			& & J_\text{out}\\
+			& \text{при ограничениях}
+			& & \begin{cases}
+				\text{условия из теоремы 2},
+			\end{cases}
+		\end{aligned}
+	\end{equation}
+	где ${W}_{q1}, {W}_p, {W}_{q2}, {W}_a, {W}_b, {W}_c$ и ${W}_d$ --- весовые матрицы.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Применение методов}
+	\begin{figure}
+	\centering
+	\includegraphics[scale=0.85]{images/output_cost.JPG}
+	\caption{Целевая функция для ЗОУ \eqref{eq:thm2_OCP}, решённые для плоского четвероногого робота, построенная относительно параметра $\alpha$; вертикальная ось масштабирована логарифмически, обе оси без единиц.}
+	\label{fig:cost_output}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Применение методов}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.8\linewidth]{images/output_state_z.JPG}
+		\includegraphics[width=0.8\linewidth]{images/output_state_zk.JPG}
+		\caption{Вектор состояния и вектор состояния регулятора от времени при решении \eqref{eq:thm2_OCP} для плоского четвероногого робота.}
+		\label{fig:output_state_z}
+	\end{figure}
+\end{frame}
+
+\subsection{Комплекс программ}
+
+\begin{frame}
+	\frametitle{Комплекс программ}
+	\begin{figure}
+	\centering
+	\includegraphics[scale=0.2]{images/programm.png}
+	\caption{Блок–схема программы с точки зрения пользователя.}
+	\label{fig:programm}
+\end{figure}
+\end{frame}
 
 \section{Заключение}
-\begin{frame}[plain, noframenumbering]
-    \begin{center}
-        \Huge
-        Остальное
-    \end{center}
-\end{frame}
-
-\subsection{Формулы}
-
-\begin{frame}
-    \frametitle{Формулы}
-    \[
-    \left\{
-    \begin{array}{rl}
-        \dot x = & \sigma (y-x)  \\
-        \dot y = & x (r - z) - y \\
-        \dot z = & xy - bz
-    \end{array}
-    \right.
-    \]
-\end{frame}
-
-\begin{frame}
-    \frametitle{amsmath}
-    \centering
-    \begin{minipage}[t]{0.5\linewidth}
-        \begin{multline*}
-            y = 1 x^1 + 2 x^2 + 3 x^3 + \\ + 4 x^4 + 5 x^5 + \dots
-        \end{multline*}
-    \end{minipage}
-\end{frame}
-
-\begin{frame}[allowframebreaks]
-    \frametitle{Уравнения Максвелла}
-    \centering{
-        \small
-        \def\arraystretch{1.8}%
-        \begin{tabular}{ll}
-            \toprule
-            Интегральная форма                                                                                                                                            & Дифференциальная форма                                                          \\ \midrule
-            \(Q_e(t) = \displaystyle\oiint_S \vec D(t) \cdot d\vec{s} = \displaystyle\iiint_V \rho_v(t) dv\)                                                              & \(\nabla \cdot \vec D(t) = \rho_v(t)\)                                          \\
-            \(\displaystyle\oiint_S \vec B(t) \cdot d\vec{s} = 0\)                                                                                                        & \(\nabla \cdot \vec B(t) = 0\)                                                  \\
-            \(V_{emf}(t) = \displaystyle\oint_L \vec E(t) \cdot d\vec{l}\) = \(- \displaystyle\iint_S \left[\frac{\partial\vec{B}(t)}{\partial t}\right] \cdot d\vec{s}\) & \(\nabla \times \vec E(t) = - \frac{\partial\vec{B}(t)}{\partial t}\)           \\
-            \(I(t) = \displaystyle\oint_L \vec H(t) \cdot d\vec{l} = \displaystyle\iint_S \left[\vec J(t) + \frac{\partial\vec{D}(t)}{\partial t}\right] \cdot d\vec{s}\) & \(\nabla \times \vec H(t) = \vec J(t) + \frac{\partial\vec{D}(t)}{\partial t}\) \\ \midrule
-            \(\displaystyle\oiint_S \vec J \cdot d\vec{s} = -\frac{\partial Q_e}{\partial t}\)                                                                            & \(\nabla \cdot \vec J = - \frac{\partial \rho_v}{\partial t}\)                  \\
-            \bottomrule
-            \multicolumn{2}{c}{\(\vec D(t) = \left[\varepsilon(t)\right] * \vec E(t)\)}                                                                                                                                                                     \\
-            \multicolumn{2}{c}{\(\vec B(t) = \left[\mu(t)\right] * \vec H(t)\)}                                                                                                                                                                             \\
-        \end{tabular}
-    }
-    \framebreak
-
-    \hspace{0.05\linewidth}
-    \centering{
-        \small
-        \def\arraystretch{1.8}%
-        \begin{tabular}{ll}
-            \toprule
-            Интегральная форма                                                                                                                & Дифференциальная форма                               \\ \midrule
-            \(Q_e = \displaystyle\oiint_S \vec D \cdot d\vec{s} = \displaystyle\iiint_V \rho_v dv\)                                           & \(\nabla \cdot \vec D = \rho_v\)                     \\
-            \(\displaystyle\oiint_S \vec B \cdot d\vec{s} = 0\)                                                                               & \(\nabla \cdot \vec B = 0\)                          \\
-            \(V_{emf} = \displaystyle\oint_L \vec E \cdot d\vec{l}\) = \(- \displaystyle\iint_S \left[j \omega \vec B\right] \cdot d\vec{s}\) & \(\nabla \times \vec E = - j \omega \vec B\)         \\
-            \(I = \displaystyle\oint_L \vec H \cdot d\vec{l} = \displaystyle\iint_S \left[\vec J + j \omega \vec D\right] \cdot d\vec{s}\)    & \(\nabla \times \vec H = \vec J + j \omega \vec{D}\) \\ \midrule
-            \(\displaystyle\oiint_S \vec J \cdot d\vec{s} = - j \omega Q_e\)                                                                  & \(\nabla \cdot \vec J = - j \omega \rho_v\)          \\
-            \bottomrule
-            \multicolumn{2}{c}{\(\vec D(t) = \left[\varepsilon\right] \vec E(t)\)}                                                                                                                   \\
-            \multicolumn{2}{c}{\(\vec B(t) = \left[\mu\right] \vec H(t)\)}                                                                                                                           \\
-        \end{tabular}
-    }
-\end{frame}
-
-\subsection{Таблицы}
-
-\begin{frame}
-    \frametitle{Таблица}
-    \centering
-    \begin{tabular}{|l|l|}
-        \hline
-        \textbf{Заголовок 1} & \textbf{Заголовок 2} \\
-        \hline
-        Сумма                & \(b+a\)              \\
-        \hline
-        Разность             & \(a-b\)              \\
-        \hline
-        Произведение         & \(a*b\)              \\
-        \hline
-    \end{tabular}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Другая таблица}
-    \centering
-    \begin{tabular}{lc}
-        \toprule
-        \multicolumn{1}{c}{\textbf{Заголовок 1}} & \textbf{Заголовок 2} \\ \midrule
-        Сумма                                    & \(b+a\)              \\
-        Разность                                 & \(a-b\)              \\
-        Произведение                             & \(a*b\)              \\
-        \bottomrule
-    \end{tabular}
-\end{frame}
 
 
-\subsection{Разное}
 
-\begin{frame}
-    \frametitle{Большой многоуровневый список}
-    \begin{itemize}
-        \item \textbf{Пункт 1}
-              \begin{itemize}
-                  \itemi Подпункт 1-1
-                  \itemi Подпункт 1-2
-              \end{itemize}
-        \item \textbf{Пункт 2}
-              \begin{itemize}
-                  \itemi Подпункт 2-1
-              \end{itemize}
-        \item \textbf{Пункт 3}
-              \begin{itemize}
-                  \itemi Подпункт 3-1
-                  \itemi Подпункт 3-2
-              \end{itemize}
-        \item \textbf{Пункт 4}
-              \begin{itemize}
-                  \itemi Подпункт 4-1
-              \end{itemize}
-        \item \textbf{Пункт 5}
-              \begin{itemize}
-                  \itemi Подпункт 5-1
-                  \itemi Подпункт 5-2
-                  \itemi Подпункт 5-3
-              \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Четыре изображения}
-    \centering
-    \includegraphics[width=0.35\linewidth,angle=35]{latex}
-    \includegraphics[width=0.35\linewidth,angle=135]{latex}\\
-    \includegraphics[width=0.35\linewidth,angle=15]{latex}
-    \includegraphics[width=0.35\linewidth,angle=-15]{latex}
-\end{frame}
 

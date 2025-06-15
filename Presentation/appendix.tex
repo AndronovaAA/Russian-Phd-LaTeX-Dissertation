@@ -1,32 +1,85 @@
 \begin{frame}
-    \frametitle{Ответы на замечания ведущей организации НИИ~<<Рога~и~копыта>>}
-    \begin{itemize}
-        \item Замечание -- ответ
-        \item Замечание -- ответ
-        \item Замечание -- ответ
-        \item Замечание -- ответ
-        \item Замечание -- ответ
-    \end{itemize}
+    \frametitle{Математические инструменты}
+\emph{S--процедура:}
+Рассмотрим ${M},{N} \in \mathbb{R}^{n\times n}$. Если существует скаляр $\gamma>0$, который отвечает следующему условию ${M}+\gamma {N}<0$, тогда $x\T {N} x\geq 0$ подразумевает $x\T{M}x\leq 0$.
+
+\emph{Неравенство Юнга:}
+Для любой положительно определённой матрицы $M>0$, положительных скаляров $\epsilon > 0, \nu > 0$ и матриц ${X}, {Y}, {F}$, где ${F}\T{F}\leq \nu{I}$, следующие неравенства верны:
+%
+\begin{align}
+	\label{eq:Young_relation_BMI}
+	{X}\T{Y} + {Y}\T{X}  \leq {X}\T 
+	\epsilon {M}^{-1}{X} + \frac{1}{\epsilon}   {Y}\T  {M}{Y}, 
+	\\
+	\label{eq:Young_robust_2}
+	{X}\T{F}{Y} + {Y}\T{F}\T{X}  \leq \epsilon {X}\T{X} +  \frac{\nu}{\epsilon} {Y}\T {Y}.
+\end{align}
+%
+Обозначим $\nu=\epsilon^2$ для формулирования следующего неравенства:
+%
+\begin{equation}
+	\label{eq:updated_Young_robust_2}
+	{X}^T{F}{Y} + {Y}\T{F}\T{X}  \leq \epsilon {X}\T{X} + \epsilon {Y}\T{Y}.
+\end{equation}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Ответы на замечания оф. оппонента Иванова\,И.\,И}
-    \begin{itemize}
-        \item Замечание -- ответ
-        \item Замечание -- ответ
-        \item Замечание -- ответ
-        \item Замечание -- ответ
-        \item Замечание -- ответ
-    \end{itemize}
+	\frametitle{Математические инструменты}
+	\emph{Дополнение Шура:}
+	Для любой симметричной матрицы ${A}\in \mathbb{S}^n$ и ${C}\in \mathbb{S}^m$ и матрицы ${B}\in \mathbb{R}^{n\times m}$, а также их конкатенации:
+	\noindent \begin{align*}
+		{M}= \begin{bmatrix}
+			{A} & {B} \\
+			{B}\T & {C} 
+		\end{bmatrix},
+	\end{align*}
+	%
+	следующие утверждения равнозначны:
+	% 
+	\noindent
+	\begin{enumerate}
+		\item ${M} < 0$,
+		\item ${A}-{B}{C}^{-1}{B}\T < 0 , {C}< 0$,
+		\item ${C}-{B}\T{A}^{-1}{B}< 0 , {A}< 0$.
+	\end{enumerate}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Ответы на замечания Петрова\,П.\,П}
-    \begin{itemize}
-        \item Замечание -- ответ
-        \item Замечание -- ответ
-        \item Замечание -- ответ
-        \item Замечание -- ответ
-        \item Замечание -- ответ
-    \end{itemize}
+	\frametitle{Системы с механическими ограничениями}
+    \begin{figure}
+	\begin{minipage}[c]{0.4\textwidth}
+		\textbf{Ортогональные методы}
+		\begin{equation*}
+			\begin{gathered}
+				\dot{x}=Ax+Bu+F\lambda\\
+				G\dot{x}=0
+			\end{gathered}
+		\end{equation*}
+	\end{minipage}\hfill
+	\begin{minipage}[c]{0.6\textwidth}
+		\textbf{Дескрипторные методы}
+		\begin{equation*}
+			\begin{gathered}
+				E\dot{x}=Ax+Bu\\
+				\begin{pmatrix}
+					I & 0\\
+					G & 0
+				\end{pmatrix}
+				\begin{pmatrix}
+					\dot{x}\\ \dot{\lambda}
+				\end{pmatrix}=
+				\begin{pmatrix}
+					A & F\\ 0 & 0
+				\end{pmatrix}
+				\begin{pmatrix}
+					x\\ \lambda
+				\end{pmatrix}+
+				\begin{pmatrix}
+					B \\ 0
+				\end{pmatrix}
+				u
+			\end{gathered}
+		\end{equation*}
+	\end{minipage}
+\end{figure}
 \end{frame}
