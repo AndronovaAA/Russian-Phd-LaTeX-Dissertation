@@ -1,7 +1,5 @@
 \section{Введение}
 
-\subsection{Актуальность исследования}
-
 \begin{frame}
 	\frametitle{Шагающие роботы}
 	    \begin{minipage}[t]{0.47\linewidth}
@@ -25,28 +23,10 @@
     \frametitle{Управление шагающими роботами}
 	\begin{figure}
 	\centering
-	\includegraphics[scale=0.59]{images/table.JPG}
+	\includegraphics[scale=0.59]{images/table_short.JPG}
 	\caption{Методы управления и наблюдения для систем с механическими ограничениями.}
 	\label{fig:table}
 \end{figure}
-\end{frame}
-
-\subsection{Область исследования}
-
-\subsection{Цели и задачи}
-
-\begin{frame}
-    \frametitle{Цели и задачи}
-    Целью диссертационной работы является разработка численных ортогональных методов оптимального робастного управления математическими моделями, описывающих шагающих роботов, с использованием линейных матричных неравенств.
-    
-	Выполненные задачи:
-	\begin{itemize}
-		\item Проведён обзор литературы;
-		\item Описана математическая модель шагающего робота;
-		\item Предложен численный метод оптимального робастного управления для систем с параметрическими неопределённостями;
-		\item Предложен численный метод оптимального робастного управления с динамической обратной связью для системы с аддитивными неопределённостями;
-		\item Разработан комплекс программ, реализующий предложенные методы.
-	\end{itemize}
 \end{frame}
 
 \section{Основная часть}
@@ -61,44 +41,7 @@
     \begin{align}\label{eq:1}
     	{x}= {N} {z}^* + {R} {\zeta}^*,
     \end{align}
-    где ${z}^*$ --- координаты состояния, изменяющиеся со временем, и ${\zeta}^* = const$; матрицы ${N}$ и ${R}$ являются ортонормированными базисами в пространстве нулей и строк матрицы ограничений ${G}$.
-\end{frame}
-
-\begin{frame}
-	\frametitle{Формулирование неопределённости}
-	Рассмотрим динамику $\dot z^* = f(z^*, \zeta^*)$ с параметрами $\zeta^* = \text{const}$, и её разложение Тейлора в окрестности точки $z^* = z_0$, $\zeta^* = \zeta_0$. Обозначим $z = z^* - z_0$ и $\zeta = \zeta^* - \zeta_0$.
-	Опустив квадратичные члены и члены высших порядков, но сохранив линейные и билинейные члены, запишем приближенную динамику в виде:
-	
-	\begin{equation}
-		\label{eq:model_linearization_1}
-		\dot z = \frac{\partial f}{\partial z} z + \Delta {A}(\zeta) z + \frac{\partial f}{\partial \zeta} \zeta,
-	\end{equation}
-	где $\Delta {A}(\zeta) = \frac{\partial}{\partial z} (\frac{\partial f}{\partial \zeta} \zeta)$.
-	\vfill
-	Модель \eqref{eq:model_linearization_1} включает в себя как мультипликативные, так и аддитивные неопределённости. Мы можем интерпретировать постоянные параметры $\zeta$ как неопределённые параметры модели, либо как статические компоненты состояния шагающего робота. 
-\end{frame}
-
-\begin{frame}
-	\frametitle{Формулирование неопределённости}
-	Предположим, что основным источником неопределённости является геометрия окружающей среды. Учитывая определение $\Delta {A}(\zeta)$, мы можем написать:
-	\begin{equation}
-		\Delta {A}(\zeta) = 
-		\frac{\partial}{\partial z} 
-		\left (
-		\frac{\partial f}{\partial \zeta} {R}\T 
-		\begin{bmatrix}
-			{J}_K & 0 \\ \dot{{J}}_K & {J}_K
-		\end{bmatrix}^+ 
-		\begin{bmatrix}
-			s_K \\ 0
-		\end{bmatrix} \varsigma 
-		\right )
-		= \Tilde{A} \varsigma,
-	\end{equation}
-	%
-	где  $-1 \leq \varsigma \leq 1$, $\Delta h$ --- неточность в положении точки на опорной поверхности, $h_K(q) = \Delta h$, ${J}_K = \partial h_K / \partial q$, $\Tilde{A}$ --- некоторая матрица, образующая базис в пространстве допустимых значений неопределённой матрицы $\Delta {A}$.
-	
-	Наша цель --- получить такие матрицы ${M}_1$, ${F}_1$ и ${N}_1$, где ${F}_1\T {F}_1 \leq {I}$, что для любого выбранного вектора $z$ множество всех векторов ${M}_1 {F}_1 {N}_1 z$ будет содержать множество $(\Tilde{A} \varsigma) z$. 
+    где ${z}^*$ --- координаты состояния, изменяющиеся со временем, и ${\zeta}^* = const$; матрицы ${N}$ и ${R}$ являются ортонормированными базисами в пространстве нулей и строк матрицы ограничений ${G}$ (ядро и кообраз матрицы ${G}$).
 \end{frame}
 
 \subsection{Методы оптимального робастного управления}
@@ -257,8 +200,8 @@
 				0 & {I}
 			\end{bmatrix}, \ \ 
 			{\Xi} = \begin{bmatrix}
-				{B}\hat{{K}} & {B}{K}_{\zeta} \end{bmatrix}, 
-			S = \begin{bmatrix}
+				{B}\hat{{K}} & {B}{K}_{\zeta} \end{bmatrix}, \ \ 
+			{S} = \begin{bmatrix}
 				{I} \\ 0
 			\end{bmatrix}.
 		\end{align*}
@@ -366,71 +309,6 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Целевая функция}
-	Неопределённости ограничены следующим образом:
-	%
-	\begin{equation}
-		{F}_i\T{F}_i\leq \nu_i {I}, \ \ i=1,2,3,
-	\end{equation}
-	где $\nu_i$ --- радиусы неопределённости --- скаляры, определяющие ограничения, накладываемые на нормы ${F}_i$. 
-	
-	Обозначим $\mu_i=\gamma_i\nu_i$ и $\bar{\mu}_i=\frac{1}{\mu_i}$ для $i=1,2,3$.
-	Используя данные переменные, можно сформулировать следующие целевые функции:
-	\begin{align}
-		\label{eq:cost_lin}
-		J_\text{lin} &= \sum_{i=1}^{3}\left(\bar{\mu}_i+\gamma_i\right), \\ 
-		\label{eq:cost_quad}
-		J_\text{quad} & =  \sum_{i=1}^{3}\left((\bar{\mu}_i-\varpi)^2+(\gamma_i-\varpi)^2\right) + \varpi^2,
-	\end{align}
-	%
-	где $\varpi$ --- свободная переменная. Целью обеих целевых функций является максимизация $\nu_i$, которая достигается минимизацией либо $J_\text{lin}$, либо $J_\text{quad}$. Максимизируя $\nu_i$, достигается устойчивость к большему набору неопределённых матриц $\Delta {A}_n$, $\Delta {B}$ и $\Delta {C}$.
-\end{frame}
-
-\begin{frame}
-	\frametitle{Применение численных методов}
-	Выбираем линейную целевую функцию, и задача оптимизационного управления приобретает вид:
-	%
-	\begin{equation}
-		\label{eq:thm4_OCP}
-		\begin{aligned}
-			& \underset{\bar{\mu}_i,\gamma_i,{Q}_1, {P}_2,\hat{{K}} , \hat{{L}} }{\text{минимизируя}}
-			& &  \sum_{i=1}^{3}\left(\bar{\mu}_i+\gamma_i\right), \\
-			& \text{при ограничениях}
-			& & \begin{cases}
-				{Q}_1>0, \ \
-				{P}_2>0, \ \
-				\bar{\mu}_i>0, \ \
-				\gamma_i>0, \ \
-				\text{для} \ \ i=1,2,3; \\
-				\text{линейное матричное неравенство из теоремы 1 }.
-			\end{cases}
-		\end{aligned}
-	\end{equation}
-	%
-	Получаем оптимизационную задачу c переменными $\bar{\mu}_i,\gamma_i,{Q}_1, {P}_2,\hat{{K}}, \hat{{L}}$ и параметром $\epsilon_1$, который мы можем найти решетчатым поиском.
-\end{frame}
-
-\begin{frame}
-	\frametitle{Применение численных методов}
-	\begin{figure}
-		\centering
-		\includegraphics[scale=0.85]{images/mult_soft_cost_qp_eps.JPG}
-		\caption{Значение целевой функции задачи оптимального управления \eqref{eq:thm4_OCP}, решённой для плоского четвероногого робота, построенное относительно параметра $\epsilon_1$; обе оси без единиц.}
-		\label{fig:cost}
-	\end{figure}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Применение методов}
-	\begin{figure}
-		\centering
-		\includegraphics[scale=0.8]{images/mult_soft_nu_eps_qp.JPG}
-		\caption{Верхняя граница радиусов неопределённости $\nu_i$ задачи \eqref{eq:thm4_OCP}; графики построены относительно значения свободного параметра $\epsilon_1$; вертикальная ось масштабирована логарифмически, обе оси без единиц.}
-		\label{fig:cost_qp}
-	\end{figure}
-\end{frame}
-
-\begin{frame}
 	\frametitle{Применение методов}
 	Сформулируем оптимизационную задачу для системы с обратной динамической связью.
 	Целевой функцией будет являться минимизация переменных матриц ${Q}_1, {Q}_2, {P}_1, {\hat{A}}_K, {\hat{B}}_K,{\hat{C}}_K, {D}_K$:
@@ -447,7 +325,7 @@
 		\begin{aligned}
 			\label{eq:thm2_OCP}
 			& \underset{{Q}_1, {Q}_2, {P}_1, {\hat{A}}_K, {\hat{B}}_K,{\hat{C}}_K, {D}_K, \alpha }{\text{минимизируя}}
-			& & J_\text{out}\\
+			& & J_\text{out},\\
 			& \text{при ограничениях}
 			& & \begin{cases}
 				\text{условия из теоремы 3}.
@@ -464,18 +342,6 @@
 	\caption{Целевая функция для ЗОУ \eqref{eq:thm2_OCP}, решённой для плоского четвероногого робота, построенная относительно параметра $\alpha$; вертикальная ось масштабирована логарифмически, обе оси без единиц.}
 	\label{fig:cost_output}
 	\end{figure}
-\end{frame}
-
-\subsection{Комплекс программ}
-
-\begin{frame}
-	\frametitle{Комплекс программ}
-	\begin{figure}
-	\centering
-	\includegraphics[scale=0.2]{images/programm.png}
-	\caption{Блок–схема программы с точки зрения пользователя.}
-	\label{fig:programm}
-\end{figure}
 \end{frame}
 
 \section{Заключение}

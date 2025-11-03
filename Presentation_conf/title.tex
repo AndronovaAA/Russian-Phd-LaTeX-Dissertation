@@ -1,25 +1,5 @@
 \setbeamertemplate{title page}
 {
-    \ifnumequal{\value{logotitle}}{1}{
-        \IfFileExists{images/logo.pdf}{
-            \begin{minipage}[c]{0.15\textwidth}
-                \begin{flushleft}
-                    \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic
-                \end{flushleft}
-            \end{minipage}%
-            \hfill
-            \begin{minipage}[c]{0.8\linewidth}
-                \centering
-                \usebeamerfont{institute}\insertinstitute\par
-            \end{minipage}
-        }{
-            \centering
-            \usebeamerfont{institute}\insertinstitute\par
-        }
-    }{
-        \centering
-        \usebeamerfont{institute}\insertinstitute\par
-    }
     \centering
     \vfill
     \usebeamerfont{subtitle}\insertsubtitle\par
@@ -32,7 +12,7 @@
 }
 
 %\title{\small{Название презентации}}
-\title{\thesisTitle}
+\title{\confTitle}
 \author{%
     \texorpdfstring{%
         \emph{Выступающий:}~\thesisAuthorShort\\%
@@ -40,7 +20,7 @@
         %
     }{\thesisAuthor}%
 }
-\date{\texorpdfstring{\thesisCity, \thesisYear}{}}
+\date{\texorpdfstring{Университет Иннополис, г. \thesisCity, \thesisYear}{}}
 \institute{\texorpdfstring{\thesisOrganization}{}}
 \IfFileExists{images/logo.pdf}{
     \titlegraphic{\includegraphics[width=\textwidth]{images/logo}}
@@ -49,4 +29,4 @@
     }{}
 }{}
 %\subtitle{Представление на соискание учёной степени \thesisDegree\ по специальности \thesisSpecialtyNumber\ \thesisSpecialtyTitle}
-\subtitle{Специальность \thesisSpecialtyNumber\ \thesisSpecialtyTitle}
+%\subtitle{Специальность \thesisSpecialtyNumber\ \thesisSpecialtyTitle}
